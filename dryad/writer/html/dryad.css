@@ -1,0 +1,178 @@
+/* Spacing */
+
+body, div, p, pre, ol, ul
+{
+    margin: 0;
+    padding: 0;
+}
+
+p + p, div + p, p + div, div + div {
+    margin-top: 1em;
+}
+
+/* Visual */
+
+body {
+    background-color: #cccccc;
+    text-align: center;
+}
+
+div {
+    font-family: Verdana;
+    font-size: 10pt;
+}
+
+pre, tt {
+    font-family: Lucida Console;
+    font-size: 90%;
+    /*font-size: 10pt;*/
+}
+
+pre {
+    overflow: auto;
+}
+
+/* Central column */
+
+.central {
+    /* don't need spacing for this one*/
+    margin-top: 0;
+
+    /* override body parameters*/
+    background-color: white;
+    color: #333333;
+    text-align: left;
+
+    /* positioning */
+    display: inline-block;
+    width: 50em;
+    padding: 0em 3em 3em 3em;
+
+    /* colors */
+    border-left: 1px solid;
+    border-right: 1px solid;
+    border-color: #777777;
+    box-shadow: 0 0 1em #666666;
+    -moz-box-shadow: 0 0 1em black;
+}
+
+/* Default elements */
+
+h1, h2, h3, h4, h5, h6 {
+    border-bottom: 1px dotted;
+    border-color: #666666;
+    font-family: Georgia;
+}
+
+div.list div.list {
+    margin-left: 0.75em;
+}
+
+li {
+    padding: 0.4em;
+    list-style-position: inside;
+    border-radius: 5px;
+}
+
+div > div > ul > li.even, div > div > ol > li.even {
+    background-color: rgba(0, 0, 0, 0.03);
+}
+
+div > div > ul > li.odd, div > div > ol > li.odd {
+    background-color: inherit;
+}
+
+em {
+    color: black;
+}
+
+strong {
+    color: #333333;
+}
+
+/* ============ Plugin area ============= */
+
+/* Code */
+
+span.code {
+    background-color: #eeeeee;
+    border: 1px solid;
+    border-color: #cccccc;
+    border-radius: 2px;
+}
+
+em span.code {
+    font-style: normal;
+}
+
+strong span.code {
+    font-style: normal;
+}
+
+div.code {
+    background-color: #eeeeee;
+    border: 1px solid;
+    border-color: #999999;
+    border-radius: 5px;
+    padding: 0.5em;
+    box-shadow: 1px 1px 2px #dddddd;
+}
+
+h1 > .code, h2 > .code, h3 > .code, h4 > .code, h5 > .code, h6 > .code {
+    background-color: white;
+    border: none;
+}
+
+/* Unknown */
+
+.unknown {
+    background-color: #cc0000;
+    border: 1px solid;
+    border-color: #660000;
+    color: white;
+}
+
+span.unknown{
+    border-radius: 2px;
+}
+
+div.unknown {
+    border-radius: 5px;
+    box-shadow: 1px 1px 3px rgba(0,0,0,0.25);
+    padding: 0.5em;
+}
+
+/* Math blocks */
+
+.theorem-outer, .definition-outer, .example-outer, .paradox-outer {
+    background-color: #cccccc;
+    border: 1px solid;
+    border-color: #666666;
+    border-radius: 5px;
+    box-shadow: 1px 1px 3px rgba(0,0,0,0.25);
+    padding-top: 0.25em;
+}
+
+.theorem-inner, .definition-inner, .example-inner, .paradox-inner {
+    margin-top: 0.25em;
+    padding: 0.25em 0.5em 0.5em 0.5em;
+    background-color: white;
+    border-top: 1px solid;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    border-color: #999999;
+}
+
+.definition-outer em {
+    font-weight: bolder;
+    font-style: normal;
+}
+
+.definition-title, .theorem-title, .example-title, .paradox-title {
+    text-shadow: 1px 1px 1px white;
+    margin-left: 0.25em;
+}
+
+.theorem-title > strong, .definition-title > strong, .paradox-title > strong {
+    /*font-size: 120%;*/
+}
