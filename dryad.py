@@ -46,7 +46,7 @@ def outName(filepath):
     name = os.path.splitext(name)[0]
     return os.path.join(dir, name + '.html')
 
-def process(filepath):
+def process(path_to_file):
     lines = iter(open(filepath, encoding = 'utf_8_sig').readlines())
     lines = map(line_utils.Line, lines)
 

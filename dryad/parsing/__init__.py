@@ -55,3 +55,34 @@ class k_iter:
             yield self.context[0]
             if next(self, None) is None:
                 break
+            
+blockParsers = collections.defaultdict(
+    lambda: unknown.parseUnknownBlock),
+    {
+        'code': code.codeBlockParser('auto'),
+        'c++': code.codeBlockParser('c++'),
+        'python': code.codeBlockParser('python'),
+        'sh': code.codeBlockParser('sh'),
+        'make': code.codeBlockParser('make'),
+
+        'math': math.parseMathBlock,
+
+        'theorem': math_blocks.mathAdmonitionParser('theorem', 'theorem'),
+        'definition': math_blocks.mathAdmonitionParser('definition', 'definition'),
+        'example': math_blocks.mathAdmonitionParser('example'),
+        'paradox': math_blocks.mathAdmonitionParser('paradox', 'theorem'),
+
+        'image': image.parseImage
+    }
+)
+
+inlineParsers = collections.defaultdict(
+    lambda: unknown.parseUnknownInline),
+    {
+        '`': code.parseCodeInline,
+        '[code]': code.parseCodeInline,
+        '$': math.parseMathInline,
+        '[math]': math.parseMathInline,
+        None: default.parseDefault
+    }
+)

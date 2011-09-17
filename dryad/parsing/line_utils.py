@@ -5,7 +5,8 @@ class Line:
         self.text = text.expandtabs(4)
 
         self.indent = 0
-        while self.indent < len(self.text) and self.text[self.indent] == ' ':
+        while (self.indent < len(self.text) and 
+            self.text[self.indent] == ' '):
             self.indent += 1
         self.indent += indent
 
@@ -14,17 +15,18 @@ class Line:
 
     def __repr__(self):
         return repr(self.text)+'({0})'.format(self.indent)
-
+    
     def indentedText(self):
         return '{0}{1}'.format(' ' * self.indent, self.text)
 
-    def dedented(self, n):
-        l = Line(self.text, self.indent)
-        l.indent -= n
-        if l.indent < 0:
-            l.indent = 0
-        return l
+def indent(line):
+    return 0
 
+def dedentedBy(self, n):
+    l = Line(self.text, self.indent)
+    l.indent = max(l.indent-n, 0)
+    return l
+    
 def stripBlankLines(lines):
     #source = parsing.k_iter(lines, k = 0)
 
@@ -43,6 +45,7 @@ def stripBlankLines(lines):
     #            pass
 
     # strip blank lines in the end
+    
     lines = list(lines)
     if not lines:
         return lines
@@ -59,8 +62,11 @@ def stripBlankLines(lines):
 
 def dedentedByMin(lines):
     lines = list(lines)
-    minIndent = min(itertools.chain([999], map(lambda l: l.indent if not l.isBlank else 999, lines)))
+    minIndent = min(
+        itertools.chain(
+            [999], 
+            map(lambda l: l.indent if not l.isBlank else 999, 
+                lines)))
     return map(
         lambda l: l.dedented(minIndent),
-        lines
-    )
+        lines)

@@ -11,7 +11,7 @@ def _emitRaw(text):
 
 emit = _emit
 emitRaw = _emitRaw
-writer = None
+runningWriterName = None
 
 def reset():
     global emit, emitRaw, writer
@@ -19,21 +19,15 @@ def reset():
     emitRaw = _emitRaw
     writer = None
 
-nodeWriters = collections.defaultdict(lambda:
-    lambda node: None)
-
-def nodeEnter(node):
-    writers = nodeWriters[type(node), writer]
-    if isinstance(writers, tuple):
-        writers[0](node)
-    else:
-        writers(node)
-
-def nodeExit(node):
-    writers = nodeWriters[type(node), writer]
-    if isinstance(writers, tuple):
-        writers[1](node)
+def _nodeEnter(node):
+    global runningWriterName
+    
+    writer = node.writers[runningWriterName]
+    writer
+    
+def _nodeExit(node):
 
 def walk(*nodes):
     for n in nodes:
         doctree.walkDoctree(n, nodeEnter, nodeExit)
+        

@@ -2,13 +2,16 @@ import itertools
 from .. parsing import line_utils
 
 class Block:
-    def __init__(self, inline, lines):
+    def __init__(self, name, inline, lines):
+        self.name = name
         self.inline = inline
         self.lines = list(lines)
 
     def allLines(self):
         if self.inline:
-            return itertools.chain([line_utils.Line(self.inline)], self.lines)
+            return itertools.chain(
+                [line_utils.Line(self.inline)], 
+                self.lines)
         else:
             return self.lines
 
