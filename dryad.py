@@ -1,5 +1,4 @@
-filename = r'D:\Dropbox\knowledge\migration\prog\lang\c++\1_plain.txt'
-inpath = r'D:\Dropbox\knowledge\migration'
+input_path = r'D:\Dropbox\knowledge\migration'
 
 rebuild = True
 rebuild = False
@@ -19,54 +18,61 @@ import os.path
 import os
 from dryad import doctree
 
-def build():
-
-    inputDir = 'src/'
-    outputDir = 'build/html/'
-    builder = 'html'
-
-    for (path, dirs, files) in os.walk(inputDir):
-        for f in files:
-            path+f
-            file = (outputDir+(path-inputDir)+f)
-            open(file)
-            k_iter(file.readlines)
-            try:
-                parse
-            except:
-                repack
-
+#===============================================================================
+# def build():
+# 
+#    inputDir = 'src/'
+#    outputDir = 'build/html/'
+#    builder = 'html'
+# 
+#    for (path, dirs, files) in os.walk(inputDir):
+#        for f in files:
+#            path+f
+#            file = (outputDir+(path-inputDir)+f)
+#            open(file)
+#            k_iter(file.readlines)
+#            try:
+#                parse
+#            except:
+#                repack
+# 
 # links: full path anchor list, header list
 # images: local input and output folders
 # customizable strongs
+#===============================================================================
 
-def outName(filepath):
-    path = os.path.abspath(filepath)
-    dir, name = os.path.split(path)
-    name = os.path.splitext(name)[0]
-    return os.path.join(dir, name + '.html')
+def replace_ext(filename, ext):
+    dir, name = os.path.split(filename)
+    name_bare = os.path.splitext(name)[0]
+    return os.path.join(dir, name_bare + ext)
 
-def process(path_to_file):
-    lines = iter(open(filepath, encoding = 'utf_8_sig').readlines())
-    lines = map(line_utils.Line, lines)
-
+def render(in_stream, out_stream):
+    lines = iter(cin.readlines())
     root = Root(block_parser.parseBlocks(lines))
     doctree.fixHierarchy(root)
+    
+    #for node in root.children:
+    #    print(node.pformat())
+    
+    dryad.writer.html.writeHTML(root, outpath)
 
-    outpath = outName(filepath)
-    if (not os.path.exists(outpath)) or \
-       (os.path.getmtime(outpath) < os.path.getmtime(filepath)) or \
-        rebuild:
-
-        #for node in root.children:
-        #    print(node.pformat())
-        dryad.writer.html.writeHTML(root, outpath)
+def render_file(filename):
+    out_filename = replace_ext(filename, 'html')
+    if (not os.path.exists(out_filename) or 
+            os.path.getmtime(out_filename) < os.path.getmtime(filename) or
+            rebuild):
+        in_stream = open(filename)
+        out_stream = open(out_filename)
+        render(in_stream, out_stream)
+        
+def render_dir(path):
+    for (dirpath, dirnames, filenames) in os.walk(path):
+        for f in filenames:
+            if os.path.splitext(f)[1] == '.txt':
+                render_file(os.path.join(path, f))
 
 def main():
-    for (path, dirs, files) in os.walk(inpath):
-        for f in files:
-            if os.path.splitext(f)[1] == '.txt':
-                process(os.path.join(path, f))
-
+    render_dir(input_path)
+  
 if __name__ == "__main__":
     main()

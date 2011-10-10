@@ -57,8 +57,7 @@ class k_iter:
                 break
             
 blockParsers = collections.defaultdict(
-    lambda: unknown.parseUnknownBlock),
-    {
+    lambda: unknown.parseUnknownBlock, {
         'code': code.codeBlockParser('auto'),
         'c++': code.codeBlockParser('c++'),
         'python': code.codeBlockParser('python'),
@@ -77,8 +76,7 @@ blockParsers = collections.defaultdict(
 )
 
 inlineParsers = collections.defaultdict(
-    lambda: unknown.parseUnknownInline),
-    {
+    lambda: unknown.parseUnknownInline, {
         '`': code.parseCodeInline,
         '[code]': code.parseCodeInline,
         '$': math.parseMathInline,

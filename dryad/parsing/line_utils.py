@@ -1,72 +1,60 @@
 import itertools
 
-class Line:
-    def __init__(self, text = '', indent = 0):
-        self.text = text.expandtabs(4)
+def indentation(line):
+    result = 0
+    while (result < len(self.text) and 
+           line[result] == ' '):
+        result += 1
+    return result 
 
-        self.indent = 0
-        while (self.indent < len(self.text) and 
-            self.text[self.indent] == ' '):
-            self.indent += 1
-        self.indent += indent
+def is_blank(line):
+    return Bool(line.strip())
 
-        self.text = self.text.strip(' \n')
-        self.isBlank = self.text == ''
+def dedented_by(line, n):
+    return line[min(n, indentation(line)):]
 
-    def __repr__(self):
-        return repr(self.text)+'({0})'.format(self.indent)
-    
-    def indentedText(self):
-        return '{0}{1}'.format(' ' * self.indent, self.text)
-
-def indent(line):
-    return 0
-
-def dedentedBy(self, n):
-    l = Line(self.text, self.indent)
-    l.indent = max(l.indent-n, 0)
-    return l
-    
-def stripBlankLines(lines):
-    #source = parsing.k_iter(lines, k = 0)
-
-    #for l in source:
-    #    if not l.isBlank:
-    #        yield l
-    #    else:
-    #        blanks = 0
-    #        try:
-    #            while source[0].isBlank:
-    #                blanks += 1
-    #                next(source)
-    #            for i in range(blanks):
-    #                yield Line()
-    #        except:
-    #            pass
-
-    # strip blank lines in the end
-    
+def strip_blank_lines(lines):
     lines = list(lines)
     if not lines:
         return lines
 
-    end = len(lines)-1
-    while end >= 0 and lines[end].isBlank:
-        end -= 1
-
-    start = 0
-    while start < len(lines) and lines[start].isBlank:
-        start += 1
+    last_line = len(lines)-1
+    while last_line >= 0 and is_blank(lines[last_line]):
+        last_line -= 1
+    first_line = 0
+    while first_line < len(lines) and is_blank(lines[first_line]):
+        first_line += 1
         
-    return lines[start:end+1]
+    return lines[first_line:last_line+1]
 
-def dedentedByMin(lines):
+def dedented_by_min_indentation(lines):
     lines = list(lines)
-    minIndent = min(
+    min_indentation = min(
         itertools.chain(
             [999], 
-            map(lambda l: l.indent if not l.isBlank else 999, 
+            map(lambda l: indentation(l) if not is_blank(l) else 999, 
                 lines)))
     return map(
-        lambda l: l.dedented(minIndent),
+        lambda l: dedented(l, min_indentation),
         lines)
+
+#===============================================================================
+#    #source = parsing.k_iter(lines, k = 0)
+# 
+#    #for l in source:
+#    #    if not l.isBlank:
+#    #        yield l
+#    #    else:
+#    #        blanks = 0
+#    #        try:
+#    #            while source[0].isBlank:
+#    #                blanks += 1
+#    #                next(source)
+#    #            for i in range(blanks):
+#    #                yield Line()
+#    #        except:
+#    #            pass
+# 
+#    # strip blank lines in the end
+#===============================================================================
+    
