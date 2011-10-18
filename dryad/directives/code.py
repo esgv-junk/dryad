@@ -29,7 +29,7 @@ class CodeBlock:
             self.language,
             self.lines)
 
-class CodeInline(doctree.Inline):
+class CodeSpan(doctree.Inline):
     def writeHTML(node):
         with Tag('span', _class='code'):
             with Tag('tt'):

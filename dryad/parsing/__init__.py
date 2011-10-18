@@ -1,86 +1,54 @@
-import itertools
-import collections
+import re, itertools
 
-# eater
+block_rules = [BlockRule, 
+               ListRule, 
+               SectionRule, 
+               ParagraphRule]
 
-def eat(seq, n = None):
-    if n is None:
-        collections.deque(seq, maxlen = 0)
-    else:
-        next(itertools.islice(seq, n, n), None)
+max_lookahead = max(map(lambda r: r.lookahead, block_rules))
 
-# LL iterator
+def parse_blocks(lines):
+    source = k_iter(lines, max_lookahead)
+    next(source, None)                  # create context iterator and open it
 
-def k_forward(seq, end=None, k = 1):
-    safe = itertools.chain(seq, itertools.repeat(end, k))
-    context = itertools.tee(safe, k+1)
-    [eat(context[i], i) for i in range(k+1)]
-    return zip(*context)
-
-class k_iter:
-    def __init__ (self, seq, end = None, k = 1):
-        self.seq = iter(seq)
-        self.end = end
-        self.k = k
-        self.itr = k_forward(seq, end, k)
-        self.context = None
-        self.done = False
-
-    def __next__(self):
-        try:
-            self.context = next(self.itr)
-        except StopIteration:
-            self.done = True
-            raise
-        return self.context[0]
-
-    def __iter__(self):
-        return self
-
-    def __getitem__(self, item):
-        if not self.done:
-            return self.context[item]
-        else:
-            raise StopIteration()
-
-    def __repr__(self):
-
-        return repr(self.context)
-
-    def takewhile(self, pred):
-        if not self.context:
-            next(self)
-
-        while pred(self):
-            yield self.context[0]
-            if next(self, None) is None:
+    while True:
+        while is_blank(source[0]):        # skip blank lines
+            next(source)
+        for rule in block_rules:         # check sequentially all parsing rules
+            if rule.applies_to(source):
+                for node in rule.parse(source):
+                    yield node
                 break
             
-blockParsers = collections.defaultdict(
-    lambda: unknown.parseUnknownBlock, {
-        'code': code.codeBlockParser('auto'),
-        'c++': code.codeBlockParser('c++'),
-        'python': code.codeBlockParser('python'),
-        'sh': code.codeBlockParser('sh'),
-        'make': code.codeBlockParser('make'),
+# Escapes in span elements:
+#    *        - within text, within strong
+#    `        - within text, within span
+#    \        - within span, within strong, within text
+#    @, #, .. - no escapes 
+#    []       - no escapes
+#
+# There are no escapes for span markers (like "@" and "[url]"). If you want to 
+# write something like "\@``", write "@ ``" instead.
+#
+# When parser sees '\<x>' (<x> is a char) it does the following:
+#     1) If '\<x>' is known escape _in the current context_, parser
+#        replaces the escape sequence. 
+#     2) Else, parser yields verbatim '\' and verbatim '<x>'.
 
-        'math': math.parseMathBlock,
+span_rules = [SpanRule,
+              EmphRule,
+              TextRule]
 
-        'theorem': math_blocks.mathAdmonitionParser('theorem', 'theorem'),
-        'definition': math_blocks.mathAdmonitionParser('definition', 'definition'),
-        'example': math_blocks.mathAdmonitionParser('example'),
-        'paradox': math_blocks.mathAdmonitionParser('paradox', 'theorem'),
+united_rules_re = '(' + join_regexes(
+    *map(lambda rule: rule.rule_regex, span_rules)) + ')' 
 
-        'image': image.parseImage
-    }
-)
-
-inlineParsers = collections.defaultdict(
-    lambda: unknown.parseUnknownInline, {
-        '`': code.parseCodeInline,
-        '[code]': code.parseCodeInline,
-        '$': math.parseMathInline,
-        '[math]': math.parseMathInline,
-        None: default.parseDefault
-    }
-)
+def parse_spans(text):
+    for part in re.split(united_rules_re, text):
+        if part == '':
+            continue
+        
+        for rule in span_rules:
+            if re.match(rule.rule_regex, part):
+                for node in rule.parse(part):
+                    yield node
+                continue

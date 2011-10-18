@@ -18,29 +18,6 @@ import os.path
 import os
 from dryad import doctree
 
-#===============================================================================
-# def build():
-# 
-#    inputDir = 'src/'
-#    outputDir = 'build/html/'
-#    builder = 'html'
-# 
-#    for (path, dirs, files) in os.walk(inputDir):
-#        for f in files:
-#            path+f
-#            file = (outputDir+(path-inputDir)+f)
-#            open(file)
-#            k_iter(file.readlines)
-#            try:
-#                parse
-#            except:
-#                repack
-# 
-# links: full path anchor list, header list
-# images: local input and output folders
-# customizable strongs
-#===============================================================================
-
 def replace_ext(filename, ext):
     dir, name = os.path.split(filename)
     name_bare = os.path.splitext(name)[0]

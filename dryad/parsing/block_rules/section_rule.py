@@ -1,10 +1,18 @@
+class SectionRule:
+    @staticmethod
+    def applies_to(source):
+        pass
+    
+    @staticmethod
+    def parse():
+        pass
+
 class Section:
     lookahead = 2
 
     @staticmethod
     def outlineRe(title):
-        return r'^[=\-~]{{{0}}}$'.format(len(title.text))
-
+        return r'^[=\-~]{{{title_len},}}$'.format(len(title.text))
 
     @staticmethod
     def case2(source):
@@ -20,11 +28,10 @@ class Section:
         outlineRe = Section.outlineRe(title)
         return not source[0].isBlank and indMatch and re.match(outlineRe, source[0].text) and \
                re.match(outlineRe, source[2].text)
-
+               
     @staticmethod
     def isStartLine(source):
         # match '======'-type pattern in the second line
-
         return Section.case2(source) or Section.case3(source)
 
     @staticmethod
