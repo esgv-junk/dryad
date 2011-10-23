@@ -1,3 +1,8 @@
+from dryad.parsing.utils.str_utils import *
+from dryad.parsing.utils.k_iter import *
+from dryad.parsing.typographer import typographed
+from dryad.doctree.span_nodes.text import Text
+ 
 text_escapes = { 
     '\\\\': '\\',
     r'\`' : '`',
@@ -5,7 +10,7 @@ text_escapes = {
 }
 
 class TextRule:
-    rule_regex = '.*'
+    rule_regexp = '.*?'
     
     @staticmethod
     def parse(text):

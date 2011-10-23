@@ -61,3 +61,12 @@
 # 
 #    # strip blank lines in the end
 #===============================================================================
+
+# From doctree.Block
+#def allLines(self):
+#        if self.inline_text:
+#            return itertools.chain(
+#                [line_utils.Line(self.inline_text)], 
+#                self.body_lines)
+#        else:
+#            return self.body_lines

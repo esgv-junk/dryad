@@ -1,67 +1,76 @@
-class SectionRule:
-    @staticmethod
-    def applies_to(source):
-        pass
+import re
+from dryad.parsing.utils.line_utils import *
+from dryad.parsing.utils.k_iter import *
+from dryad.doctree.block_nodes.section import Section
+ 
+
+class SectionRule2:
+    lookahead = 1
     
     @staticmethod
-    def parse():
-        pass
-
-class Section:
-    lookahead = 2
-
+    def applies_to(source):
+        return title_matches_outline(source[0], source[1])
+        
     @staticmethod
-    def outlineRe(title):
-        return r'^[=\-~]{{{title_len},}}$'.format(len(title.text))
-
-    @staticmethod
-    def case2(source):
-        indMatch = source[0].indent == source[1].indent == 0
-        title = source[0]
-        return not source[0].isBlank and indMatch and re.match(Section.outlineRe(title), source[1].text)
-
-    @staticmethod
-    def case3(source):
-        indMatch = source[0].indent == source[1].indent == \
-                   source[2].indent == 0
-        title = source[1]
-        outlineRe = Section.outlineRe(title)
-        return not source[0].isBlank and indMatch and re.match(outlineRe, source[0].text) and \
-               re.match(outlineRe, source[2].text)
-               
-    @staticmethod
-    def isStartLine(source):
-        # match '======'-type pattern in the second line
-        return Section.case2(source) or Section.case3(source)
-
+    def extract_heading_attributes(source):
+        """Returns (title, heading_char, num_lines_heading_takes)"""
+        return (source[0], source[1][0:1], 2)
+    
     @staticmethod
     def parse(source):
-        if Section.case2(source):
-            title = source[0]
-            headingChar = source[1].text[0]
-            headingCase = 2
-            parsing.eat(source, 2)
-        else:
-            title = source[1]
-            headingChar = source[0].text[0]
-            headingCase = 3
-            parsing.eat(source, 3)
-
-        titleNodes = inline_parser.parseInline(title.text)
-
-        def take(s):
-            nonlocal headingChar, headingCase
-            if headingCase == 2:
-                return not(Section.case2(s) and 
-                    (s[1].text[0] == headingChar))
-            else:
-                return not(Section.case3(s) and
-                    (s[0].text[0] == headingChar))
-
-        lines = source.takewhile(take)
-
-        # resulting node
-        result = doctree.Section(titleNodes, list(parseBlocks(lines)))
-
-        # yield
-        yield result
+        for node in parse_section(SectionRule2, source):
+            yield node
+            
+class SectionRule3:
+    lookahead = 2
+    
+    @staticmethod
+    def applies_to(source):
+        return (title_matches_outline(source[1], source[0]) and
+                source[2] == source[0])
+        
+    @staticmethod
+    def extract_heading_attributes(source):
+        """Returns (title, heading_char, num_lines_heading_takes)"""
+        return (source[1], source[0][0:1], 3)
+    
+    @staticmethod
+    def parse(source):
+        for node in parse_section(SectionRule3, source):
+            yield node
+            
+def title_matches_outline(title, outline):
+    indents_match = (get_indent(title) ==
+                     get_indent(outline) == 0)
+    
+    outline_re = "^{char}{{{min_repeats},}}$".format(
+        char='[=\-]',
+        min_repeats=len(title))
+    
+    return (indents_match and
+            not is_blank(title) and
+            re.match(outline_re, outline))
+    
+def parse_section(section_rule, source):
+    title, outline_char, num_lines_heading_takes = \
+        section_rule.extract_heading_attributes(source)
+    
+    eat(source, num_lines_heading_takes)
+    
+    def is_next_same_level_section_start(source):
+        nonlocal section_rule, outline_char
+        
+        current_outline_char = \
+            section_rule.extract_heading_attributes(source)[1]
+            
+        return (outline_char == current_outline_char and
+                section_rule.applies_to(source))
+        
+    body_lines = source.takewhile(
+        lambda s: not is_next_same_level_section_start(s))
+    
+    from dryad.parsing import parse_blocks, parse_spans
+    
+    title_nodes = parse_spans(title)
+    child_nodes = parse_blocks(body_lines)
+    yield Section(title_nodes, child_nodes)

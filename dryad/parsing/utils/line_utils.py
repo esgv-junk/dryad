@@ -4,7 +4,7 @@ import sys
 # === Working with blank lines ===
 
 def is_blank(line):
-    return Bool(line.strip())
+    return not bool(line.strip())
 
 def blank_lines_stripped_start(lines):
     lines = list(lines)
@@ -37,7 +37,7 @@ def blank_lines_stripped(lines):
 
 def get_indent(line):
     result = 0
-    while (result < len(self.text) and 
+    while (result < len(line) and 
            line[result] == ' '):
         result += 1
     return result 

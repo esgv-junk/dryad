@@ -1,6 +1,6 @@
 from .. parsing import line_utils
 
-from dryad import doctree
+from dryad.doctree.span_nodes import Span
 from dryad import writer
 from dryad.writer.html.tags import Tag
 
@@ -15,11 +15,11 @@ class CodeBlock:
                     writer.emit('{0}\n'.format(l.indentedText()))
         writer.emitRaw('\n')
 
-    blockParsers = {'code':   'verbatim', 
-                    'c++':    'verbatim',
-                    'python': 'verbatim',
-                    'sh':     'verbatim',
-                    'make':   'verbatim'}
+    blockParsers = {'code':     'verbatim', 
+                    'c\+\+':    'verbatim',
+                    'python':   'verbatim',
+                    'sh':       'verbatim',
+                    'make':     'verbatim'}
     
     writers = {'html': writeHTML}
     
@@ -29,16 +29,16 @@ class CodeBlock:
             self.language,
             self.lines)
 
-class CodeSpan(doctree.Inline):
+class CodeSpan(Span):
     def writeHTML(node):
         with Tag('span', _class='code'):
             with Tag('tt'):
                 writer.emit(node.text)
                 
-    inlineParsers = {'code':   'verbatim', 
-                     'c++':    'verbatim',
-                     'python': 'verbatim',
-                     'sh':     'verbatim',
-                     'make':   'verbatim'}
+    inlineParsers = { '\[code\]':   'verbatim', 
+                     r'\[c\+\+\]':  'verbatim',
+                      '\[python\]': 'verbatim',
+                      '\[sh\]':     'verbatim',
+                      '\[make\]':   'verbatim'}
     
     writers = {'html': writeHTML}

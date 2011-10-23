@@ -1,14 +1,22 @@
 import re, itertools
+from dryad.parsing.utils.re_utils import *
+from dryad.parsing.utils.k_iter import *
+from dryad.parsing.utils.line_utils import *
 
-block_rules = [BlockRule, 
-               ListRule, 
-               SectionRule, 
-               ParagraphRule]
+from dryad.parsing.block_rules import \
+    block_rule, list_rule, section_rule, paragraph_rule
+
+block_rules = [block_rule.    BlockRule, 
+               list_rule.     OrderedListRule,
+               list_rule.     UnorderedListRule, 
+               section_rule.  SectionRule3,
+               section_rule.  SectionRule2,
+               paragraph_rule.ParagraphRule]
 
 max_lookahead = max(map(lambda r: r.lookahead, block_rules))
 
 def parse_blocks(lines):
-    source = k_iter(lines, max_lookahead)
+    source = k_iter(lines, lookahead=max_lookahead)
     next(source, None)                  # create context iterator and open it
 
     while True:
@@ -21,11 +29,11 @@ def parse_blocks(lines):
                 break
             
 # Escapes in span elements:
-#    *        - within text, within strong
-#    `        - within text, within span
-#    \        - within span, within strong, within text
-#    @, #, .. - no escapes 
-#    []       - no escapes
+#    *           - within text, within strong
+#    `           - within text, within span
+#    \           - within span, within strong, within text
+#    @, #, $, .. - no escapes 
+#    []          - no escapes
 #
 # There are no escapes for span markers (like "@" and "[url]"). If you want to 
 # write something like "\@``", write "@ ``" instead.
@@ -35,12 +43,14 @@ def parse_blocks(lines):
 #        replaces the escape sequence. 
 #     2) Else, parser yields verbatim '\' and verbatim '<x>'.
 
-span_rules = [SpanRule,
-              EmphRule,
-              TextRule]
+from dryad.parsing.span_rules import span_rule, emph_rule, text_rule 
+
+span_rules = [span_rule.SpanRule,
+              emph_rule.EmphRule,
+              text_rule.TextRule]
 
 united_rules_re = '(' + join_regexes(
-    *map(lambda rule: rule.rule_regex, span_rules)) + ')' 
+    *map(lambda rule: rule.rule_regexp, span_rules)) + ')' 
 
 def parse_spans(text):
     for part in re.split(united_rules_re, text):
@@ -48,7 +58,7 @@ def parse_spans(text):
             continue
         
         for rule in span_rules:
-            if re.match(rule.rule_regex, part):
+            if re.match(rule.rule_regexp, part):
                 for node in rule.parse(part):
                     yield node
-                continue
+                break

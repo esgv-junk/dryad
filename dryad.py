@@ -7,16 +7,16 @@ class Root:
     def __init__(self, children):
         self.children = list(children)
 
-import dryad.directives
-import dryad.writer
-import dryad.writer.html.block_nodes
-import dryad.writer.html.inline_nodes
-
-from dryad.parsing import block_parser, line_utils
-import dryad.writer.html
-import os.path
-import os
-from dryad import doctree
+#import dryad.directives
+#import dryad.writer
+#import dryad.writer.html.block_nodes
+#import dryad.writer.html.inline_nodes
+#
+#from dryad.parsing import block_parser, line_utils
+#import dryad.writer.html
+#import os.path
+#import os
+#from dryad import doctree
 
 def replace_ext(filename, ext):
     dir, name = os.path.split(filename)
@@ -48,8 +48,18 @@ def render_dir(path):
             if os.path.splitext(f)[1] == '.txt':
                 render_file(os.path.join(path, f))
 
+#def main():
+#    render_dir(input_path)
+
+from dryad.parsing import parse_blocks
+
+input_file = 'test.txt'
+
 def main():
-    render_dir(input_path)
+    test_lines = iter(open(input_file).readlines())
+    
+    for block in parse_blocks(test_lines):
+        print(block.pretty_format())
   
 if __name__ == "__main__":
     main()

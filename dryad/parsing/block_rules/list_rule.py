@@ -1,66 +1,75 @@
-class List:
-    lookahead = 0;
+import re
+from dryad.parsing.utils.line_utils import *
+from dryad.parsing.utils.k_iter import *
+from dryad.doctree.block_nodes.list import List, ListItem
 
+class UnorderedListRule:
+    lookahead = 0
+    
+    start_re     = r'^[\-\*] '
+    re_capturing = r'^([\-\*]) (.*)'
+    
     @staticmethod
-    def caseO(source):
-        return bool(re.match(
-            r'^(?:{0}|\#)\.'.format('0|-?[1-9][0-9]*'),
-            source[0].text))
-
+    def applies_to(source):
+        return bool(re.match(UnorderedListRule.start_re, source[0]))
+    
     @staticmethod
-    def caseU(source):
-        return bool(re.match(
-            r'^(?:[\-\*] )',
-            source[0].text))
-
+    def parse(source):
+        for node in parse_list(source, is_ordered=False):
+            yield node
+            
+        
+int_re = r'0|[1-9][0-9]*'
+            
+class OrderedListRule:
+    lookahead    = 0
+    
+    start_re     = r'^(?:{int_re}|\#)[.)] '.format(int_re=int_re)
+    re_capturing = r'^({int_re}|\#)[.)] (.*)$'.format(int_re=int_re)
+    
     @staticmethod
-    def isStartLine(source):
-        return List.caseO(source) or List.caseU(source)
-
-    @staticmethod
-    def parseListItems(lines):
-        source = parsing.k_iter(lines, line_utils.Line(), k=0)
-        next(source, None)
-
-        while True:
-            indent = source[0].indent
-
-            if List.caseO(source):
-                value, firstLine = re.match(
-                    r'^({0}|\#)\.(.*)$'.format('0|-?[1-9][0-9]*'),
-                    source[0].text).groups()
-            else:
-                value = None
-                firstLine = re.match(
-                    r'^(?:[\-\*] )(.*)',
-                    source[0].text).group(1)
-
-            next(source)
-            value = int(value) if (value != '#' and value is not None) else None
-
-            childLines = source.takewhile(
-                lambda s: (s[0].indent > indent) or s[0].isBlank)
-            allLines = itertools.chain([line_utils.Line(firstLine)],
-                                       childLines)
-
-            yield doctree.ListItem(value, parseBlocks(allLines))
+    def applies_to(source):
+        return bool(re.match(OrderedListRule.start_re, source[0]))
 
     @staticmethod
     def parse(source):
-        # take all lines more indented than the first line
-        indent = source[0].indent
+        for node in parse_list(source, is_ordered=True):
+            yield node
+            
+def parse_list(source, is_ordered):
+    list_rule = OrderedListRule if is_ordered else UnorderedListRule 
+    start_indent = get_indent(source[0])
 
-        def takeU(s):
-            return s[0].indent > indent or \
-                   s[0].isBlank or \
-                   ((s[0].indent == indent) and List.caseU(s))
+    items_lines = source.takewhile(
+        lambda source: (get_indent(source[0]) > start_indent or
+                        is_blank(source[0]) or
+                        (get_indent(source[0]) == start_indent and
+                         list_rule.applies_to(source))))
+    items = parse_list_items(items_lines, is_ordered)
 
-        def takeO(s):
-            return s[0].indent > indent or \
-                   s[0].isBlank or \
-                   ((s[0].indent == indent) and List.caseO(s))
+    yield List(is_ordered, items)
+    
+def parse_list_items(items_lines, is_ordered):
+    source = k_iter(items_lines, lookahead=0)
+    list_rule = OrderedListRule if is_ordered else UnorderedListRule
+    next(source, None)
 
-        ordered = List.caseO(source)
-        lines = source.takewhile(takeO if ordered else takeU)
-
-        yield doctree.List(ordered, List.parseListItems(lines))
+    while True: # parse particular item
+        start_indent = get_indent(source[0])
+        
+        match_obj = re.match(list_rule.re_capturing, source[0])
+        item_marker, first_line = match_obj.groups()
+        
+        next(source)        # StopIteration will eventually occur here, and
+                            # will break infinite loop.
+                            
+        item_num = (int(item_marker)
+            if (is_ordered and item_marker != '#')  
+            else None)
+        item_body_lines = source.takewhile(
+            lambda source: (get_indent(source[0]) > start_indent) or 
+                            is_blank(source[0]))
+        item_all_lines = itertools.chain([first_line], item_body_lines)
+        
+        from dryad.parsing import parse_blocks, parse_spans
+        yield ListItem(item_num, parse_blocks(item_all_lines))

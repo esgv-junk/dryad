@@ -1,33 +1,26 @@
-__all__ = []
-
-from . block_nodes import Block, Root, Paragraph, Section, List, ListItem
-from . inline_nodes import Inline, Text, Strong
-
-def fixHierarchy(node):
-    if not hasattr(node, 'parent'):
-        node.parent = None
+def setup_doctree_fields(root_node):
+    if not hasattr(root_node, 'parent_node'):
+        root_node.parent = None
     
-    if hasattr(node, 'children'):
-        childIndex = 0
-
-        for i in range(len(node.children)):
+    if hasattr(root_node, 'child_nodes'):
+        for child_index in range(len(root_node.child_nodes)):
             # create some fields:
-            # parent, childIndex, nextSibling, prevSibling
-            child = node.children[i]
-            child.parent = node
-            child.childIndex = childIndex
-            if i > 0:
-                child.prevSibling = node.children[i-1]
-            if i < len(node.children)-1:
-                child.nextSibling = node.children[i+1]
+            # parent_node, child_index, next_sibling, prev_sibling
+            child_node = root_node.child_nodes[child_index]
+            child_node.parent_node = root_node
+            child_node.child_index = child_index
+            
+            if child_index > 0:
+                child_node.prev_sibling = root_node.child_nodes[child_index - 1]
+            if child_index < (len(root_node.child_nodes) - 1):
+                child_node.next_sibling = root_node.child_nodes[child_index + 1]
 
             # proceed
-            fixHierarchy(child)
-            childIndex += 1
+            setup_doctree_fields(child_node)
 
-def walkDoctree(node, enter, exit):
-    enter(node)
-    if hasattr(node, 'children'):
-        for c in node.children:
-            walkDoctree(c, enter, exit)
-    exit(node)
+def walk_doctree(start_node, on_enter, on_exit):
+    on_enter(start_node)
+    if hasattr(start_node, 'child_nodes'):
+        for child_node in start_node.child_nodes:
+            walk_doctree(child_node, on_enter, on_exit)
+    on_exit(start_node)
