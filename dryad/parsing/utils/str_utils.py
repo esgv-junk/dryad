@@ -1,7 +1,9 @@
 import itertools, re
 from dryad.parsing.utils.re_utils import *
 
+
 def is_char(s):
+    # BUG: is duplicated in re_utils!
     return len(s) == 1
 
 def make_indent(indent_level):
@@ -24,3 +26,5 @@ def escaped(string, descape_dict):
     
 def descaped(string, descape_dict):
     return multiple_replace(string, descape_dict)
+
+escaped_text_re = r'(?:[^\\]|\\.)+?'

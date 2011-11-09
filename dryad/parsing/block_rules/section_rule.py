@@ -14,12 +14,14 @@ class SectionRule2:
     @staticmethod
     def extract_heading_attributes(source):
         """Returns (title, heading_char, num_lines_heading_takes)"""
+        
         return (source[0], source[1][0:1], 2)
     
     @staticmethod
     def parse(source):
         for node in parse_section(SectionRule2, source):
             yield node
+            
             
 class SectionRule3:
     lookahead = 2
@@ -32,24 +34,28 @@ class SectionRule3:
     @staticmethod
     def extract_heading_attributes(source):
         """Returns (title, heading_char, num_lines_heading_takes)"""
+        
         return (source[1], source[0][0:1], 3)
     
     @staticmethod
     def parse(source):
         for node in parse_section(SectionRule3, source):
             yield node
+    
             
 def title_matches_outline(title, outline):
-    indents_match = (get_indent(title) ==
-                     get_indent(outline) == 0)
+    indents_match = (get_indent(title) == get_indent(outline) == 0)
     
     outline_re = "^{char}{{{min_repeats},}}$".format(
         char='[=\-]',
-        min_repeats=len(title))
+        min_repeats=len(title)
+    )
     
-    return (indents_match and
-            not is_blank(title) and
-            re.match(outline_re, outline))
+    return (
+        indents_match and
+        not is_blank(title) and
+        re.match(outline_re, outline)
+    )
     
 def parse_section(section_rule, source):
     title, outline_char, num_lines_heading_takes = \
@@ -65,7 +71,7 @@ def parse_section(section_rule, source):
             
         return (outline_char == current_outline_char and
                 section_rule.applies_to(source))
-        
+    
     body_lines = source.takewhile(
         lambda s: not is_next_same_level_section_start(s))
     

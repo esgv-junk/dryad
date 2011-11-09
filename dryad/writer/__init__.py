@@ -1,51 +1,32 @@
-from dryad.doctree import walk_doctree
+def set_writer(new_writer_name):
+    global writer_name
+    writer_name = new_writer_name
 
-def default_emit(text):
-    raise NotImplementedError('Writer not running')
-
-def default_emit_raw(text):
-    raise NotImplementedError('Writer not running')
-
-def set_emitters(new_writer_name, new_emit, new_emit_raw):
-    global emit, emit_raw, running_writer_name
-    emit = new_emit
-    emit_raw = new_emit_raw
-    running_writer_name = new_writer_name
-
-def reset_emitters():
-    set_emitters(None, default_emit, default_emit_raw)
-    
-# set emitters to initial values
-reset_emitters()
-
-def run_writer(writer_name, root_node, emit, emit_raw):
-    set_emitters(writer_name, emit, emit_raw)
-    write_nodes(root_node)
-    reset_emitters()
-    
-def write_nodes(*nodes):
-    
-    def on_enter_node(node):
-        global running_writer_name
-        
-        if (hasattr(node, 'writers') and
-            running_writer_name in node.writers):
-            
-            current_writer = node.writers[running_writer_name]
-            if isinstance(current_writer, tuple):
-                current_writer[0](node)
-            else:
-                current_writer(node)
-    
-    def on_exit_node(node):
-        global running_writer_name
-        
-        if (hasattr(node, 'writers') and
-            running_writer_name in node.writers):
-            
-            current_writer = node.writers[running_writer_name]
-            if isinstance(current_writer, tuple):
-                current_writer[1](node)
+def str_nodes(*nodes):
+    result = ''
     
     for node in nodes:
-        walk_doctree(node, on_enter_node, on_exit_node)
+        node_class_path = str(type(node))[14:-2]
+        
+        writer_class_path = 'dryad.writer.{writer_name}.{node_path}'.format(
+            writer_name=writer_name,
+            node_path=node_class_path
+        )
+        writer_module = '.'.join(writer_class_path.split('.')[:-1])
+        
+        try:
+            exec('import ' + writer_module)
+        except ImportError:
+            continue
+        
+        result += eval(writer_class_path + '.write(node)') or ''
+        
+    return result
+        
+def pystache_lines(lines):
+    if isinstance(lines, str):
+        if lines[-1:] == '\n':
+            lines = lines[:-1]
+        return pystache_lines(lines.split('\n'))
+    else:
+        return [{'text': line} for line in lines]

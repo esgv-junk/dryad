@@ -3,6 +3,7 @@ from dryad.parsing.utils.re_utils import *
 from dryad.parsing.utils.k_iter import *
 from dryad.parsing.utils.line_utils import *
 
+
 from dryad.parsing.block_rules import \
     block_rule, list_rule, section_rule, paragraph_rule
 
@@ -17,16 +18,21 @@ max_lookahead = max(map(lambda r: r.lookahead, block_rules))
 
 def parse_blocks(lines):
     source = k_iter(lines, lookahead=max_lookahead)
-    next(source, None)                  # create context iterator and open it
+    next(source, None)                   # create context iterator and open it
 
     while True:
-        while is_blank(source[0]):        # skip blank lines
-            next(source)
+        while is_blank(source[0]):       # skip blank lines
+            eat(source, 1)
+            
         for rule in block_rules:         # check sequentially all parsing rules
             if rule.applies_to(source):
                 for node in rule.parse(source):
                     yield node
                 break
+            
+        if source.is_done:
+            break
+
             
 # Escapes in span elements:
 #    *           - within text, within strong
@@ -43,14 +49,17 @@ def parse_blocks(lines):
 #        replaces the escape sequence. 
 #     2) Else, parser yields verbatim '\' and verbatim '<x>'.
 
-from dryad.parsing.span_rules import span_rule, emph_rule, text_rule 
+from dryad.parsing.span_rules import \
+    span_rule, strong_rule, emph_rule, text_rule 
 
 span_rules = [span_rule.SpanRule,
+              strong_rule.StrongRule,  
               emph_rule.EmphRule,
               text_rule.TextRule]
 
-united_rules_re = '(' + join_regexes(
-    *map(lambda rule: rule.rule_regexp, span_rules)) + ')' 
+united_rules_re = (
+    '(' + join_regexes(*map(lambda rule: rule.rule_regexp, span_rules)) + ')'
+) 
 
 def parse_spans(text):
     for part in re.split(united_rules_re, text):
@@ -62,3 +71,9 @@ def parse_spans(text):
                 for node in rule.parse(part):
                     yield node
                 break
+           
+            
+from dryad.doctree.root import Root    
+        
+def parse_document(lines):
+    return Root(parse_blocks(lines))

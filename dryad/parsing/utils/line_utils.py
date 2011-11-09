@@ -1,7 +1,8 @@
 import itertools
 import sys
 
-# === Working with blank lines ===
+
+# Working with blank lines
 
 def is_blank(line):
     return not bool(line.strip())
@@ -16,7 +17,7 @@ def blank_lines_stripped_start(lines):
         first_line += 1
     
     return lines[first_line:]
-    
+
 def blank_lines_stripped_end(lines):
     lines = list(lines)
     if not lines:
@@ -27,13 +28,14 @@ def blank_lines_stripped_end(lines):
         last_line -= 1
         
     return lines[:last_line+1]
-        
 
 def blank_lines_stripped(lines):
     return blank_lines_stripped_start(
-        blank_lines_stripped_end(lines))
+        blank_lines_stripped_end(lines)
+    )
 
-# === Working with indent ===
+
+# Working with indent
 
 def get_indent(line):
     result = 0
@@ -48,8 +50,9 @@ def dedented_by(line, amount):
     else:
         return map(lambda l: dedented_by(l, amount),
                    line) 
-        
+
 def get_min_indent(lines, blank_line_indent=sys.maxsize):
+    
     def get_custom_indent(line):
         if not is_blank(line):
             return get_indent(line)

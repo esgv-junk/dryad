@@ -1,65 +1,65 @@
 input_path = r'D:\Dropbox\knowledge\migration'
 
 rebuild = True
-rebuild = False
+#rebuild = False
 
-class Root:
-    def __init__(self, children):
-        self.children = list(children)
+testing = True
+testing = False
 
-#import dryad.directives
-#import dryad.writer
-#import dryad.writer.html.block_nodes
-#import dryad.writer.html.inline_nodes
-#
-#from dryad.parsing import block_parser, line_utils
-#import dryad.writer.html
-#import os.path
-#import os
-#from dryad import doctree
+import os.path
+import os
+from dryad.parsing import parse_document
+from dryad.writer import *
+import dryad.writer
+
 
 def replace_ext(filename, ext):
     dir, name = os.path.split(filename)
     name_bare = os.path.splitext(name)[0]
-    return os.path.join(dir, name_bare + ext)
+    return os.path.join(dir, name_bare + '.' + ext)
 
 def render(in_stream, out_stream):
-    lines = iter(cin.readlines())
-    root = Root(block_parser.parseBlocks(lines))
-    doctree.fixHierarchy(root)
+    test_lines = iter(in_stream.readlines())
+    root = parse_document(test_lines)
     
-    #for node in root.children:
-    #    print(node.pformat())
-    
-    dryad.writer.html.writeHTML(root, outpath)
+    set_writer('html')    
+    print(str_nodes(root), file=out_stream)
 
 def render_file(filename):
     out_filename = replace_ext(filename, 'html')
     if (not os.path.exists(out_filename) or 
             os.path.getmtime(out_filename) < os.path.getmtime(filename) or
             rebuild):
-        in_stream = open(filename)
-        out_stream = open(out_filename)
+        
+        print(filename[len(input_path)+1:])
+        
+        in_stream = open(filename, 'r', encoding='utf_8_sig')
+        out_stream = open(out_filename, 'w', encoding='utf_8')
+        
         render(in_stream, out_stream)
+        
+        in_stream.close()
+        out_stream.close()
         
 def render_dir(path):
     for (dirpath, dirnames, filenames) in os.walk(path):
         for f in filenames:
             if os.path.splitext(f)[1] == '.txt':
-                render_file(os.path.join(path, f))
-
-#def main():
-#    render_dir(input_path)
-
-from dryad.parsing import parse_blocks
+                render_file(os.path.join(dirpath, f))
 
 input_file = 'test.txt'
 
 def main():
-    test_lines = iter(open(input_file).readlines())
+    if not testing:
+        render_dir(input_path)
+        print('Done')
+    else:
+        test_lines = iter(open(input_file).readlines())
+        root = parse_document(test_lines)
+        
+        set_writer('debug')    
+        print(str_nodes(root))
+        print(str_nodes(root), file=open('test.html', 'w', encoding="utf-8"))
     
-    for block in parse_blocks(test_lines):
-        print(block.pretty_format())
-  
 if __name__ == "__main__":
     main()

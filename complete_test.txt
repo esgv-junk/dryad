@@ -1,0 +1,168 @@
+=======
+Section
+=======
+
+A paragraph.
+
+[lonely block] It's time for
+  METH!
+  
+  And whole CSS!
+  
+  /* Spacing */
+
+  body, div, p, pre, ol, ul {
+      margin: 0;
+      padding: 0;
+  }
+  
+  p + p, div + p, p + div, div + div {
+      margin-top: 1em;
+  }
+  
+  /* Visual */
+  
+  body {
+      background-color: #cccccc;
+      text-align: center;
+  }
+  
+  div {
+      font-family: Verdana;
+      font-size: 10pt;
+  }
+  
+  pre, tt {
+      font-family: Lucida Console;
+  }
+  
+  pre {
+      overflow: auto;
+  }
+  
+  /* Central column */
+  
+  .central {
+      margin-top: 0;                         /* don't need spacing for this one*/
+  
+      background-color: white;               /* override body parameters*/
+      color: #333333;
+      text-align: left;
+  
+      display: inline-block;                 /* positioning */
+      width: 50em;
+      padding: 0em 3em 3em 3em;
+  
+      border-left: 1px solid;                /* colors */
+      border-right: 1px solid;
+      border-color: #777777;
+      box-shadow: 0 0 1em #666666;
+  }
+  
+  /* ============================== DOCTREE =================================== */
+  
+  /* ----------------------------- Sections ----------------------------------- */
+  
+  h1, h2, h3, h4, h5, h6 {
+      border-bottom: 1px dotted;
+      border-color: #666666;
+      font-family: Georgia;
+      font-variant: small-caps;
+  }
+  
+  h1 { font-size: 220% }
+  h2 { font-size: 170% }
+  h3 { font-size: 150% }
+  h4 { font-size: 120% }
+  h5 { font-size: 100% }
+  h6 { font-size: 100% }
+  
+  /* ------------------------------ Lists ------------------------------------- */
+  
+  div.list div.list {
+      margin-left: 0.75em;
+  }
+  
+  li {
+      padding: 0.4em;
+      list-style-position: inside;
+      border-radius: 5px;
+  }
+  
+  div > div > ul > li.even, div > div > ol > li.even {
+      background-color: rgba(0, 0, 0, 0.03);
+  }
+  
+  div > div > ul > li.odd, div > div > ol > li.odd {
+      background-color: inherit;
+  }
+  
+  /* ------------------------------ Blocks ------------------------------------ */
+  
+  span.unknown, div.unknown > span {          /* Colors */
+      background-color: hsl(10, 60%, 50%);
+      color: white;
+  }
+  
+  .body_text, .inline_text {
+      background-color: white;
+      color: black;
+  }
+  
+  span.unknown, div.unknown > span {          /* Default span */
+      border: 1px solid #990000;
+      border-radius: 2px;
+      padding-left: 2pt;
+  }
+  
+  .body_text, .inline_text {
+      border-top-right-radius: inherit;
+      border-bottom-right-radius: inherit;
+      margin-left: 2pt;
+      padding: 0px 2pt;
+  }
+  
+  div.unknown {                               /* Default block*/
+      border: 1px solid #990000;
+      border-radius: 2px;
+      /* box-shadow: 1px 1px 3px rgba(0,0,0,0.25); */
+  }
+  
+  div.unknown > span {
+      display: inline-block;
+      margin-top: -0.8em;
+      margin-left: 0.5em;
+  }
+  
+  .block > pre {
+  }
+  
+  /* ------------------------------ Spans ------------------------------------- */
+  
+  em {
+      color: black;
+  }
+  
+  strong {
+      color: #333333;
+  }
+ 
+[lonely block]
+  
+1) What's your *name*?
+2) What's your **quest**?
+3) What's the airspeed velocity of unladen swallow?
+
+  - An @`african` one or [kinda]`european` one?
+  - I don't know
+
+A song now
+-------------
+
+And
+it's
+a 
+long
+long --
+way home.
+
