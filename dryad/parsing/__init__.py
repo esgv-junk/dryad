@@ -1,10 +1,11 @@
 import re, itertools
-from dryad.parsing.utils.re_utils import *
-from dryad.parsing.utils.k_iter import *
-from dryad.parsing.utils.line_utils import *
+from pyforge.re_utils import *
+from pyforge.line_utils import *
+from pyforge.iter_utils import *
+from dryad.parsing.k_iter import *
 
 
-from dryad.parsing.block_rules import \
+from dryad.parsing.rules import \
     block_rule, list_rule, section_rule, paragraph_rule
 
 block_rules = [block_rule.    BlockRule, 
@@ -35,9 +36,9 @@ def parse_blocks(lines):
 
             
 # Escapes in span elements:
-#    *           - within text, within strong
+#    *           - within text, within strong/emph
 #    `           - within text, within span
-#    \           - within span, within strong, within text
+#    \           - within span, within strong/emph, within text
 #    @, #, $, .. - no escapes 
 #    []          - no escapes
 #
@@ -49,8 +50,7 @@ def parse_blocks(lines):
 #        replaces the escape sequence. 
 #     2) Else, parser yields verbatim '\' and verbatim '<x>'.
 
-from dryad.parsing.span_rules import \
-    span_rule, strong_rule, emph_rule, text_rule 
+from dryad.parsing.rules import span_rule, strong_rule, emph_rule, text_rule 
 
 span_rules = [span_rule.SpanRule,
               strong_rule.StrongRule,  
@@ -58,7 +58,7 @@ span_rules = [span_rule.SpanRule,
               text_rule.TextRule]
 
 united_rules_re = (
-    '(' + join_regexes(*map(lambda rule: rule.rule_regexp, span_rules)) + ')'
+    '(' + join_regexes(rule.rule_regexp for rule in span_rules) + ')'
 ) 
 
 def parse_spans(text):

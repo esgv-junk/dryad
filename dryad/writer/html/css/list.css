@@ -1,0 +1,10 @@
+/* ------------------------------ Lists ------------------------------------- */
+
+div.list {
+    padding-left: 2em;
+}
+
+li {
+    padding: 0.2em;
+    margin-bottom: 0.4em;
+}

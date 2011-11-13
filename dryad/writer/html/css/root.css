@@ -1,0 +1,81 @@
+/* ========================= GENERAL TWEAKS ================================= */
+
+/* ----------------------------- Spacing ------------------------------------ */
+
+body, div, p, pre, ol, ul, span, tt, table, td, tr {
+    margin: 0;
+    padding: 0;
+}
+
+p + p,   div + p,   pre + p,
+p + div, div + div, pre + div,
+p + pre, div + pre, pre + pre {
+    margin-top: 0.7em;
+}
+
+table {
+    border-collapse: collapse;
+    table-layout: fixed;
+}
+
+td {
+    vertical-align: top;
+}
+
+pre {
+    overflow: auto;
+}
+
+/* -------------------------- Colors & Fonts -------------------------------- */
+
+div {
+    font-family: Verdana;
+    font-size: 10pt;
+}
+
+pre, tt {
+    font-family: Courier New;
+}
+
+a {
+    color: hsl(10, 60%, 50%);
+    text-decoration: none;
+}
+
+a:hover {
+    /* color: hsl(0, 80%, 50%); */
+    color: white;
+    background-color: hsl(10, 60%, 50%); 
+}
+
+
+/* ----------------------------- Columns ---------------------------------- */
+
+div.central_column {
+    margin-top: 0;                         /* don't need spacing for this one*/
+ 
+    width: 49em;
+    padding: 0em 3em 3em 3em;
+}
+
+div.left_column {
+    width: 14em; 
+    padding: 1em;
+}
+
+body {
+    background-color: #cccccc;
+}
+
+td.central_column {
+    color: #333333;
+    background-color: white;
+    
+    border-left: 1px dashed;                /* colors */
+    border-right: 1px solid;
+    border-color: #777;
+}
+
+td.left_column {
+   background-color: #f6f6f6;
+}

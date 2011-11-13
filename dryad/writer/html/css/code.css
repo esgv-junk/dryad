@@ -1,0 +1,13 @@
+/* -------------------------------- Code ------------------------------------ */
+
+tt.code {
+    border-radius: 2px;
+    color: black;
+    background: -webkit-radial-gradient(circle, #fafafa, #f0f0f0);
+}
+
+div.code {
+    padding: 0.5em;
+    background: -webkit-linear-gradient(left, #fdfdfd, #f0f0f0);
+    border-left: 1.5ex solid hsl(10, 60%, 50%);
+}

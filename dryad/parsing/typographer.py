@@ -1,4 +1,4 @@
-from dryad.parsing.utils.str_utils import *
+from pyforge.str_utils import *
 
 typographic_escapes = {
     '->' : '\u2192',

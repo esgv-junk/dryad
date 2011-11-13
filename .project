@@ -3,6 +3,7 @@
 	<name>dryad</name>
 	<comment></comment>
 	<projects>
+		<project>pystache</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>

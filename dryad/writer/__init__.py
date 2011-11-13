@@ -1,3 +1,5 @@
+writer_name = 'debug'
+
 def set_writer(new_writer_name):
     global writer_name
     writer_name = new_writer_name
@@ -12,6 +14,7 @@ def str_nodes(*nodes):
             writer_name=writer_name,
             node_path=node_class_path
         )
+        
         writer_module = '.'.join(writer_class_path.split('.')[:-1])
         
         try:
@@ -29,4 +32,7 @@ def pystache_lines(lines):
             lines = lines[:-1]
         return pystache_lines(lines.split('\n'))
     else:
-        return [{'text': line} for line in lines]
+        return pystache_list(lines, 'text')
+    
+def pystache_list(list_, field_name):
+    return [{field_name: element} for element in list_]

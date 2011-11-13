@@ -1,0 +1,12 @@
+[auto]
+    .PHONY                  Make reqs no-file rules / treat reqs as non-existing files.
+    .DEFAULT                Commands to be invoked for targets without explicit and implicit rules.
+    .SILENT                 Don't print commands when building targets. OBSOLETE.
+    .NOTPARALLEL            Non-parallel it is, even if -j specified. 
+    .EXPORT_ALL_VARIABLES   ...for a child process.
+    
+    .PRECIOUS               Don't delete reqs on SIGINT, don't delete if reqs are intermediate. Has higher priority than .DELETE_ON_ERROR.
+    .INTERMEDIATE           Treat reqs as intermediate files.
+    .SECONDARY              Reqs are .INTERMEDIATE, but not deleted.
+    .DELETE_ON_ERROR        Antipod of .PRECIOUS. Delete reqs on any error.
+    .IGNORE                 Ignore errors of target-updating commands.
