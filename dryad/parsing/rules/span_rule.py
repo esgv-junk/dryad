@@ -41,8 +41,6 @@ class SpanRule:
         body_text = descaped(body_text, span_escapes)
         
                                                # pass further
-        for (span_name_re, parse_func) in plugins.span_regexes:
-            if re.match(span_name_re, span_name):
-                for node in parse_func(span_name, body_text):
-                    yield node
-                break
+        for node in plugins.parse_span(span_name, body_text):
+            yield node
+        

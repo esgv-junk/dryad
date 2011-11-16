@@ -38,8 +38,6 @@ class BlockRule:
         )
                                         # and pass further
                                         # (depending on block type)
-        for (block_name_re, parse_func) in plugins.block_regexes:
-            if re.match(block_name_re, block_name):
-                for node in parse_func(block_name, inline_text, body_lines):
-                    yield node
-                break
+        for node in plugins.parse_block(block_name, inline_text, body_lines):
+            yield node
+    

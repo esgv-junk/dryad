@@ -10,9 +10,8 @@ pygments_languages = itertools.chain.from_iterable(
         pygments.lexers.get_all_lexers()  
 )
 
-language_re = make_exact(
+language_re = \
     make_strings_re(itertools.chain(['auto', 'code'], pygments_languages))
-)
 
 class CodeBlock:
     def __init__(self, language, body_lines):
