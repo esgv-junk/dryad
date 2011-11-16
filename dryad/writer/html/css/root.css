@@ -7,9 +7,8 @@ body, div, p, pre, ol, ul, span, tt, table, td, tr {
     padding: 0;
 }
 
-p + p,   div + p,   pre + p,
-p + div, div + div, pre + div,
-p + pre, div + pre, pre + pre {
+p + p,   div + p,
+p + div, div + div {
     margin-top: 0.7em;
 }
 
@@ -54,7 +53,7 @@ a:hover {
 div.central_column {
     margin-top: 0;                         /* don't need spacing for this one*/
  
-    width: 49em;
+    width: 51em;
     padding: 0em 3em 3em 3em;
 }
 

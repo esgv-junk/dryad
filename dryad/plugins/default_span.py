@@ -1,4 +1,4 @@
-preferred_default_name = 'unknown'
+preferred_default_name = 'default'
 
 default_span_name = preferred_default_name 
 

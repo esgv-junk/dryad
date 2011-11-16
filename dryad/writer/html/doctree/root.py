@@ -4,7 +4,7 @@ import pystache
 from dryad.doctree.section import Section
 from dryad.writer import *
 
-root_template_path = 'dryad/writer/html/doctree/root.txt'
+root_template_path = 'dryad/writer/html/templates/root.txt'
 
 class Root:
     def write(self):
