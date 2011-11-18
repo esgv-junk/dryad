@@ -17,6 +17,29 @@
 <link rel="stylesheet" type="text/css" href="file:///D:/Dropbox/code/dryad/{{filename}}" />
 
 {{/stylesheets}}
+
+<!-- MathJax -->
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [['$', '$']],
+        skipTags: ["script", "noscript", "style", "pre", "tt", "span"],
+        processClass: "math"
+    },
+    "HTML-CSS": {
+        scale: 120,
+        showMathMenu: false,
+    },
+    NativeMML: {
+        scale: 120
+    }
+});
+</script>
+
+<script type="text/javascript"
+    src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
 </head>
 
 

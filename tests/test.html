@@ -27,6 +27,29 @@
 
 <link rel="stylesheet" type="text/css" href="file:///D:/Dropbox/code/dryad/dryad/writer/html/css\unknown.css" />
 
+
+<!-- MathJax -->
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [['$', '$']],
+        skipTags: ["script", "noscript", "style", "pre", "tt", "span"],
+        processClass: "math"
+    },
+    "HTML-CSS": {
+        scale: 120,
+        showMathMenu: false,
+    },
+    NativeMML: {
+        scale: 120
+    }
+});
+</script>
+
+<script type="text/javascript"
+    src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
 </head>
 
 
@@ -60,6 +83,24 @@
 </h1>
 
 
+<div class="math">
+$$
+     is good
+$$
+</div>
+<div class="math">
+$$
+        is gonna blow yer mind
+        yer gonna have
+$$
+</div>
+<div class="math">
+$$
+        math diorder
+$$
+</div>
+<p>Inline <span class="math">$$</span> and $$more$$ inline <span class="math">$math$</span>.</p>
+
 <div class="section">
 
 <h2 id="Constructors_and_destructors">
@@ -67,10 +108,6 @@
     <a class="section_anchor" href="#Constructors_and_destructors">&para;</a>
 </h2>
 
-
-<div class="image">
-    <img src="foo/bar.jpg" />
-</div>
 
 <div class="section">
 
@@ -315,19 +352,19 @@
 <p><span class="unknown"><tt class="span_name">todo</tt><tt class="body_text"> table</tt></span>
 </p>
 
-<div class="code"><pre>=============== ======================= =============== =================== ==================================
-Entity          Default constructor     Destructor      Copy constructor    Assign operator
-=============== =======================+=============== =================== ==================================
-When generated  When there are no other|                 When not written
-                constructors           |
---------------- -----------------------+---------------+------------------------------------------------------
-Parameters                      None                   | `const T&amp;` if possible
-                                                       | (member and base cctors/asops get const parameter).
-                                                       | Else `T&amp;`.
---------------- -----------------------+---------------+------------------------------------------------------
-Behaviour       Call bases&#39; default    |        Call members&#39; dtors/cctors/asops
-                cctors                 |
---------------- -----------------------+----------------------------------------------------------------------
+<div class="code"><pre><span class="lineno"> 1</span> =============== ======================= =============== =================== ==================================
+<span class="lineno"> 2</span> Entity          Default constructor     Destructor      Copy constructor    Assign operator
+<span class="lineno"> 3</span> =============== =======================+=============== =================== ==================================
+<span class="lineno"> 4</span> When generated  When there are no other|                 When not written
+<span class="lineno"> 5</span>                 constructors           |
+<span class="lineno"> 6</span> --------------- -----------------------+---------------+------------------------------------------------------
+<span class="lineno"> 7</span> Parameters                      None                   | `const T&amp;` if possible
+<span class="lineno"> 8</span>                                                        | (member and base cctors/asops get const parameter).
+<span class="lineno"> 9</span>                                                        | Else `T&amp;`.
+<span class="lineno">10</span> --------------- -----------------------+---------------+------------------------------------------------------
+<span class="lineno">11</span> Behaviour       Call bases&#39; default    |        Call members&#39; dtors/cctors/asops
+<span class="lineno">12</span>                 cctors                 |
+<span class="lineno">13</span> --------------- -----------------------+----------------------------------------------------------------------
 </pre></div>
 <p>Base can make derived class write ctor, cctor, and asop in order to instantiate. Nothing in C++ can make child write its own destructor: default will always be good.</p>
 
@@ -545,11 +582,11 @@ Behaviour       Call bases&#39; default    |        Call members&#39; dtors/ccto
 
 <p>Derived class can hide members</p>
 
-<div class="code"><pre><span class="k">class</span> <span class="nc">D</span><span class="o">:</span> <span class="k">public</span> <span class="n">B</span>
-<span class="p">{</span>
-<span class="k">private</span><span class="o">:</span>
-    <span class="k">using</span> <span class="n">B</span><span class="o">::</span><span class="n">f</span><span class="p">();</span>
-<span class="p">};</span>
+<div class="code"><pre><span class="lineno">1</span> <span class="k">class</span> <span class="nc">D</span><span class="o">:</span> <span class="k">public</span> <span class="n">B</span>
+<span class="lineno">2</span> <span class="p">{</span>
+<span class="lineno">3</span> <span class="k">private</span><span class="o">:</span>
+<span class="lineno">4</span>     <span class="k">using</span> <span class="n">B</span><span class="o">::</span><span class="n">f</span><span class="p">();</span>
+<span class="lineno">5</span> <span class="p">};</span>
 </pre></div>
 </li>
 
@@ -595,29 +632,29 @@ Behaviour       Call bases&#39; default    |        Call members&#39; dtors/ccto
 
 <p>Dreaded diamond:</p>
 
-<div class="code"><pre>    Base
-    /  \
-   /    \
-  /      \
-Der1      Der2
-  \      /
-   \    /
-    \  /
-    Join
+<div class="code"><pre><span class="lineno">1</span>     Base
+<span class="lineno">2</span>     /  \
+<span class="lineno">3</span>    /    \
+<span class="lineno">4</span>   /      \
+<span class="lineno">5</span> Der1      Der2
+<span class="lineno">6</span>   \      /
+<span class="lineno">7</span>    \    /
+<span class="lineno">8</span>     \  /
+<span class="lineno">9</span>     Join
 </pre></div>
 <p>Base is included twice, ambiguous base member assignment.</p>
 
 <p>Resolved via vitrual inheritance:</p>
 
-<div class="code"><pre>          Base
-          /  \
-         /    \
-virtual /      \ virtual
-    Der1      Der2
-        \      /
-         \    /
-          \  /
-          Join
+<div class="code"><pre><span class="lineno">1</span>           Base
+<span class="lineno">2</span>           /  \
+<span class="lineno">3</span>          /    \
+<span class="lineno">4</span> virtual /      \ virtual
+<span class="lineno">5</span>     Der1      Der2
+<span class="lineno">6</span>         \      /
+<span class="lineno">7</span>          \    /
+<span class="lineno">8</span>           \  /
+<span class="lineno">9</span>           Join
 </pre></div>
 <p><strong>Virtual base constructors are invoked DIRECTLY</strong> from most–derived constructor.</p>
 
@@ -669,11 +706,11 @@ virtual /      \ virtual
 
 <p><strong>Use typedefs</strong></p>
 
-<div class="code"><pre><span class="k">typedef</span>  <span class="kt">int</span> <span class="p">(</span><span class="n">Fred</span><span class="o">::*</span><span class="n">FredMemFn</span><span class="p">)(</span><span class="kt">char</span> <span class="n">x</span><span class="p">,</span> <span class="kt">float</span> <span class="n">y</span><span class="p">);</span>  <span class="o">&lt;</span> <span class="n">please</span> <span class="k">do</span> <span class="k">this</span><span class="o">!</span>
-<span class="n">FredMemFn</span> <span class="n">p</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">Fred</span><span class="o">::</span><span class="n">f</span><span class="p">;</span>
-<span class="n">Fred</span> <span class="n">fred</span><span class="p">;</span>
-<span class="n">fred</span><span class="p">.</span><span class="o">*</span><span class="n">p</span><span class="p">;</span>
-<span class="p">(</span><span class="o">&amp;</span><span class="n">fred</span><span class="p">)</span><span class="o">-&gt;*</span><span class="n">p</span><span class="p">;</span>
+<div class="code"><pre><span class="lineno">1</span> <span class="k">typedef</span>  <span class="kt">int</span> <span class="p">(</span><span class="n">Fred</span><span class="o">::*</span><span class="n">FredMemFn</span><span class="p">)(</span><span class="kt">char</span> <span class="n">x</span><span class="p">,</span> <span class="kt">float</span> <span class="n">y</span><span class="p">);</span>  <span class="o">&lt;</span> <span class="n">please</span> <span class="k">do</span> <span class="k">this</span><span class="o">!</span>
+<span class="lineno">2</span> <span class="n">FredMemFn</span> <span class="n">p</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">Fred</span><span class="o">::</span><span class="n">f</span><span class="p">;</span>
+<span class="lineno">3</span> <span class="n">Fred</span> <span class="n">fred</span><span class="p">;</span>
+<span class="lineno">4</span> <span class="n">fred</span><span class="p">.</span><span class="o">*</span><span class="n">p</span><span class="p">;</span>
+<span class="lineno">5</span> <span class="p">(</span><span class="o">&amp;</span><span class="n">fred</span><span class="p">)</span><span class="o">-&gt;*</span><span class="n">p</span><span class="p">;</span>
 </pre></div>
 </li>
 

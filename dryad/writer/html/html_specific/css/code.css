@@ -11,3 +11,8 @@ div.code {
     background: -webkit-linear-gradient(left, #fdfdfd, #f0f0f0);
     border-left: 0.3em solid hsl(10, 60%, 50%);
 }
+
+h1 > .code, h2 > .code, h3 > .code, 
+h4 > .code, h5 > .code, h6 > .code {
+    background-color: inherit;
+}

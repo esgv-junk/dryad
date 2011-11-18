@@ -58,6 +58,7 @@ def parse_list(source, is_ordered):
         parse_list_items(items_lines, is_ordered)
     )
     
+    
 def parse_list_items(items_lines, is_ordered):
     source = k_iter(items_lines, lookahead=0)
     next(source, None)

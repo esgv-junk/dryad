@@ -114,33 +114,6 @@ MathJax.Hub.Config({
 """
 
 """
-div.code {                                 
-    border: 1px solid #900;
-    border-radius: 2px;
-    margin-top: 1.5em;
-    
-    color: black;
-    background-color: white;
-}
-
-tt.code_language {
-    color: white;
-    background-color: hsl(10, 60%, 50%);
-  
-    border: 1px solid;
-    border-radius: 2px;
-    border-color: inherit;
-    
-    display: inline-block;
-    margin-top: -0.8em;
-    margin-left: 0.5em;
-    
-    display: none;
-    border: none;
-}
-"""
-
-"""
 /* div > div > ul > li.even, div > div > ol > li.even {
     background-color: hsl(260, 50%, 97%);
 }

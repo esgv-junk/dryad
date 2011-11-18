@@ -4,6 +4,16 @@ Object-oriented C++
 
 [default_span] code
 
+[math] is good
+
+[math]
+    is gonna blow yer mind
+    yer gonna have
+    
+    math diorder
+    
+Inline [math] and $$more$$ inline $`math`.
+
 Constructors and destructors
 ============================
 

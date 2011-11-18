@@ -1,14 +1,16 @@
 import re
 from pyforge.re_utils import *
 
-from dryad.plugins.code import CodeBlock, CodeSpan, language_re
-from dryad.plugins.image import ImageBlock
+from dryad.plugins.code         import CodeBlock, CodeSpan, language_re
+from dryad.plugins.math         import MathBlock, MathSpan 
+from dryad.plugins.image        import ImageBlock
 from dryad.plugins.default_span import set_default_span, parse_default_span
-from dryad.plugins.unknown import UnknownBlock, UnknownSpan
+from dryad.plugins.unknown      import UnknownBlock, UnknownSpan
 
 
 block_regexes = [
     (language_re   , CodeBlock.parse   ),
+    ('math'        , MathBlock.parse   ),
     ('image'       , ImageBlock.parse  ),
     ('default_span', set_default_span  ),
     ('.*'          , UnknownBlock.parse)
@@ -16,6 +18,8 @@ block_regexes = [
 
 span_regexes = [
     (language_re, CodeSpan.parse    ),
+    ('math'     , MathSpan.parse    ),
+    ('\$'       , MathSpan.parse    ),
     (''         , parse_default_span),
     ('.*'       , UnknownSpan.parse )
 ]
