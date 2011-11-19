@@ -13,42 +13,32 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 
 <!-- stylesheets -->
-<link rel="stylesheet" type="text/css" href="file:///D:/Dropbox/code/dryad/dryad/writer/html/css\code.css" />
+<link rel="stylesheet" type="text/css" 
+    href="file:///D:/Dropbox/code/dryad/dryad/writer/html/html_specific/css\code.css" />
 
-<link rel="stylesheet" type="text/css" href="file:///D:/Dropbox/code/dryad/dryad/writer/html/css\list.css" />
+<link rel="stylesheet" type="text/css" 
+    href="file:///D:/Dropbox/code/dryad/dryad/writer/html/html_specific/css\list.css" />
 
-<link rel="stylesheet" type="text/css" href="file:///D:/Dropbox/code/dryad/dryad/writer/html/css\pygments.css" />
+<link rel="stylesheet" type="text/css" 
+    href="file:///D:/Dropbox/code/dryad/dryad/writer/html/html_specific/css\pygments.css" />
 
-<link rel="stylesheet" type="text/css" href="file:///D:/Dropbox/code/dryad/dryad/writer/html/css\root.css" />
+<link rel="stylesheet" type="text/css" 
+    href="file:///D:/Dropbox/code/dryad/dryad/writer/html/html_specific/css\root.css" />
 
-<link rel="stylesheet" type="text/css" href="file:///D:/Dropbox/code/dryad/dryad/writer/html/css\section.css" />
+<link rel="stylesheet" type="text/css" 
+    href="file:///D:/Dropbox/code/dryad/dryad/writer/html/html_specific/css\section.css" />
 
-<link rel="stylesheet" type="text/css" href="file:///D:/Dropbox/code/dryad/dryad/writer/html/css\span.css" />
+<link rel="stylesheet" type="text/css" 
+    href="file:///D:/Dropbox/code/dryad/dryad/writer/html/html_specific/css\span.css" />
 
-<link rel="stylesheet" type="text/css" href="file:///D:/Dropbox/code/dryad/dryad/writer/html/css\unknown.css" />
+<link rel="stylesheet" type="text/css" 
+    href="file:///D:/Dropbox/code/dryad/dryad/writer/html/html_specific/css\unknown.css" />
 
-
-<!-- MathJax -->
-<script type="text/x-mathjax-config">
-MathJax.Hub.Config({
-    tex2jax: {
-        inlineMath: [['$', '$']],
-        skipTags: ["script", "noscript", "style", "pre", "tt", "span"],
-        processClass: "math"
-    },
-    "HTML-CSS": {
-        scale: 120,
-        showMathMenu: false,
-    },
-    NativeMML: {
-        scale: 120
-    }
-});
-</script>
 
 <script type="text/javascript"
-    src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+    src="file:///D:/Dropbox/code/dryad/dryad/writer/html/html_specific/js\math.js" />
 </script>
+    
 
 </head>
 
@@ -85,22 +75,13 @@ MathJax.Hub.Config({
 
 <div class="math">
 $$
-     is good
+        \int \limits_a^b
+            \frac{1}{\sqrt{2\pi}\sigma^2}
+            \exp \left[
+                -\frac{1}{2 \sigma^2} x^2
+            \right] dx
 $$
 </div>
-<div class="math">
-$$
-        is gonna blow yer mind
-        yer gonna have
-$$
-</div>
-<div class="math">
-$$
-        math diorder
-$$
-</div>
-<p>Inline <span class="math">$$</span> and $$more$$ inline <span class="math">$math$</span>.</p>
-
 <div class="section">
 
 <h2 id="Constructors_and_destructors">
@@ -193,7 +174,7 @@ $$
 
 <li class="even">
 
-<p><tt class="code">Foo(x, y)</tt> creates temporary variable.</p>
+<p><span class="math">$Foo(x, y)$</span> creates temporary variable.</p>
 
 </li>
 
@@ -205,7 +186,7 @@ $$
 
 <li class="even">
 
-<p>Move functionality to <tt class="code">init()</tt> function</p>
+<p>Move functionality to <span class="math">$init()$</span> function</p>
 
 </li>
 
@@ -323,7 +304,7 @@ $$
 
 <p>One <strong>MUST NOT call dtor explicitly</strong></p>
 
-<p>  If you want to, use <tt class="code">{}</tt>.</p>
+<p>  If you want to, use <span class="math">${}$</span>.</p>
 
 </li>
 
@@ -352,19 +333,19 @@ $$
 <p><span class="unknown"><tt class="span_name">todo</tt><tt class="body_text"> table</tt></span>
 </p>
 
-<div class="code"><pre><span class="lineno"> 1</span> =============== ======================= =============== =================== ==================================
-<span class="lineno"> 2</span> Entity          Default constructor     Destructor      Copy constructor    Assign operator
-<span class="lineno"> 3</span> =============== =======================+=============== =================== ==================================
-<span class="lineno"> 4</span> When generated  When there are no other|                 When not written
-<span class="lineno"> 5</span>                 constructors           |
-<span class="lineno"> 6</span> --------------- -----------------------+---------------+------------------------------------------------------
-<span class="lineno"> 7</span> Parameters                      None                   | `const T&amp;` if possible
-<span class="lineno"> 8</span>                                                        | (member and base cctors/asops get const parameter).
-<span class="lineno"> 9</span>                                                        | Else `T&amp;`.
-<span class="lineno">10</span> --------------- -----------------------+---------------+------------------------------------------------------
-<span class="lineno">11</span> Behaviour       Call bases&#39; default    |        Call members&#39; dtors/cctors/asops
-<span class="lineno">12</span>                 cctors                 |
-<span class="lineno">13</span> --------------- -----------------------+----------------------------------------------------------------------
+<div class="code"><pre>=============== ======================= =============== =================== ==================================
+Entity          Default constructor     Destructor      Copy constructor    Assign operator
+=============== =======================+=============== =================== ==================================
+When generated  When there are no other|                 When not written
+                constructors           |
+--------------- -----------------------+---------------+------------------------------------------------------
+Parameters                      None                   | `const T&amp;` if possible
+                                                       | (member and base cctors/asops get const parameter).
+                                                       | Else `T&amp;`.
+--------------- -----------------------+---------------+------------------------------------------------------
+Behaviour       Call bases&#39; default    |        Call members&#39; dtors/cctors/asops
+                cctors                 |
+--------------- -----------------------+----------------------------------------------------------------------
 </pre></div>
 <p>Base can make derived class write ctor, cctor, and asop in order to instantiate. Nothing in C++ can make child write its own destructor: default will always be good.</p>
 
@@ -394,7 +375,7 @@ $$
 
 <p><strong>Virtual ctor</strong></p>
 
-<p>  No support in C++, use <tt class="code">virtual clone();</tt> or <tt class="code">virtual create();</tt>.</p>
+<p>  No support in C++, use <span class="math">$virtual clone();$</span> or <span class="math">$virtual create();$</span>.</p>
 
 </li>
 
@@ -428,7 +409,7 @@ $$
 
 <p><strong>No virtual function calls in constructor or destructor</strong></p>
 
-<p>  Because while construction is in process, object is of <tt class="code">Base</tt> class yet,   not of <tt class="code">Derived</tt>.</p>
+<p>  Because while construction is in process, object is of <span class="math">$Base$</span> class yet,   not of <span class="math">$Derived$</span>.</p>
 
 <p>  If a called virtual function is pure virtual, you'll get an error,   else you'll just get unexpected behaviour.</p>
 
@@ -438,7 +419,7 @@ $$
 
 <li class="even">
 
-<p>To fix, use two–stage init with <tt class="code">init()</tt> function     and named constructor idiom (don't forget <tt class="code">auto_ptr</tt> ownership on object     (to crash properly).</p>
+<p>To fix, use two–stage init with <span class="math">$init()$</span> function     and named constructor idiom (don't forget <span class="math">$auto_ptr$</span> ownership on object     (to crash properly).</p>
 
 </li>
 
@@ -548,7 +529,7 @@ $$
 
 <li class="even">
 
-<p>Use explicit <strong><tt class="code">Base::f()</tt> to call base function</strong></p>
+<p>Use explicit <strong><span class="math">$Base::f()$</span> to call base function</strong></p>
 
 <p>  Not a virtual call, not a virtual cost.</p>
 
@@ -556,7 +537,7 @@ $$
 
 <li class="odd">
 
-<p><strong>No C–style downcasts</strong> on MI/VI. <tt class="code">dynamic_cast</tt> only!</p>
+<p><strong>No C–style downcasts</strong> on MI/VI. <span class="math">$dynamic_cast$</span> only!</p>
 
 <p>  See implementation.</p>
 
@@ -582,17 +563,17 @@ $$
 
 <p>Derived class can hide members</p>
 
-<div class="code"><pre><span class="lineno">1</span> <span class="k">class</span> <span class="nc">D</span><span class="o">:</span> <span class="k">public</span> <span class="n">B</span>
-<span class="lineno">2</span> <span class="p">{</span>
-<span class="lineno">3</span> <span class="k">private</span><span class="o">:</span>
-<span class="lineno">4</span>     <span class="k">using</span> <span class="n">B</span><span class="o">::</span><span class="n">f</span><span class="p">();</span>
-<span class="lineno">5</span> <span class="p">};</span>
+<div class="code"><pre><span class="k">class</span> <span class="nc">D</span><span class="o">:</span> <span class="k">public</span> <span class="n">B</span>
+<span class="p">{</span>
+<span class="k">private</span><span class="o">:</span>
+    <span class="k">using</span> <span class="n">B</span><span class="o">::</span><span class="n">f</span><span class="p">();</span>
+<span class="p">};</span>
 </pre></div>
 </li>
 
 <li class="odd">
 
-<p><strong><tt class="code">derived** -&gt; base**</tt></strong> conversion is not allowed (see const correctness).</p>
+<p><strong><span class="math">$derived** -&gt; base**$</span></strong> conversion is not allowed (see const correctness).</p>
 
 </li>
 
@@ -612,7 +593,7 @@ $$
 
 <li class="even">
 
-<p>Inheritance <strong>access control</strong> controls whether you can <strong>convert</strong> <tt class="code">Derived*</tt> to   <tt class="code">Base*</tt></p>
+<p>Inheritance <strong>access control</strong> controls whether you can <strong>convert</strong> <span class="math">$Derived*$</span> to   <span class="math">$Base*$</span></p>
 
 </li>
 
@@ -632,29 +613,29 @@ $$
 
 <p>Dreaded diamond:</p>
 
-<div class="code"><pre><span class="lineno">1</span>     Base
-<span class="lineno">2</span>     /  \
-<span class="lineno">3</span>    /    \
-<span class="lineno">4</span>   /      \
-<span class="lineno">5</span> Der1      Der2
-<span class="lineno">6</span>   \      /
-<span class="lineno">7</span>    \    /
-<span class="lineno">8</span>     \  /
-<span class="lineno">9</span>     Join
+<div class="code"><pre>    Base
+    /  \
+   /    \
+  /      \
+Der1      Der2
+  \      /
+   \    /
+    \  /
+    Join
 </pre></div>
 <p>Base is included twice, ambiguous base member assignment.</p>
 
 <p>Resolved via vitrual inheritance:</p>
 
-<div class="code"><pre><span class="lineno">1</span>           Base
-<span class="lineno">2</span>           /  \
-<span class="lineno">3</span>          /    \
-<span class="lineno">4</span> virtual /      \ virtual
-<span class="lineno">5</span>     Der1      Der2
-<span class="lineno">6</span>         \      /
-<span class="lineno">7</span>          \    /
-<span class="lineno">8</span>           \  /
-<span class="lineno">9</span>           Join
+<div class="code"><pre>          Base
+          /  \
+         /    \
+virtual /      \ virtual
+    Der1      Der2
+        \      /
+         \    /
+          \  /
+          Join
 </pre></div>
 <p><strong>Virtual base constructors are invoked DIRECTLY</strong> from most–derived constructor.</p>
 
@@ -678,13 +659,13 @@ $$
 
 <li class="even">
 
-<p><strong>Pointer to function</strong>: <tt class="code">int (*)(char,float)</tt></p>
+<p><strong>Pointer to function</strong>: <span class="math">$int (*)(char,float)$</span></p>
 
 </li>
 
 <li class="odd">
 
-<p><strong>Pointer to member function</strong>: <tt class="code">int (Fred::*)(char,float)</tt></p>
+<p><strong>Pointer to member function</strong>: <span class="math">$int (Fred::*)(char,float)$</span></p>
 
 </li>
 
@@ -706,17 +687,17 @@ $$
 
 <p><strong>Use typedefs</strong></p>
 
-<div class="code"><pre><span class="lineno">1</span> <span class="k">typedef</span>  <span class="kt">int</span> <span class="p">(</span><span class="n">Fred</span><span class="o">::*</span><span class="n">FredMemFn</span><span class="p">)(</span><span class="kt">char</span> <span class="n">x</span><span class="p">,</span> <span class="kt">float</span> <span class="n">y</span><span class="p">);</span>  <span class="o">&lt;</span> <span class="n">please</span> <span class="k">do</span> <span class="k">this</span><span class="o">!</span>
-<span class="lineno">2</span> <span class="n">FredMemFn</span> <span class="n">p</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">Fred</span><span class="o">::</span><span class="n">f</span><span class="p">;</span>
-<span class="lineno">3</span> <span class="n">Fred</span> <span class="n">fred</span><span class="p">;</span>
-<span class="lineno">4</span> <span class="n">fred</span><span class="p">.</span><span class="o">*</span><span class="n">p</span><span class="p">;</span>
-<span class="lineno">5</span> <span class="p">(</span><span class="o">&amp;</span><span class="n">fred</span><span class="p">)</span><span class="o">-&gt;*</span><span class="n">p</span><span class="p">;</span>
+<div class="code"><pre><span class="k">typedef</span>  <span class="kt">int</span> <span class="p">(</span><span class="n">Fred</span><span class="o">::*</span><span class="n">FredMemFn</span><span class="p">)(</span><span class="kt">char</span> <span class="n">x</span><span class="p">,</span> <span class="kt">float</span> <span class="n">y</span><span class="p">);</span>  <span class="o">&lt;</span> <span class="n">please</span> <span class="k">do</span> <span class="k">this</span><span class="o">!</span>
+<span class="n">FredMemFn</span> <span class="n">p</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">Fred</span><span class="o">::</span><span class="n">f</span><span class="p">;</span>
+<span class="n">Fred</span> <span class="n">fred</span><span class="p">;</span>
+<span class="n">fred</span><span class="p">.</span><span class="o">*</span><span class="n">p</span><span class="p">;</span>
+<span class="p">(</span><span class="o">&amp;</span><span class="n">fred</span><span class="p">)</span><span class="o">-&gt;*</span><span class="n">p</span><span class="p">;</span>
 </pre></div>
 </li>
 
 <li class="odd">
 
-<p>You <strong>can't convert func ptr</strong> to <tt class="code">void*</tt></p>
+<p>You <strong>can't convert func ptr</strong> to <span class="math">$void*$</span></p>
 
 <p>  Machine might be non–von–neumann. (LOLWHAT?)</p>
 
@@ -724,7 +705,7 @@ $$
 
 <li class="even">
 
-<p>You <strong>can't convert member func ptr</strong> to <tt class="code">void*</tt></p>
+<p>You <strong>can't convert member func ptr</strong> to <span class="math">$void*$</span></p>
 
 <p>  Consider a pointer to a virtual member function.</p>
 

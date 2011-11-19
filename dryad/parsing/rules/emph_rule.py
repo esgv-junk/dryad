@@ -16,7 +16,7 @@ class EmphRule:
     
     @staticmethod
     def parse(text):
-        body_text = descaped(
+        body_text = multiple_replace(
             re.match(emph_capturing_re, text).group(1),
             emph_escapes
         )

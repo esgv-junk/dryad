@@ -2,17 +2,15 @@
 Object-oriented C++
 ===================
 
-[default_span] code
-
-[math] is good
+[default_span] math
 
 [math]
-    is gonna blow yer mind
-    yer gonna have
-    
-    math diorder
-    
-Inline [math] and $$more$$ inline $`math`.
+    \int \limits_a^b
+        \frac{1}{\sqrt{2\pi}\sigma^2}
+        \exp \left[
+            -\frac{1}{2 \sigma^2} x^2 
+        \right] dx
+     
 
 Constructors and destructors
 ============================

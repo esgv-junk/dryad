@@ -19,9 +19,8 @@ class CodeBlock:
             )
                 
         pygments_formatter = pygments.formatters.HtmlFormatter(
-            cssclass='code',
-            linenos='inline',
-            style='trac'
+            style='trac',
+            cssclass='code'
         )  
         
         body_html = pygments.highlight(

@@ -4,7 +4,7 @@ import pystache
 from dryad.doctree.section import Section
 from dryad.writer import *
 
-root_template_path = 'dryad/writer/html/templates/root.txt'
+root_template_path = 'dryad/writer/html/html_specific/templates/root.txt'
 
 class Root:
     def write(self):
@@ -13,12 +13,14 @@ class Root:
             if isinstance(node, Section):
                 title = node.get_title_as_string()
                 break
-                                            # gather css files
-        css_filenames = glob.glob('dryad/writer/html/css/*.css')
-                
+                                            # gather css files and scripts
+        css_filenames = glob.glob('dryad/writer/html/html_specific/css/*.css')
+        js_filenames = glob.glob('dryad/writer/html/html_specific/js/*.js');
+                                            
         context = {                         # create context                         
             'title': title,
             'stylesheets': pystache_list(css_filenames, 'filename'),
+            'scripts'    : pystache_list(js_filenames, 'filename'),
             'child_lines': pystache_lines(str_nodes(*self.child_nodes))
         }
                                             # render template

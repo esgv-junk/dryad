@@ -114,6 +114,27 @@ MathJax.Hub.Config({
 """
 
 """
+<!-- MathJax -->
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [['$', '$']],
+        skipTags: ["script", "noscript", "style", "pre", "tt", "span"],
+        processClass: "math"
+    },
+    "HTML-CSS": {
+        scale: 120,
+        showMathMenu: false,
+    },
+    NativeMML: {
+        scale: 120
+    }
+});
+</script>
+
+"""
+
+"""
 /* div > div > ul > li.even, div > div > ol > li.even {
     background-color: hsl(260, 50%, 97%);
 }

@@ -15,5 +15,5 @@ class TextRule:
     
     @staticmethod
     def parse(text):
-        text = descaped(typographed(text), text_escapes)
+        text = multiple_replace(typographed(text), text_escapes)
         yield Text(text)

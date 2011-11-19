@@ -38,7 +38,7 @@ class SpanRule:
             span_name = span_name[1:-1] 
             
                                                # descape span escape sequences
-        body_text = descaped(body_text, span_escapes)
+        body_text = multiple_replace(body_text, span_escapes)
         
                                                # pass further
         for node in plugins.parse_span(span_name, body_text):

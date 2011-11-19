@@ -16,7 +16,7 @@ class StrongRule:
     
     @staticmethod
     def parse(text):
-        body_text = descaped(
+        body_text = multiple_replace(
             re.match(strong_capturing_re, text).group(1),
             strong_escapes
         )

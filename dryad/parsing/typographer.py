@@ -10,6 +10,6 @@ typographic_escapes = {
 }
 
 def typographed(text):
-    return descaped(text, typographic_escapes)
+    return multiple_replace(text, typographic_escapes)
 
     
