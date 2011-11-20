@@ -1,6 +1,7 @@
-from dryad.parsing.k_iter import k_iter
 from pyforge.iter_utils import *
 from pyforge.line_utils import *
+from dryad.parsing.k_iter import k_iter
+from dryad.parsing.typographer import typograph_math
 
 class MathBlock:
     def __init__(self, body_lines):
@@ -18,8 +19,9 @@ class MathBlock:
             while is_blank(source[0]):      # lines
                 eat(source, 1)
             
-            body_lines = source.takewhile(
-                lambda source: not is_blank(source[0])
+            body_lines = map(
+                typograph_math,
+                source.takewhile(lambda source: not is_blank(source[0]))
             )
             yield MathBlock(body_lines)
                       
@@ -29,7 +31,7 @@ class MathBlock:
 
 class MathSpan:
     def __init__(self, body_text):
-        self.body_text = body_text
+        self.body_text = typograph_math(body_text)
     
     @staticmethod
     def parse(span_name, body_text):

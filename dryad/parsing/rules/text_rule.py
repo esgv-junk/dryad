@@ -1,5 +1,5 @@
 from pyforge.str_utils import *
-from dryad.parsing.typographer import typographed
+from dryad.parsing.typographer import typograph_text
 from dryad.doctree.text import Text
  
  
@@ -15,5 +15,5 @@ class TextRule:
     
     @staticmethod
     def parse(text):
-        text = multiple_replace(typographed(text), text_escapes)
+        text = multiple_replace(typograph_text(text), text_escapes)
         yield Text(text)

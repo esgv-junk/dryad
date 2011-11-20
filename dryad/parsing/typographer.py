@@ -1,3 +1,4 @@
+import re
 from pyforge.str_utils import *
 
 typographic_escapes = {
@@ -9,7 +10,13 @@ typographic_escapes = {
     '-'  : '\u2013'    # en dash
 }
 
-def typographed(text):
-    return multiple_replace(text, typographic_escapes)
+math_replaces = [
+    (r'([(\[]|\\[{|])', r'\\left\1'),
+    (r'([)\]]|\\[}|])', r'\\right\1'),
+]
 
+def typograph_text(text):
+    return multiple_replace(text, typographic_escapes)
     
+def typograph_math(body_text):
+    return multiple_replace_re(body_text, math_replaces)

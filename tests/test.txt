@@ -2,14 +2,17 @@
 Object-oriented C++
 ===================
 
-[default_span] math
+[default_span] code
 
 [math]
     \int \limits_a^b
         \frac{1}{\sqrt{2\pi}\sigma^2}
-        \exp \left[
+        \exp [
             -\frac{1}{2 \sigma^2} x^2 
-        \right] dx
+        ] dx
+        
+[math]
+    \|x\|
      
 
 Constructors and destructors

@@ -82,6 +82,11 @@ $$
             \right] dx
 $$
 </div>
+<div class="math">
+$$
+        \left(\left(\left(x+3\right)^2 + 4\right)^3\right)^5
+$$
+</div>
 <div class="section">
 
 <h2 id="Constructors_and_destructors">
@@ -174,7 +179,7 @@ $$
 
 <li class="even">
 
-<p><span class="math">$Foo(x, y)$</span> creates temporary variable.</p>
+<p><tt class="code">Foo(x, y)</tt> creates temporary variable.</p>
 
 </li>
 
@@ -186,7 +191,7 @@ $$
 
 <li class="even">
 
-<p>Move functionality to <span class="math">$init()$</span> function</p>
+<p>Move functionality to <tt class="code">init()</tt> function</p>
 
 </li>
 
@@ -304,7 +309,7 @@ $$
 
 <p>One <strong>MUST NOT call dtor explicitly</strong></p>
 
-<p>  If you want to, use <span class="math">${}$</span>.</p>
+<p>  If you want to, use <tt class="code">{}</tt>.</p>
 
 </li>
 
@@ -375,7 +380,7 @@ Behaviour       Call bases&#39; default    |        Call members&#39; dtors/ccto
 
 <p><strong>Virtual ctor</strong></p>
 
-<p>  No support in C++, use <span class="math">$virtual clone();$</span> or <span class="math">$virtual create();$</span>.</p>
+<p>  No support in C++, use <tt class="code">virtual clone();</tt> or <tt class="code">virtual create();</tt>.</p>
 
 </li>
 
@@ -409,7 +414,7 @@ Behaviour       Call bases&#39; default    |        Call members&#39; dtors/ccto
 
 <p><strong>No virtual function calls in constructor or destructor</strong></p>
 
-<p>  Because while construction is in process, object is of <span class="math">$Base$</span> class yet,   not of <span class="math">$Derived$</span>.</p>
+<p>  Because while construction is in process, object is of <tt class="code">Base</tt> class yet,   not of <tt class="code">Derived</tt>.</p>
 
 <p>  If a called virtual function is pure virtual, you'll get an error,   else you'll just get unexpected behaviour.</p>
 
@@ -419,7 +424,7 @@ Behaviour       Call bases&#39; default    |        Call members&#39; dtors/ccto
 
 <li class="even">
 
-<p>To fix, use two–stage init with <span class="math">$init()$</span> function     and named constructor idiom (don't forget <span class="math">$auto_ptr$</span> ownership on object     (to crash properly).</p>
+<p>To fix, use two–stage init with <tt class="code">init()</tt> function     and named constructor idiom (don't forget <tt class="code">auto_ptr</tt> ownership on object     (to crash properly).</p>
 
 </li>
 
@@ -529,7 +534,7 @@ Behaviour       Call bases&#39; default    |        Call members&#39; dtors/ccto
 
 <li class="even">
 
-<p>Use explicit <strong><span class="math">$Base::f()$</span> to call base function</strong></p>
+<p>Use explicit <strong><tt class="code">Base::f()</tt> to call base function</strong></p>
 
 <p>  Not a virtual call, not a virtual cost.</p>
 
@@ -537,7 +542,7 @@ Behaviour       Call bases&#39; default    |        Call members&#39; dtors/ccto
 
 <li class="odd">
 
-<p><strong>No C–style downcasts</strong> on MI/VI. <span class="math">$dynamic_cast$</span> only!</p>
+<p><strong>No C–style downcasts</strong> on MI/VI. <tt class="code">dynamic_cast</tt> only!</p>
 
 <p>  See implementation.</p>
 
@@ -573,7 +578,7 @@ Behaviour       Call bases&#39; default    |        Call members&#39; dtors/ccto
 
 <li class="odd">
 
-<p><strong><span class="math">$derived** -&gt; base**$</span></strong> conversion is not allowed (see const correctness).</p>
+<p><strong><tt class="code">derived** -&gt; base**</tt></strong> conversion is not allowed (see const correctness).</p>
 
 </li>
 
@@ -593,7 +598,7 @@ Behaviour       Call bases&#39; default    |        Call members&#39; dtors/ccto
 
 <li class="even">
 
-<p>Inheritance <strong>access control</strong> controls whether you can <strong>convert</strong> <span class="math">$Derived*$</span> to   <span class="math">$Base*$</span></p>
+<p>Inheritance <strong>access control</strong> controls whether you can <strong>convert</strong> <tt class="code">Derived*</tt> to   <tt class="code">Base*</tt></p>
 
 </li>
 
@@ -659,13 +664,13 @@ virtual /      \ virtual
 
 <li class="even">
 
-<p><strong>Pointer to function</strong>: <span class="math">$int (*)(char,float)$</span></p>
+<p><strong>Pointer to function</strong>: <tt class="code">int (*)(char,float)</tt></p>
 
 </li>
 
 <li class="odd">
 
-<p><strong>Pointer to member function</strong>: <span class="math">$int (Fred::*)(char,float)$</span></p>
+<p><strong>Pointer to member function</strong>: <tt class="code">int (Fred::*)(char,float)</tt></p>
 
 </li>
 
@@ -697,7 +702,7 @@ virtual /      \ virtual
 
 <li class="odd">
 
-<p>You <strong>can't convert func ptr</strong> to <span class="math">$void*$</span></p>
+<p>You <strong>can't convert func ptr</strong> to <tt class="code">void*</tt></p>
 
 <p>  Machine might be non–von–neumann. (LOLWHAT?)</p>
 
@@ -705,7 +710,7 @@ virtual /      \ virtual
 
 <li class="even">
 
-<p>You <strong>can't convert member func ptr</strong> to <span class="math">$void*$</span></p>
+<p>You <strong>can't convert member func ptr</strong> to <tt class="code">void*</tt></p>
 
 <p>  Consider a pointer to a virtual member function.</p>
 
