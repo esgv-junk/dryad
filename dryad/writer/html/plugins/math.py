@@ -1,36 +1,33 @@
 import pystache
-from pyforge.str_utils import *
-from dryad.writer import *
-
-block_template = """\
-<div class="math">
-$$
-{{#body_lines}}
-    {{text}}
-{{/body_lines}}
-$$
-</div>
-"""
+from pyforge.all import *
 
 math_escapes = {
     r'\$': r'\$',
     r'$' : r'\$'
 }
 
+block_template = """\
+<div class="math">
+$$
+{{body_lines}}
+$$
+</div>
+"""
+
+span_template = '<span class="math">${{body_text}}$</span>'
+
 class MathBlock:
     def write(self):        
-        escaped_lines = map(
-            lambda line: multiple_replace(line, math_escapes),
-            self.body_lines
+        escaped_lines = (
+            multiple_replace(line, math_escapes) 
+            for line in self.body_lines
         )
         
         context = {
-            'body_lines': pystache_lines(escaped_lines)
+            'body_lines': '\n'.join(escaped_lines)
         }
         
         return pystache.render(block_template, context)
-
-span_template = '<span class="math">${{body_text}}$</span>'
 
 class MathSpan:
     def write(self):

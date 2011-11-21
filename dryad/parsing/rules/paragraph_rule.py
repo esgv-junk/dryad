@@ -1,4 +1,4 @@
-from pyforge.line_utils import *
+from pyforge.all import *
 from dryad.doctree.paragraph import Paragraph
 
 

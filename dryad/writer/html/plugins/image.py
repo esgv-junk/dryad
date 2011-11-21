@@ -1,5 +1,4 @@
 import pystache
-from dryad.writer import *
 
 image_template = """\
 <div class="image">

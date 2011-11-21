@@ -1,6 +1,5 @@
 import re
-from pyforge.line_utils import *
-from pyforge.iter_utils import *
+from pyforge.all import *
 from dryad.doctree.section import Section
  
 

@@ -1,5 +1,6 @@
 from dryad.parsing import parse_document
 from dryad.writer import *
+from dryad import plugins
 
 input_file = 'tests/test.txt'
 output_file = 'tests/test.html'

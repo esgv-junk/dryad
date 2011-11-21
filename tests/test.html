@@ -75,18 +75,21 @@
 
 <div class="math">
 $$
-        \int \limits_a^b
-            \frac{1}{\sqrt{2\pi}\sigma^2}
-            \exp \left[
-                -\frac{1}{2 \sigma^2} x^2
-            \right] dx
+    |x|
 $$
 </div>
-<div class="math">
-$$
-        \left(\left(\left(x+3\right)^2 + 4\right)^3\right)^5
-$$
+<div class="unknown">
+
+<span class="unknown"><tt class="span_name">unknown</tt><tt class="body_text"> block</tt></span>
+
+<pre>
+    KOWABUGAAAAA
+</pre>
+
 </div>
+
+<p>And <span class="unknown"><tt class="span_name">unknown</tt><tt class="body_text">span</tt></span>.</p>
+
 <div class="section">
 
 <h2 id="Constructors_and_destructors">
@@ -115,11 +118,13 @@ $$
 
 <p>Virtual bases left–to–right depth–first in declaration order.</p>
 
+
 </li>
 
 <li value="2" class="odd">
 
 <p>Bases left–to–right in declaration order.</p>
+
 
 </li>
 
@@ -127,7 +132,9 @@ $$
 
 <p>Members in declaration order.</p>
 
+
 </li>
+
 
 </ol>
 
@@ -143,17 +150,21 @@ $$
 
 <p>And for arrays;</p>
 
+
 </li>
 
 <li class="odd">
 
 <p>And for members.</p>
 
+
 </li>
+
 
 </ul>
 
 </div>
+
 
 </div>
 
@@ -181,11 +192,13 @@ $$
 
 <p><tt class="code">Foo(x, y)</tt> creates temporary variable.</p>
 
+
 </li>
 
 <li class="odd">
 
 <p>Default parameters might help.</p>
+
 
 </li>
 
@@ -193,17 +206,21 @@ $$
 
 <p>Move functionality to <tt class="code">init()</tt> function</p>
 
+
 </li>
 
 <li class="odd">
 
 <p>Placement new DOES NOT work and IS EVIL since ctor does many little magical     things.</p>
 
+
 </li>
+
 
 </ul>
 
 </div>
+
 
 </li>
 
@@ -221,17 +238,21 @@ $$
 
 <p>Called by default;</p>
 
+
 </li>
 
 <li class="odd">
 
 <p>Called on array creation.</p>
 
+
 </li>
+
 
 </ul>
 
 </div>
+
 
 </li>
 
@@ -247,17 +268,21 @@ $$
 
 <p>Improved performance (inplace construction with no cctor or asop involved).</p>
 
+
 </li>
 
 <li class="odd">
 
 <p>Improved even for built–in types.</p>
 
+
 </li>
+
 
 </ul>
 
 </div>
+
 
 </li>
 
@@ -273,23 +298,29 @@ $$
 
 <p>Return–by–value doesn't impose extra copy on modern compilers</p>
 
+
 </li>
 
 <li class="odd">
 
 <p>Number of copies and constructors invoked are not stdized.     GCC optimizes, MSVC constructs result, then copy–constructs value.</p>
 
+
 </li>
+
 
 </ul>
 
 </div>
 
+
 </li>
+
 
 </ul>
 
 </div>
+
 
 </div>
 
@@ -311,19 +342,24 @@ $$
 
 <p>  If you want to, use <tt class="code">{}</tt>.</p>
 
+
 </li>
 
 <li class="odd">
 
 <p>One <strong>MUST call dtor</strong> explicitly <strong>on placement new</strong>.</p>
 
+
 </li>
+
 
 </ul>
 
 </div>
 
+
 </div>
+
 
 </div>
 
@@ -354,6 +390,7 @@ Behaviour       Call bases&#39; default    |        Call members&#39; dtors/ccto
 </pre></div>
 <p>Base can make derived class write ctor, cctor, and asop in order to instantiate. Nothing in C++ can make child write its own destructor: default will always be good.</p>
 
+
 </div>
 
 <div class="section">
@@ -382,6 +419,7 @@ Behaviour       Call bases&#39; default    |        Call members&#39; dtors/ccto
 
 <p>  No support in C++, use <tt class="code">virtual clone();</tt> or <tt class="code">virtual create();</tt>.</p>
 
+
 </li>
 
 <li class="odd">
@@ -396,17 +434,21 @@ Behaviour       Call bases&#39; default    |        Call members&#39; dtors/ccto
 
 <p>Needed when someone will delete via base ptr.</p>
 
+
 </li>
 
 <li class="odd">
 
 <p>Rationale: make dtor virtual if class has virtual functions.</p>
 
+
 </li>
+
 
 </ul>
 
 </div>
+
 
 </li>
 
@@ -426,23 +468,29 @@ Behaviour       Call bases&#39; default    |        Call members&#39; dtors/ccto
 
 <p>To fix, use two–stage init with <tt class="code">init()</tt> function     and named constructor idiom (don't forget <tt class="code">auto_ptr</tt> ownership on object     (to crash properly).</p>
 
+
 </li>
 
 <li class="odd">
 
 <p>Other approach: move virtual constructor pieces into helper class,     and pass helper to a constructor.</p>
 
+
 </li>
+
 
 </ul>
 
 </div>
 
+
 </li>
+
 
 </ul>
 
 </div>
+
 
 </div>
 
@@ -470,17 +518,21 @@ Behaviour       Call bases&#39; default    |        Call members&#39; dtors/ccto
 
 <p>Comments and the docs.</p>
 
+
 </li>
 
 <li class="odd">
 
 <p>Private ctor.</p>
 
+
 </li>
+
 
 </ol>
 
 </div>
+
 
 </li>
 
@@ -496,11 +548,14 @@ Behaviour       Call bases&#39; default    |        Call members&#39; dtors/ccto
 
 <p>Comments and the docs.</p>
 
+
 </li>
+
 
 </ol>
 
 </div>
+
 
 </li>
 
@@ -510,13 +565,17 @@ Behaviour       Call bases&#39; default    |        Call members&#39; dtors/ccto
 
 <p>  It doesn't meen "function has no body". For example, pure virtual <strong>destructor   MUST have a body.</strong></p>
 
+
 </li>
+
 
 </ul>
 
 </div>
 
+
 </div>
+
 
 </div>
 
@@ -538,6 +597,7 @@ Behaviour       Call bases&#39; default    |        Call members&#39; dtors/ccto
 
 <p>  Not a virtual call, not a virtual cost.</p>
 
+
 </li>
 
 <li class="odd">
@@ -546,7 +606,9 @@ Behaviour       Call bases&#39; default    |        Call members&#39; dtors/ccto
 
 <p>  See implementation.</p>
 
+
 </li>
+
 
 </ul>
 
@@ -574,17 +636,20 @@ Behaviour       Call bases&#39; default    |        Call members&#39; dtors/ccto
     <span class="k">using</span> <span class="n">B</span><span class="o">::</span><span class="n">f</span><span class="p">();</span>
 <span class="p">};</span>
 </pre></div>
+
 </li>
 
 <li class="odd">
 
 <p><strong><tt class="code">derived** -&gt; base**</tt></strong> conversion is not allowed (see const correctness).</p>
 
+
 </li>
 
 <li class="even">
 
 <p><strong>Private inheritance is kinda composition</strong>, except composition is better</p>
+
 
 </li>
 
@@ -594,17 +659,21 @@ Behaviour       Call bases&#39; default    |        Call members&#39; dtors/ccto
 
 <p>  They can be overloaded but still can't be called.</p>
 
+
 </li>
 
 <li class="even">
 
 <p>Inheritance <strong>access control</strong> controls whether you can <strong>convert</strong> <tt class="code">Derived*</tt> to   <tt class="code">Base*</tt></p>
 
+
 </li>
+
 
 </ul>
 
 </div>
+
 
 </div>
 
@@ -646,7 +715,9 @@ virtual /      \ virtual
 
 <p>It should have all the parameters.</p>
 
+
 </div>
+
 
 </div>
 
@@ -666,11 +737,13 @@ virtual /      \ virtual
 
 <p><strong>Pointer to function</strong>: <tt class="code">int (*)(char,float)</tt></p>
 
+
 </li>
 
 <li class="odd">
 
 <p><strong>Pointer to member function</strong>: <tt class="code">int (Fred::*)(char,float)</tt></p>
+
 
 </li>
 
@@ -680,11 +753,13 @@ virtual /      \ virtual
 
 <p>  You need to pass an object to use member function as a callback.   Use functor objects.</p>
 
+
 </li>
 
 <li class="odd">
 
 <p><strong>Static</strong> functions are the <em>same as plain</em> functions</p>
+
 
 </li>
 
@@ -698,6 +773,7 @@ virtual /      \ virtual
 <span class="n">fred</span><span class="p">.</span><span class="o">*</span><span class="n">p</span><span class="p">;</span>
 <span class="p">(</span><span class="o">&amp;</span><span class="n">fred</span><span class="p">)</span><span class="o">-&gt;*</span><span class="n">p</span><span class="p">;</span>
 </pre></div>
+
 </li>
 
 <li class="odd">
@@ -705,6 +781,7 @@ virtual /      \ virtual
 <p>You <strong>can't convert func ptr</strong> to <tt class="code">void*</tt></p>
 
 <p>  Machine might be non–von–neumann. (LOLWHAT?)</p>
+
 
 </li>
 
@@ -714,15 +791,20 @@ virtual /      \ virtual
 
 <p>  Consider a pointer to a virtual member function.</p>
 
+
 </li>
+
 
 </ul>
 
 </div>
 
-</div>
 
 </div>
+
+
+</div>
+
 
 </div>
 

@@ -4,15 +4,23 @@ Object-oriented C++
 
 [default_span] code
 
-[math]
-    \int \limits_a^b
-        \frac{1}{\sqrt{2\pi}\sigma^2}
-        \exp [
-            -\frac{1}{2 \sigma^2} x^2 
-        ] dx
+[theorem]
+    Lil' theorem.
+
+    [math]
+        \int \limits_a^b
+            \frac{1}{\sqrt{2\pi}\sigma^2}
+            \exp [
+                -\frac{1}{2 \sigma^2} x^2 
+            ] dx
         
 [math]
-    \|x\|
+    |x|
+    
+[unknown] block
+    KOWABUGAAAAA
+    
+And [unknown]`span`.
      
 
 Constructors and destructors

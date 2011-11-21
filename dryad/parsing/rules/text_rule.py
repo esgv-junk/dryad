@@ -1,4 +1,4 @@
-from pyforge.str_utils import *
+from pyforge.all import *
 from dryad.parsing.typographer import typograph_text
 from dryad.doctree.text import Text
  

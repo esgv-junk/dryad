@@ -1,6 +1,5 @@
 import re
-from pyforge.re_utils import *
-from pyforge.str_utils import *
+from pyforge.all import *
 from dryad.doctree.strong import Strong
 
 

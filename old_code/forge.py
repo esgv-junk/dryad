@@ -22,25 +22,6 @@
 #===============================================================================
 
 #===============================================================================
-# math_HTML_escapes = {
-#    '<': '&lt;',
-#    '>': '&gt;',
-#    '&': '&amp;',
-#    '"': '&quot;',
-#    "'": '&apos;',
-# }
-# 
-# HTML_escapes = {
-#    '$': '\$'
-# }
-# HTML_escapes.update(math_HTML_escapes)
-# 
-# escape_HTML = lambda text: escape(text, HTML_escapes)
-# escape_HTML_math = lambda text: escape(text, math_HTML_escapes)
-#===============================================================================
-
-
-#===============================================================================
 #    Kinda lazy version of strip_blank_lines
 #
 #    #source = parsing.k_iter(lines, k = 0)
@@ -89,57 +70,11 @@ def walk_doctree(start_node, on_enter, on_exit):
             walk_doctree(child_node, on_enter, on_exit)
     on_exit(start_node)
     
-"""
-<!-- MathJax -->
-<script type="text/x-mathjax-config">
-MathJax.Hub.Config({
-    tex2jax: {
-        inlineMath: [['$','$']],
-        processEscapes: true,
-        skipTags: ["script", "noscript", "style"]
-    },
-    "HTML-CSS": {
-        scale: 120,
-        showMathMenu: false,
-    },
-    NativeMML: {
-        scale: 120
-    }
-});
-</script>
+pygments_languages = itertools.chain.from_iterable(
+    aliases
+    for (name, aliases, filetypes, mimetypes) in 
+        pygments.lexers.get_all_lexers()  
+)
 
-<script type="text/javascript"
-    src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
-</script>
-"""
-
-"""
-<!-- MathJax -->
-<script type="text/x-mathjax-config">
-MathJax.Hub.Config({
-    tex2jax: {
-        inlineMath: [['$', '$']],
-        skipTags: ["script", "noscript", "style", "pre", "tt", "span"],
-        processClass: "math"
-    },
-    "HTML-CSS": {
-        scale: 120,
-        showMathMenu: false,
-    },
-    NativeMML: {
-        scale: 120
-    }
-});
-</script>
-
-"""
-
-"""
-/* div > div > ul > li.even, div > div > ol > li.even {
-    background-color: hsl(260, 50%, 97%);
-}
-
-div > div > ul > li.odd, div > div > ol > li.odd {
-    background-color: inherit;
-} */
-"""
+language_re = \
+    make_strings_re(itertools.chain(['auto', 'code'], pygments_languages))

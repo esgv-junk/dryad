@@ -17,3 +17,6 @@ def set_default_span(block_name, inline_text, body_lines):
 def parse_default_span(span_name, body_text):
     from dryad.plugins import parse_span 
     return parse_span(default_span_name, body_text)
+
+block_parsers = [('default_span', set_default_span  )]
+span_parsers  = [(''            , parse_default_span)]

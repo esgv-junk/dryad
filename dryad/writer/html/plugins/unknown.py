@@ -1,4 +1,3 @@
-from dryad.writer import *
 import pystache
 
 block_template = """\
@@ -10,9 +9,7 @@ block_template = """\
 {{/span_remap}}
 
 <pre>
-{{#body_lines}}
-{{text}}
-{{/body_lines}}
+{{{body_lines}}}
 </pre>
 
 </div>
@@ -25,11 +22,23 @@ block_template = """\
 
 """
 
+span_template = """\
+<span class="unknown">\
+<tt class="span_name">{{span_name}}</tt>\
+{{#has_body_text}}\
+<tt class="body_text">{{body_text}}</tt>\
+{{/has_body_text}}\
+{{^has_body_text}}\
+<span style="margin-right: 1pt;"></span>\
+{{/has_body_text}}\
+</span>\
+"""
+
 class UnknownBlock:
     def write(self):
         context = {
             'has_lines':     bool(self.body_lines),    
-            'body_lines':    pystache_lines(self.body_lines),
+            'body_lines':    '\n'.join(self.body_lines),
             
             'span_template': span_template,
             'span_remap': {
@@ -40,18 +49,6 @@ class UnknownBlock:
         }
         
         return pystache.render(block_template, context)
-
-    
-span_template = """\
-<span class="unknown">\
-<tt class="span_name">{{span_name}}</tt>\
-{{#has_body_text}}
-<tt class="body_text">{{body_text}}</tt>\
-{{/has_body_text}}
-{{^has_body_text}}
-<span style="margin-right: 1pt;"></span>\
-{{/has_body_text}}
-</span>"""
 
 class UnknownSpan:
     def write(self):

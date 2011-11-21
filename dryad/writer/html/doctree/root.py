@@ -2,7 +2,7 @@ import glob
 import pystache
 
 from dryad.doctree.section import Section
-from dryad.writer import *
+from dryad.writer import str_nodes, pystache_list
 
 root_template_path = 'dryad/writer/html/html_specific/templates/root.txt'
 
@@ -21,7 +21,7 @@ class Root:
             'title': title,
             'stylesheets': pystache_list(css_filenames, 'filename'),
             'scripts'    : pystache_list(js_filenames, 'filename'),
-            'child_lines': pystache_lines(str_nodes(*self.child_nodes))
+            'child_lines': str_nodes(*self.child_nodes)
         }
                                             # render template
         return pystache.render(

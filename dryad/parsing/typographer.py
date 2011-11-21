@@ -1,5 +1,5 @@
 import re
-from pyforge.str_utils import *
+from pyforge.all import *
 
 typographic_escapes = {
     '->' : '\u2192',
@@ -11,8 +11,8 @@ typographic_escapes = {
 }
 
 math_replaces = [
-    (r'([(\[]|\\[{|])', r'\\left\1'),
-    (r'([)\]]|\\[}|])', r'\\right\1'),
+    (r'([(\[]|\\{)', r'\\left\1'),
+    (r'([)\]]|\\})', r'\\right\1'),
 ]
 
 def typograph_text(text):

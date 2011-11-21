@@ -1,6 +1,5 @@
 import re
-from pyforge.line_utils import *
-from pyforge.iter_utils import *
+from pyforge.all import *
 from dryad.parsing.k_iter import k_iter
 from dryad.doctree.list import List, ListItem
 

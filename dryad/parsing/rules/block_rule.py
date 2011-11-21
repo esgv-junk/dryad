@@ -1,7 +1,5 @@
 import re
-from pyforge.re_utils import *
-from pyforge.line_utils import *
-from pyforge.iter_utils import *
+from pyforge.all import *
 from dryad import plugins 
 
 

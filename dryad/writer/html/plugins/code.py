@@ -1,7 +1,8 @@
 import pystache
 import pygments, pygments.lexers, pygments.formatters
-from dryad.writer import *
 
+span_template = """\
+<tt class="code">{{body_text}}</tt>"""
 
 class CodeBlock:
     def write(self):
@@ -31,9 +32,6 @@ class CodeBlock:
         
         return body_html
     
-span_template = """\
-<tt class="code">{{body_text}}</tt>"""
-
 class CodeSpan:
     def write(self):
         context = {

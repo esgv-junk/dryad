@@ -1,5 +1,5 @@
-from dryad.writer import *
 import pystache
+from dryad.writer import *
 
 section_template = """\
 <section>
@@ -16,12 +16,8 @@ section_template = """\
 class Section:
     def write(self):
         context = {
-            'title_lines': pystache_lines(
-                str_nodes(*self.title_nodes)
-            ),
-            'child_lines': pystache_lines(
-                str_nodes(*self.child_nodes)
-            )
+            'title_lines': pystache_lines(str_nodes(*self.title_nodes)),
+            'child_lines': pystache_lines(str_nodes(*self.child_nodes))
         }
         
         return pystache.render(section_template, context)

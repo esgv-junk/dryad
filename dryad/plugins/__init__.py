@@ -1,32 +1,37 @@
 import re
-from pyforge.re_utils import *
+from pyforge.all import *
 
-from dryad.plugins.code         import CodeBlock, CodeSpan, language_re
-from dryad.plugins.math         import MathBlock, MathSpan 
-from dryad.plugins.image        import ImageBlock
-from dryad.plugins.default_span import set_default_span, parse_default_span
-from dryad.plugins.unknown      import UnknownBlock, UnknownSpan
+block_parsers = []
+span_parsers  = []
+before_parse_document = []
+after_parse_document  = []
 
-
-block_regexes = [
-    (language_re   , CodeBlock.parse   ),
-    ('math'        , MathBlock.parse   ),
-    ('image'       , ImageBlock.parse  ),
-    ('default_span', set_default_span  ),
-    ('.*'          , UnknownBlock.parse)
-]
-
-span_regexes = [
-    (language_re, CodeSpan.parse    ),
-    ('math'     , MathSpan.parse    ),
-    ('\$'       , MathSpan.parse    ),
-    (''         , parse_default_span),
-    ('.*'       , UnknownSpan.parse )
-]
-
+def load_plugins(*module_names):
+    global block_parsers, span_parsers
+    global before_parse_document, after_parse_document
+    
+    for module_name in module_names:
+        module = __import__(module_name, fromlist=[module_name])
+        
+        lists_to_gather = [
+            'block_parsers', 'span_parsers',
+            'before_parse_document', 'after_parse_document'
+        ]
+         
+        for list_name in lists_to_gather: 
+            gather_list(module, list_name, globals())
+        
+load_plugins(
+    'dryad.plugins.code', 
+    'dryad.plugins.default_span', 
+    'dryad.plugins.image', 
+    'dryad.plugins.math_blocks', 
+    'dryad.plugins.math', 
+    'dryad.plugins.unknown'
+)
 
 def parse_block(block_name, inline_text, body_lines):
-    for (block_name_re, parse_func) in block_regexes:
+    for (block_name_re, parse_func) in block_parsers:
         
         block_name_re = make_exact(block_name_re)
         
@@ -36,7 +41,7 @@ def parse_block(block_name, inline_text, body_lines):
             break
 
 def parse_span(span_name, body_text):
-    for (span_name_re, parse_func) in span_regexes:
+    for (span_name_re, parse_func) in span_parsers:
         
         span_name_re = make_exact(span_name_re)
         
@@ -44,3 +49,5 @@ def parse_span(span_name, body_text):
             for node in parse_func(span_name, body_text):
                 yield node
             break
+        
+        
