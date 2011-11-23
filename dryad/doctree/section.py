@@ -15,4 +15,9 @@ class Section:
         for title_node in self.title_nodes:
             title += get_span_text(title_node) 
         return title
+    
+def parse_section(block_name, inline_text, body_lines):
+    pass
+    
+span_parsers = [('section', parse_section)]
         

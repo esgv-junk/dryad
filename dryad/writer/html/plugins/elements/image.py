@@ -3,9 +3,7 @@ import pystache
 image_template = """\
 <div class="image">
     <img src="{{path}}" />
-</div>
-
-"""
+</div>"""
 
 class ImageBlock:
     def write(self):

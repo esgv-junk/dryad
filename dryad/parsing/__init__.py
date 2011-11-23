@@ -2,6 +2,46 @@ import re, itertools
 from pyforge.all import *
 from dryad.parsing.k_iter import *
 
+# Callbacks
+
+block_parsers = []
+span_parsers  = []
+before_parse_document = []
+after_parse_document  = []
+
+def parse_block(block_name, inline_text, body_lines):
+    for (block_name_re, parse_func) in block_parsers:
+        
+        block_name_re = make_exact(block_name_re)
+        
+        if re.match(block_name_re, block_name):
+            for node in parse_func(block_name, inline_text, body_lines):
+                yield node
+            break
+
+def parse_span(span_name, body_text):
+    for (span_name_re, parse_func) in span_parsers:
+        
+        span_name_re = make_exact(span_name_re)
+        
+        if re.match(span_name_re, span_name):
+            for node in parse_func(span_name, body_text):
+                yield node
+            break
+        
+def do_before_parse_document():
+    for callback in before_parse_document:
+        callback()
+
+def do_after_parse_document():
+    for callback in after_parse_document:
+        callback()
+
+# Parse functions have following flavors:
+# 1. Parse blocks from text: parse(lines) 
+# 2. Parse spans from text: parse(text)
+# 3. Block rule callback: parse(source)
+# 4. Span rule callback: parse(text)
 
 from dryad.parsing.rules import \
     block_rule, list_rule, section_rule, paragraph_rule
@@ -15,6 +55,7 @@ block_rules = [block_rule.    BlockRule,
 
 max_lookahead = max(map(lambda r: r.lookahead, block_rules))
 
+@works_with_line_list
 def parse_blocks(lines):
     source = k_iter(lines, lookahead=max_lookahead)
     next(source, None)                   # create context iterator and open it
@@ -70,8 +111,13 @@ def parse_spans(text):
                     yield node
                 break
            
-            
-from dryad.doctree.root import Root    
-        
+from dryad.doctree.root import Root
+
 def parse_document(lines):
-    return Root(parse_blocks(lines))
+    do_before_parse_document()
+    result = Root(parse_blocks(lines))
+    do_after_parse_document()
+    return result
+
+
+

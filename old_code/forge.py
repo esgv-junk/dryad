@@ -70,11 +70,10 @@ def walk_doctree(start_node, on_enter, on_exit):
             walk_doctree(child_node, on_enter, on_exit)
     on_exit(start_node)
     
-pygments_languages = itertools.chain.from_iterable(
-    aliases
-    for (name, aliases, filetypes, mimetypes) in 
-        pygments.lexers.get_all_lexers()  
-)
-
-language_re = \
-    make_strings_re(itertools.chain(['auto', 'code'], pygments_languages))
+"""
+div.section:hover {
+    margin-left: -0.7em; 
+    border-left: 0.3em solid #CC4D33; 
+    padding-left: 0.4em;
+}
+"""

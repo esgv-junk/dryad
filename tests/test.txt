@@ -18,7 +18,7 @@ Object-oriented C++
     |x|
     
 [unknown] block
-    KOWABUGAAAAA
+    KOWABUNGAAAAA
     
 And [unknown]`span`.
      

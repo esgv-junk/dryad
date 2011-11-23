@@ -10,7 +10,7 @@ def main():
     root = parse_document(test_lines)
     
     set_writer('html')   
-    print(str_nodes(*root.child_nodes[0:1]), end='')
+    print(str_nodes(*root.child_nodes))
     
     set_writer('html')
     print(str_nodes(root), file=open(output_file, 'w', encoding="utf-8"))

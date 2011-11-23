@@ -58,6 +58,7 @@ def parse_list(source, is_ordered):
     )
     
     
+@partial_decorator(works_with_line_list, (0, 'items_lines'))
 def parse_list_items(items_lines, is_ordered):
     source = k_iter(items_lines, lookahead=0)
     next(source, None)
@@ -84,10 +85,7 @@ def parse_list_items(items_lines, is_ordered):
         item_all_lines = itertools.chain([first_line], item_body_lines)
         
         from dryad.parsing import parse_blocks, parse_spans
-        yield ListItem(
-            item_num, 
-            parse_blocks(item_all_lines)
-        )
+        yield ListItem(item_num, parse_blocks(item_all_lines))
         
         if source.is_done:
             break

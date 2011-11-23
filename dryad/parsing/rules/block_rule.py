@@ -1,7 +1,5 @@
 import re
 from pyforge.all import *
-from dryad import plugins 
-
 
 block_capturing_re = r'^\s*\[(.*?)\](.*)\s*$'
 block_re           = capture_groups_removed(block_capturing_re)
@@ -36,6 +34,7 @@ class BlockRule:
         )
                                         # and pass further
                                         # (depending on block type)
-        for node in plugins.parse_block(block_name, inline_text, body_lines):
+        from dryad.parsing import parse_block
+        for node in parse_block(block_name, inline_text, body_lines):
             yield node
     

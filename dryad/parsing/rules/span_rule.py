@@ -1,7 +1,5 @@
 import re
 from pyforge.all import *
-from dryad import plugins
-
 
 char_markers = ['!', '@', '#', '$', '&']
 
@@ -40,6 +38,7 @@ class SpanRule:
         body_text = multiple_replace(body_text, span_escapes)
         
                                                # pass further
-        for node in plugins.parse_span(span_name, body_text):
+        from dryad.parsing import parse_span
+        for node in parse_span(span_name, body_text):
             yield node
         

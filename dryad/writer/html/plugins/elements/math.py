@@ -11,8 +11,7 @@ block_template = """\
 $$
 {{body_lines}}
 $$
-</div>
-"""
+</div>"""
 
 span_template = '<span class="math">${{body_text}}$</span>'
 

@@ -12,27 +12,22 @@ block_template = """\
 {{{body_lines}}}
 </pre>
 
-</div>
-{{/has_lines}}
-{{^has_lines}}
+</div>\
+{{/has_lines}}{{^has_lines}}
 <p>{{#span_remap}}
 {{>span_template}}
-{{/span_remap}}</p>
-{{/has_lines}}
-
-"""
+{{/span_remap}}</p>\
+{{/has_lines}}"""
 
 span_template = """\
 <span class="unknown">\
 <tt class="span_name">{{span_name}}</tt>\
 {{#has_body_text}}\
 <tt class="body_text">{{body_text}}</tt>\
-{{/has_body_text}}\
-{{^has_body_text}}\
+{{/has_body_text}}{{^has_body_text}}\
 <span style="margin-right: 1pt;"></span>\
 {{/has_body_text}}\
-</span>\
-"""
+</span>"""
 
 class UnknownBlock:
     def write(self):
