@@ -35,6 +35,5 @@ class BlockRule:
                                         # and pass further
                                         # (depending on block type)
         from dryad.parsing import parse_block
-        for node in parse_block(block_name, inline_text, body_lines):
-            yield node
+        return parse_block(block_name, inline_text, body_lines)
     

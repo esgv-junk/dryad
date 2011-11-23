@@ -2,6 +2,8 @@
 Object-oriented C++
 ===================
 
+Paragraph
+
 [default_span] code
 
 [theorem]

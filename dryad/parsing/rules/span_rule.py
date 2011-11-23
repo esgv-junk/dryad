@@ -39,6 +39,5 @@ class SpanRule:
         
                                                # pass further
         from dryad.parsing import parse_span
-        for node in parse_span(span_name, body_text):
-            yield node
+        return parse_span(span_name, body_text)
         

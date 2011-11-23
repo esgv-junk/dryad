@@ -4,7 +4,6 @@ def set_writer(new_writer_name):
     global writer_name
     writer_name = new_writer_name
 
-
 def str_node(node):
     node_class_path = str(type(node))[14:-2]
         
@@ -12,7 +11,6 @@ def str_node(node):
         writer_name=writer_name,
         node_path=node_class_path
     )
-    
     writer_module = '.'.join(writer_class_path.split('.')[:-1])
     
     try:
@@ -22,8 +20,7 @@ def str_node(node):
     
     return eval(writer_class_path + '.write(node)') or ''
 
-
-def str_nodes(*nodes, sep='\n\n'):
+def str_nodes(*nodes, sep=''):
     return sep.join(str_node(node) for node in nodes)
         
 def pystache_lines(lines):

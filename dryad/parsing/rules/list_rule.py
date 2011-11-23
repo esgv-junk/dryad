@@ -16,9 +16,7 @@ class UnorderedListRule:
     
     @staticmethod
     def parse(source):
-        for node in parse_list(source, is_ordered=False):
-            yield node
-            
+        return parse_list(source, is_ordered=False)            
         
 int_re = r'0|[1-9][0-9]*'
 
@@ -35,8 +33,7 @@ class OrderedListRule:
 
     @staticmethod
     def parse(source):
-        for node in parse_list(source, is_ordered=True):
-            yield node
+        return parse_list(source, is_ordered=True)
             
             
 def parse_list(source, is_ordered):
@@ -58,7 +55,7 @@ def parse_list(source, is_ordered):
     )
     
     
-@partial_decorator(works_with_line_list, (0, 'items_lines'))
+@partial(works_with_line_list, (0, 'items_lines'))
 def parse_list_items(items_lines, is_ordered):
     source = k_iter(items_lines, lookahead=0)
     next(source, None)

@@ -15,5 +15,5 @@ class TextRule:
     
     @staticmethod
     def parse(text):
-        text = multiple_replace(typograph_text(text), text_escapes)
-        yield Text(text)
+        from dryad.parsing import parse_span
+        return parse_span('text', text)

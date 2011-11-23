@@ -4,20 +4,19 @@ from dryad.parsing.k_iter import *
 
 # Callbacks
 
-block_parsers = []
-span_parsers  = []
+block_parsers         = []
+span_parsers          = []
 before_parse_document = []
 after_parse_document  = []
 
+@partial(works_with_line_list, (2, 'body_lines'))
 def parse_block(block_name, inline_text, body_lines):
     for (block_name_re, parse_func) in block_parsers:
         
         block_name_re = make_exact(block_name_re)
         
         if re.match(block_name_re, block_name):
-            for node in parse_func(block_name, inline_text, body_lines):
-                yield node
-            break
+            return parse_func(block_name, inline_text, body_lines)
 
 def parse_span(span_name, body_text):
     for (span_name_re, parse_func) in span_parsers:
@@ -25,9 +24,7 @@ def parse_span(span_name, body_text):
         span_name_re = make_exact(span_name_re)
         
         if re.match(span_name_re, span_name):
-            for node in parse_func(span_name, body_text):
-                yield node
-            break
+            return parse_func(span_name, body_text)
         
 def do_before_parse_document():
     for callback in before_parse_document:
@@ -36,6 +33,18 @@ def do_before_parse_document():
 def do_after_parse_document():
     for callback in after_parse_document:
         callback()
+
+def load_plugins(module_names):
+    lists_to_gather = get_objects_names(globals(), list)
+    
+    for module_name in module_names:
+        module = __import__(module_name, fromlist=[module_name])
+        
+        for list_name in lists_to_gather: 
+            gather_list(module, list_name, globals())
+        
+from dryad import plugins
+load_plugins(plugins.plugin_list)
 
 # Parse functions have following flavors:
 # 1. Parse blocks from text: parse(lines) 
@@ -113,11 +122,11 @@ def parse_spans(text):
            
 from dryad.doctree.root import Root
 
+@works_with_line_list
 def parse_document(lines):
     do_before_parse_document()
     result = Root(parse_blocks(lines))
     do_after_parse_document()
     return result
-
 
 

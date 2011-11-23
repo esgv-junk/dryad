@@ -15,10 +15,7 @@ class EmphRule:
     
     @staticmethod
     def parse(text):
-        body_text = multiple_replace(
-            re.match(emph_capturing_re, text).group(1),
-            emph_escapes
-        )
+        body_text = multiple_replace(text[1:-1], emph_escapes)
         
-        from dryad.parsing import parse_blocks, parse_spans
-        yield Emph(parse_spans(body_text))
+        from dryad.parsing import parse_span
+        return parse_span('emph', body_text)

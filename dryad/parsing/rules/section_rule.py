@@ -18,9 +18,7 @@ class SectionRule2:
     
     @staticmethod
     def parse(source):
-        for node in parse_section(SectionRule2, source):
-            yield node
-            
+        return parse_section(SectionRule2, source)
             
 class SectionRule3:
     lookahead = 2
@@ -38,9 +36,7 @@ class SectionRule3:
     
     @staticmethod
     def parse(source):
-        for node in parse_section(SectionRule3, source):
-            yield node
-    
+        return parse_section(SectionRule3, source)
             
 def title_matches_outline(title, outline):
     indents_match = (get_indent(title) == get_indent(outline) == 0)
@@ -72,8 +68,10 @@ def parse_section(section_rule, source):
     body_lines = source.takewhile(
         lambda s: not is_next_same_level_section_start(s))
     
-    from dryad.parsing import parse_blocks, parse_spans
+    from dryad.parsing import parse_block
+    return parse_block('section', title, body_lines)
     
-    title_nodes = parse_spans(title)
-    child_nodes = parse_blocks(body_lines)
-    yield Section(title_nodes, child_nodes)
+    #from dryad.parsing import parse_blocks, parse_spans
+    #title_nodes = parse_spans(title)
+    #child_nodes = parse_blocks(body_lines)
+    #yield Section(title_nodes, child_nodes)

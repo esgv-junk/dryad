@@ -22,12 +22,12 @@ class Section:
         global section_level
         
         section_level += 1
-        child_lines = str_nodes(*self.child_nodes)
+        child_lines = str_nodes(*self.child_nodes, sep='\n\n')
         section_level -= 1
         
         context = {
             'lvl':         section_level,
-            'title_text':  str_nodes(*self.title_nodes, sep=''),
+            'title_text':  str_nodes(*self.title_nodes),
             'anchor_url':  to_id(self.get_title_as_string()),
             'child_lines': child_lines
         }

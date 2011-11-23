@@ -20,7 +20,7 @@ class Root:
             'title': title,
             'stylesheets': pystache_list(css_filenames, 'filename'),
             'scripts'    : pystache_list(js_filenames, 'filename'),
-            'child_lines': str_nodes(*self.child_nodes)
+            'child_lines': str_nodes(*self.child_nodes, sep='\n\n')
         }
                                             # render template
         return pystache.render(

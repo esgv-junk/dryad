@@ -35,7 +35,7 @@ class List:
     def write(self):
         context = {
             'is_ordered' : self.is_ordered,
-            'items_lines': str_nodes(*self.items)
+            'items_lines': str_nodes(*self.items, sep='\n\n')
         }
         
         return pystache.render(list_template, context)
@@ -46,7 +46,7 @@ class ListItem:
             'ord_class'  : (self.ord_number % 2) and 'odd' or 'even',
             'has_value'  : self.value is not None,
             'value'      : self.value,
-            'child_lines': str_nodes(*self.child_nodes)
+            'child_lines': str_nodes(*self.child_nodes, sep='\n\n')
         }
         
         return pystache.render(item_template, context)

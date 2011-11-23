@@ -2,4 +2,4 @@ import pystache
 
 class Text:
     def write(self):
-        return pystache.render('{{text}}', text=self.text)        
+        return pystache.render('{{body_text}}', body_text=self.body_text)        
