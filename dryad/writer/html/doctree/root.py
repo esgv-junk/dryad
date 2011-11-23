@@ -1,6 +1,5 @@
 import glob
 import pystache
-
 from dryad.doctree.section import Section
 from dryad.writer import str_nodes, pystache_list
 

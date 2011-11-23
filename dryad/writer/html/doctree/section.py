@@ -11,11 +11,9 @@ section_template = """\
     <a class="section_anchor" href="#{{anchor_url}}">&para;</a>
 </h{{lvl}}>
 
-
 {{{child_lines}}}
-</div>
 
-"""
+</div>"""
 
 section_level = 1
 
@@ -29,7 +27,7 @@ class Section:
         
         context = {
             'lvl':         section_level,
-            'title_text':  str_nodes(*self.title_nodes),
+            'title_text':  str_nodes(*self.title_nodes, sep=''),
             'anchor_url':  to_id(self.get_title_as_string()),
             'child_lines': child_lines
         }

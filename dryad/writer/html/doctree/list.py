@@ -8,22 +8,28 @@ list_template = """\
 <ol>
 
 {{{items_lines}}}
+
 </ol>
 
-</div>
-{{/is_ordered}}
-{{^is_ordered}}
+</div>\
+{{/is_ordered}}{{^is_ordered}}
 <div class="list unordered">
 
 <ul>
 
 {{{items_lines}}}
+
 </ul>
 
-</div>
-{{/is_ordered}}
+</div>\
+{{/is_ordered}}"""
 
-"""
+item_template = """\
+<li {{#has_value}}value="{{value}}" {{/has_value}}class="{{ord_class}}">
+
+{{{child_lines}}}
+
+</li>"""
 
 class List:
     def write(self):
@@ -33,14 +39,6 @@ class List:
         }
         
         return pystache.render(list_template, context)
-    
-item_template = """\
-<li {{#has_value}}value="{{value}}" {{/has_value}}class="{{ord_class}}">
-
-{{{child_lines}}}
-</li>
-
-"""
 
 class ListItem:
     def write(self):

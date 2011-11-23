@@ -41,9 +41,7 @@
 
 <div class="left_column">
 
-{{#toc_lines}}
-{{{text}}}
-{{/toc_lines}}
+{{{toc_lines}}}
 
 </div>
 
@@ -55,6 +53,7 @@
 <div class="central_column">
 
 {{{child_lines}}}
+
 </div>
 
 </td>

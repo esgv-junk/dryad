@@ -14,7 +14,7 @@ def load_plugins(*module_names):
         module = __import__(module_name, fromlist=[module_name])
         
         lists_to_gather = [
-            'block_parsers', 'span_parsers',
+            'block_parsers', 'span_parsers', 
             'before_parse_document', 'after_parse_document'
         ]
          
