@@ -1,7 +1,7 @@
 import re
 from pyforge.all import *
 
-block_capturing_re = r'^\s*\[(.*?)\](.*)\s*$'
+block_capturing_re = r'^\s*\[(.*?)\](.*)$'
 block_re           = capture_groups_removed(block_capturing_re)
 
 class BlockRule:
@@ -13,11 +13,10 @@ class BlockRule:
         return bool(re.match(block_re, source[0]))
         
     @staticmethod
-    def parse(source):
-                                        # extract block_name and inline_text
+    def parse(source):                  # extract block_name and inline_text
         match_obj = re.match(block_capturing_re, source[0])                      
         block_name, inline_text = match_obj.groups()
-
+        
                                         # take all body_lines blank or more 
                                         # indented than the block itself
         start_indent = get_indent(source[0])
@@ -31,9 +30,7 @@ class BlockRule:
         body_lines = dedented_by(       # at the end
             blank_lines_stripped_end(body_lines),
             start_indent
-        )
-                                        # and pass further
+        )                               # and pass further
                                         # (depending on block type)
         from dryad.parsing import parse_block
         return parse_block(block_name, inline_text, body_lines)
-    

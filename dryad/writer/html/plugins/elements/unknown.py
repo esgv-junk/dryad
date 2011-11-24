@@ -32,14 +32,14 @@ span_template = """\
 class UnknownBlock:
     def write(self):
         context = {
-            'has_lines':     bool(self.body_lines),    
-            'body_lines':    '\n'.join(self.body_lines),
+            'has_lines'    : bool(self.body_lines),    
+            'body_lines'   : '\n'.join(self.body_lines),
             
             'span_template': span_template,
             'span_remap': {
-                'span_name':     self.block_name,
+                'span_name'    : self.block_name,
                 'has_body_text': bool(self.inline_text),
-                'body_text':     self.inline_text
+                'body_text'    : self.inline_text
             }
         }
         
@@ -48,9 +48,9 @@ class UnknownBlock:
 class UnknownSpan:
     def write(self):
         context = {
-            'span_name': self.span_name,
+            'span_name'    : self.span_name,
             'has_body_text': bool(self.body_text),
-            'body_text': self.body_text
+            'body_text'    : self.body_text
         }
         
         return pystache.render(span_template, context)

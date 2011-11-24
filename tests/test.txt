@@ -2,12 +2,12 @@
 Object-oriented C++
 ===================
 
-Paragraph
-
 [default_span] code
 
 [theorem]
     Lil' theorem.
+    
+    Another paragraph
 
     [math]
         \int \limits_a^b
@@ -16,9 +16,6 @@ Paragraph
                 -\frac{1}{2 \sigma^2} x^2 
             ] dx
         
-[math]
-    |x|
-    
 [unknown] block
     KOWABUNGAAAAA
     

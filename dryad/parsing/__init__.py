@@ -2,7 +2,7 @@ import re, itertools
 from pyforge.all import *
 from dryad.parsing.k_iter import *
 
-# Callbacks
+# callbacks
 
 block_parsers         = []
 span_parsers          = []

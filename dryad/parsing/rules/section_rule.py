@@ -71,7 +71,3 @@ def parse_section(section_rule, source):
     from dryad.parsing import parse_block
     return parse_block('section', title, body_lines)
     
-    #from dryad.parsing import parse_blocks, parse_spans
-    #title_nodes = parse_spans(title)
-    #child_nodes = parse_blocks(body_lines)
-    #yield Section(title_nodes, child_nodes)

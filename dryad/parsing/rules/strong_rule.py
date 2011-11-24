@@ -8,10 +8,8 @@ strong_escapes = {
    r'\*'  : '*' 
 }
 
-strong_capturing_re = r'\*\*({body_re})\*\*'.format(body_re=escaped_text_re) 
-
 class StrongRule:
-    rule_regexp = capture_groups_removed(strong_capturing_re)
+    rule_regexp = r'\*\*{body_re}\*\*'.format(body_re=escaped_text_re)
     
     @staticmethod
     def parse(text):

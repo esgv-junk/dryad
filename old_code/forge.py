@@ -69,11 +69,3 @@ def walk_doctree(start_node, on_enter, on_exit):
         for child_node in start_node.child_nodes:
             walk_doctree(child_node, on_enter, on_exit)
     on_exit(start_node)
-    
-"""
-div.section:hover {
-    margin-left: -0.7em; 
-    border-left: 0.3em solid #CC4D33; 
-    padding-left: 0.4em;
-}
-"""

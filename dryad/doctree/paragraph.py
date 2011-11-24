@@ -5,8 +5,7 @@ class Paragraph:
         self.child_nodes = list(child_nodes)        
 
 def parse_paragraph(block_name, inline_text, body_lines):
-    body_lines = list(body_lines)
-    text = ''.join(
+    text = ' '.join(
         line.strip()
         for line in chain(inline_text, body_lines)
     )

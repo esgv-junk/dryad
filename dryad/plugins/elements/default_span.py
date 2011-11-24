@@ -21,6 +21,6 @@ def parse_default_span(span_name, body_text):
 def reset_state():
     default_span_name = preferred_default_name 
 
-block_parsers        = [('default_span', set_default_span  )]
-span_parsers         = [(''            , parse_default_span)]
-after_parse_document = [reset_state]
+before_parse_document = [reset_state]
+block_parsers         = [('default_span', set_default_span  )]
+span_parsers          = [(''            , parse_default_span)]

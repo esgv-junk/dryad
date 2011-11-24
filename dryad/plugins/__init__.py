@@ -13,6 +13,7 @@ plugin_list = [
     'dryad.plugins.elements.math', 
     'dryad.plugins.elements.unknown',
     
+    'dryad.plugins.index',
     'dryad.plugins.settings',               # other plugins
     'dryad.plugins.typographer'
 ]
