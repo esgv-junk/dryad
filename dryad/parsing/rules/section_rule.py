@@ -42,7 +42,7 @@ def title_matches_outline(title, outline):
     indents_match = (get_indent(title) == get_indent(outline) == 0)
     
     outline_re = "^{char}{{{min_repeats},}}$".format(
-        char='[=\-]',
+        char='[=\-~]',
         min_repeats=len(title)
     )
     

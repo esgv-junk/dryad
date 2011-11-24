@@ -8,8 +8,8 @@ tt.code {
 
 div.code {
     padding: 0.5em;
-    background: -webkit-linear-gradient(left, #fdfdfd, #f0f0f0);
-    border-left: 0.3em solid hsl(10, 60%, 50%);
+    background: -webkit-linear-gradient(left, #fdfdfd, #f3f3f3);
+    border-left: 4px solid hsl(10, 60%, 50%);
 }
 
 h1 > .code, h2 > .code, h3 > .code, 

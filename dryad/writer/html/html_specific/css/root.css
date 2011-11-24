@@ -30,7 +30,7 @@ pre {
 
 /* -------------------------- Colors & Fonts -------------------------------- */
 
-div {
+body {
     font-family: Verdana;
     font-size: 10pt;
 }
@@ -56,7 +56,7 @@ a:hover {
 div.central_column {
     margin-top: 0;                         /* don't need spacing for this one*/
  
-    width: 51em;
+    width: 46em;
     padding: 0em 3em 3em 3em;
 }
 
