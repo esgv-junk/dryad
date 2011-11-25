@@ -9,6 +9,7 @@ plugin_list = [
     'dryad.plugins.elements.code',          # advanced elements
     'dryad.plugins.elements.default_span', 
     'dryad.plugins.elements.image',
+    'dryad.plugins.elements.invisible',
     'dryad.plugins.elements.line_break',
     'dryad.plugins.elements.math_blocks', 
     'dryad.plugins.elements.math', 

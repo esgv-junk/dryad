@@ -6,9 +6,9 @@ math_admonition_template = """\
     <admonition_type> {{admonition_type}}
     <number> {{number}}
     <title> {{title_text}}
-{{#body_lines}}
+{{#child_lines}}
     {{{text}}}
-{{/body_lines}}"""
+{{/child_lines}}"""
 
 class MathAdmonitionBlock:
     def write(self):
@@ -16,7 +16,7 @@ class MathAdmonitionBlock:
             'admonition_type': self.admonition_type,
             'number'         : self.number,
             'title_text '    : str_nodes(*self.title_nodes), 
-            'body_lines'     : pystache_lines(str_nodes(*self.child_nodes))
+            'child_lines'    : pystache_lines(str_nodes(*self.child_nodes))
         }
         
         return pystache.render(math_admonition_template, context)
