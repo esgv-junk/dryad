@@ -16,8 +16,9 @@ admonition_types = [
 admonition_numbers = defaultdict(lambda: 1)
 
 class MathAdmonitionBlock:
-    def __init__(self, admonition_type, child_nodes):
+    def __init__(self, admonition_type, title_nodes, child_nodes):
         self.admonition_type = admonition_type
+        self.title_nodes = list(title_nodes)
         self.child_nodes = list(child_nodes)
         
         global admonition_numbers
@@ -29,7 +30,11 @@ class MathAdmonitionBlock:
     
 def parse_math_admonition(block_name, inline_text, body_lines):
     from dryad.parsing import parse_blocks, parse_spans
-    yield MathAdmonitionBlock(block_name, parse_blocks(body_lines))
+    yield MathAdmonitionBlock(
+        block_name, 
+        parse_spans(inline_text.strip()), 
+        parse_blocks(body_lines)
+    )
     
 def reset_state():
     admonition_numbers = defaultdict(lambda: 1)

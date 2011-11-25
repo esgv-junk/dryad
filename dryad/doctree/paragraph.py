@@ -13,4 +13,4 @@ def parse_paragraph(block_name, inline_text, body_lines):
     from dryad.parsing import parse_spans
     yield Paragraph(parse_spans(text))
 
-block_parsers = [('paragraph', parse_paragraph)]
+block_parsers = [('paragraph|p', parse_paragraph)]
