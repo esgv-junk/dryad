@@ -26,7 +26,8 @@ type_texts = {
     'statement'  : 'Утверждение',
     'proof'      : 'Доказательство',
     'remark'     : 'Замечание',
-    'consequence': 'Следствие'
+    'consequence': 'Следствие',
+    'lemma'      : 'Лемма'
 }
 
 has_number = frozenset((
@@ -34,7 +35,8 @@ has_number = frozenset((
     'definition', 
     'paradox', 
     'hypothesis', 
-    'consequence'
+    'consequence',
+    'lemma'
 ))
 
 has_title = frozenset((
@@ -44,7 +46,8 @@ has_title = frozenset((
     'hypothesis', 
     'consequence',
     'remark', 
-    'example'
+    'example',
+    'lemma'
 ))
 
 class MathAdmonitionBlock:

@@ -10,7 +10,8 @@ admonition_types = [
     'statement',
     'proof',
     'remark',
-    'consequence'
+    'consequence',
+    'lemma'
 ]
 
 admonition_numbers = defaultdict(lambda: 1)
