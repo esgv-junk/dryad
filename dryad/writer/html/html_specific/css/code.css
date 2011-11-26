@@ -1,9 +1,13 @@
 /* -------------------------------- Code ------------------------------------ */
 
+.code {
+    font-variant: normal;
+}
+
 tt.code {
     border-radius: 2px;
     color: black;
-    background: -webkit-radial-gradient(circle, #f9f9f9, #f0f0f0);
+    background: -webkit-radial-gradient(circle, #f9f9f9, #eee);
 }
 
 div.code {
@@ -12,7 +16,11 @@ div.code {
     border-left: 4px solid hsl(10, 60%, 50%);
 }
 
-h1 > .code, h2 > .code, h3 > .code, 
-h4 > .code, h5 > .code, h6 > .code {
-    background-color: inherit;
+h1 .code, h2 .code, h3 .code, 
+h4 .code, h5 .code, h6 .code {
+    background: inherit;
+}
+
+center > table .code {
+    background: inherit;
 }

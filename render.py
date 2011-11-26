@@ -1,7 +1,7 @@
 input_path = r'D:\Dropbox\knowledge'
 
 rebuild = False
-#rebuild = True
+rebuild = True
 
 from dryad import *
 

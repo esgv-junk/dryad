@@ -34,3 +34,5 @@ class BlockRule:
                                         # (depending on block type)
         from dryad.parsing import parse_block
         return parse_block(block_name, inline_text, body_lines)
+    
+block_rules = [BlockRule]

@@ -35,6 +35,7 @@ class OrderedListRule:
     def parse(source):
         return parse_list(source, is_ordered=True)
             
+block_rules = [UnorderedListRule, OrderedListRule]
             
 def parse_list(source, is_ordered):
     list_rule = is_ordered and OrderedListRule or UnorderedListRule

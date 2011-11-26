@@ -40,4 +40,6 @@ class SpanRule:
                                                # pass further
         from dryad.parsing import parse_span
         return parse_span(span_name, body_text)
+    
+span_rules = [SpanRule]
         

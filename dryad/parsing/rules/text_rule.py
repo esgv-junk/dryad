@@ -17,3 +17,5 @@ class TextRule:
     def parse(text):
         from dryad.parsing import parse_span
         return parse_span('text', text)
+    
+span_rules = [TextRule]

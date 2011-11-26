@@ -1,0 +1,36 @@
+center > table {
+    border-collapse: collapse;
+}
+
+center > table > tbody > tr:last-child > td {
+    border-bottom: 1px solid #777;
+}
+
+center > table > tbody > tr:first-child > td {
+    border-top: 1px solid #777;
+}
+
+
+center > table tr.odd {
+    background-color: rgba(0, 0, 0, 0.03);    
+}
+
+center > table td, th {
+    padding: 0.25em 0.5em;
+    border-left: 1px solid #777;
+    border-right: 1px solid #777;
+}
+
+center > table td {
+    border-top: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
+}
+
+center > table th {
+    text-align: left;
+    font-variant: small-caps;
+    border-top: 1px solid #777;
+    border-bottom: 1px solid #777;
+    background: rgba(0, 0, 0, 0.03);
+}
+

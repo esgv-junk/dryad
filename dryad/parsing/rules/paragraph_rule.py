@@ -15,3 +15,5 @@ class ParagraphRule:
         
         from dryad.parsing import parse_block
         return parse_block('paragraph', '', body_lines)
+    
+block_rules = [ParagraphRule]

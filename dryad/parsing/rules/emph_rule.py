@@ -18,3 +18,4 @@ class EmphRule:
         from dryad.parsing import parse_span
         return parse_span('emph', body_text)
     
+span_rules = [EmphRule]

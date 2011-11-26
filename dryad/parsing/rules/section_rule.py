@@ -38,6 +38,8 @@ class SectionRule3:
     def parse(source):
         return parse_section(SectionRule3, source)
             
+block_rules = [SectionRule2, SectionRule3]
+            
 def title_matches_outline(title, outline):
     indents_match = (get_indent(title) == get_indent(outline) == 0)
     

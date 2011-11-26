@@ -17,3 +17,5 @@ class StrongRule:
         
         from dryad.parsing import parse_span
         return parse_span('strong', body_text)
+    
+span_rules = [StrongRule]

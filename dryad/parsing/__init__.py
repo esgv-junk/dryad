@@ -2,6 +2,15 @@ import re, itertools
 from pyforge.all import *
 from dryad.parsing.k_iter import *
 
+def load_plugins(module_names):
+    lists_to_gather = get_objects_names(globals(), list)
+    
+    for module_name in module_names:
+        module = __import__(module_name, fromlist=[module_name])
+        
+        for list_name in lists_to_gather: 
+            gather_list(module, list_name, globals())
+
 # callbacks
 
 block_parsers         = []
@@ -25,24 +34,7 @@ def parse_span(span_name, body_text):
         
         if re.match(span_name_re, span_name):
             return parse_func(span_name, body_text)
-        
-def do_before_parse_document():
-    for callback in before_parse_document:
-        callback()
 
-def do_after_parse_document():
-    for callback in after_parse_document:
-        callback()
-
-def load_plugins(module_names):
-    lists_to_gather = get_objects_names(globals(), list)
-    
-    for module_name in module_names:
-        module = __import__(module_name, fromlist=[module_name])
-        
-        for list_name in lists_to_gather: 
-            gather_list(module, list_name, globals())
-        
 from dryad import plugins
 load_plugins(plugins.plugin_list)
 
@@ -52,15 +44,21 @@ load_plugins(plugins.plugin_list)
 # 3. Block rule callback: parse(source)
 # 4. Span rule callback: parse(text)
 
-from dryad.parsing.rules import \
-    block_rule, list_rule, section_rule, paragraph_rule
+block_rules = []
+span_rules  = []
 
-block_rules = [block_rule.    BlockRule, 
-               list_rule.     OrderedListRule,
-               list_rule.     UnorderedListRule, 
-               section_rule.  SectionRule3,
-               section_rule.  SectionRule2,
-               paragraph_rule.ParagraphRule]
+load_plugins([
+    'dryad.parsing.rules.block_rule',
+    'dryad.parsing.rules.list_rule',
+    'dryad.parsing.rules.section_rule',
+    'dryad.parsing.rules.table_rule',
+    'dryad.parsing.rules.paragraph_rule',
+    
+    'dryad.parsing.rules.span_rule',
+    'dryad.parsing.rules.strong_rule',
+    'dryad.parsing.rules.emph_rule',
+    'dryad.parsing.rules.text_rule'
+])
 
 max_lookahead = max(map(lambda r: r.lookahead, block_rules))
 
@@ -81,6 +79,21 @@ def parse_blocks(lines):
             
         if source.is_done:
             break
+        
+united_rules_re = (
+    '(' + join_regexes(rule.rule_regexp for rule in span_rules) + ')'
+) 
+
+def parse_spans(text):
+    for part in re.split(united_rules_re, text):
+        if part == '':
+            continue
+        
+        for rule in span_rules:
+            if re.match(rule.rule_regexp, part):
+                for node in rule.parse(part):
+                    yield node
+                break
 
             
 # Escapes in span elements:
@@ -98,35 +111,17 @@ def parse_blocks(lines):
 #        replaces the escape sequence. 
 #     2) Else, parser yields verbatim '\' and verbatim '<x>'.
 
-from dryad.parsing.rules import span_rule, strong_rule, emph_rule, text_rule 
-
-span_rules = [span_rule.SpanRule,
-              strong_rule.StrongRule,  
-              emph_rule.EmphRule,
-              text_rule.TextRule]
-
-united_rules_re = (
-    '(' + join_regexes(rule.rule_regexp for rule in span_rules) + ')'
-) 
-
-def parse_spans(text):
-    for part in re.split(united_rules_re, text):
-        if part == '':
-            continue
-        
-        for rule in span_rules:
-            if re.match(rule.rule_regexp, part):
-                for node in rule.parse(part):
-                    yield node
-                break
-           
 from dryad.doctree.root import Root
 
 @works_with_line_list
 def parse_document(lines):
-    do_before_parse_document()
+    for callback in before_parse_document:
+        callback()
+        
     result = Root(parse_blocks(lines))
-    do_after_parse_document()
+    
+    for callback in after_parse_document:
+        callback()
+        
     return result
-
 

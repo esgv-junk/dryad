@@ -11,18 +11,20 @@ span.math_admonition_type + * {
 span.math_admonition_type {
     color: #444;
     font-weight: bold;
+    font-variant: small-caps;
+    border-bottom: 1px dotted #777;
 }
 
 span.math_admonition_title {
     font-variant: small-caps;
 }
 
-
 div.math_admonition {
     padding: 0.5em 8px;
     margin-top: 0.5em;
     background: -webkit-linear-gradient(left, white, #f7f7f7, white);
     border-bottom: solid;
+    border-top: solid;
     border-width: 1px;
     border-color: #eee;
 }
@@ -35,6 +37,5 @@ div.math_admonition div.math_admonition div.math_admonition:hover {
 
 div.math_admonition div.math_admonition {
     margin-left: 5px;
-    background: #f9f9f9;
-    border-color: #e9e9e9;
+    background: -webkit-linear-gradient(left, #fcfcfc, #eee, #fcfcfc);
 }

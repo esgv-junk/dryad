@@ -9,9 +9,7 @@ section_template = """\
 {{/title_lines}}\
 {{#child_lines}}
     {{{text}}}
-{{/child_lines}}
-
-"""
+{{/child_lines}}"""
 
 class Section:
     def write(self):

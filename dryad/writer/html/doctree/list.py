@@ -1,28 +1,19 @@
 import pystache
 from dryad.writer import str_nodes
 
-list_template = """\
-{{#is_ordered}}
-<div class="list ordered">
-
+ordered_list_template = """\
 <ol>
 
 {{{items_lines}}}
 
-</ol>
+</ol>"""
 
-</div>\
-{{/is_ordered}}{{^is_ordered}}
-<div class="list unordered">
-
+unordered_list_template = """\
 <ul>
 
 {{{items_lines}}}
 
-</ul>
-
-</div>\
-{{/is_ordered}}"""
+</ul>"""
 
 item_template = """\
 <li {{#has_value}}value="{{value}}" {{/has_value}}class="{{ord_class}}">
@@ -34,11 +25,16 @@ item_template = """\
 class List:
     def write(self):
         context = {
-            'is_ordered' : self.is_ordered,
             'items_lines': str_nodes(*self.items, sep='\n\n')
         }
         
-        return pystache.render(list_template, context)
+        template = (
+            ordered_list_template 
+            if self.is_ordered 
+            else unordered_list_template
+        )
+        
+        return pystache.render(template, context)
 
 class ListItem:
     def write(self):

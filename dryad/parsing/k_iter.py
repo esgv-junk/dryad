@@ -5,7 +5,7 @@ class k_iter:
     def __init__ (self, seq, lookahead=1, end_padding='', do_rstrip=True):
         if do_rstrip:
             seq = map(str.rstrip, seq)
-        self._k_iter = group_k_forward(iter(seq), end_padding, lookahead)
+        self._k_iter = group_k_forward(iter(seq), lookahead, end_padding)
         self.context_ = None
         self.is_done = False
 

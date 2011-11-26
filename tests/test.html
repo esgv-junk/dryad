@@ -7,7 +7,7 @@
 
 <head>
 
-<title>Object–oriented C++</title>
+<title>Linear spaces</title>
 
 <!-- encoding -->
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -17,7 +17,13 @@
     href="file:///D:/Dropbox/code/dryad/dryad/writer/html/html_specific/css\code.css" />
 
 <link rel="stylesheet" type="text/css" 
+    href="file:///D:/Dropbox/code/dryad/dryad/writer/html/html_specific/css\invisible.css" />
+
+<link rel="stylesheet" type="text/css" 
     href="file:///D:/Dropbox/code/dryad/dryad/writer/html/html_specific/css\list.css" />
+
+<link rel="stylesheet" type="text/css" 
+    href="file:///D:/Dropbox/code/dryad/dryad/writer/html/html_specific/css\math.css" />
 
 <link rel="stylesheet" type="text/css" 
     href="file:///D:/Dropbox/code/dryad/dryad/writer/html/html_specific/css\math_blocks.css" />
@@ -35,6 +41,9 @@
     href="file:///D:/Dropbox/code/dryad/dryad/writer/html/html_specific/css\span.css" />
 
 <link rel="stylesheet" type="text/css" 
+    href="file:///D:/Dropbox/code/dryad/dryad/writer/html/html_specific/css\table.css" />
+
+<link rel="stylesheet" type="text/css" 
     href="file:///D:/Dropbox/code/dryad/dryad/writer/html/html_specific/css\unknown.css" />
 
 
@@ -49,7 +58,7 @@
 
 <body>
 
-<table>
+<table class="layout">
 
 <tr>
 
@@ -71,675 +80,33 @@
 
 <div class="section">
 
-<h1 id="Object_oriented_C__">
-    Object–oriented C++
-    <a class="section_anchor" href="#Object_oriented_C__">&para;</a>
+<h1 id="Linear_spaces">
+    Linear spaces
+    <a class="section_anchor" href="#Linear_spaces">&para;</a>
 </h1>
 
-<div class="math_admonition theorem">
-
-<span class="math_admonition_title theorem">Теорема 1.</span>
-
-<p>Lil' theorem.</p>
-
-<p>Another paragraph</p>
+<p><div class="invisible">
 
 <div class="math">
 $$
-    \int \limits_a^b
-        \frac{1}{\sqrt{2\pi}\sigma^2}
-        \exp \left[
-            -\frac{1}{2 \sigma^2} x^2
-        \right] dx
+
+\newcommand{\rank}{\mathrm{rank}}
+\newcommand{\tr}{\mathrm{tr}}
+\newcommand{\dim}{\mathrm{dim}}
+
+\newcommand{\to}{\mathop\longrightarrow}
+\newcommand{\intl}{\int\limits}
+\newcommand{\iintl}{\iint\limits}
+\newcommand{\iiintl}{\iiint\limits}
+\newcommand{\d}{\partial}
+
+\renewcommand{\bar}{\overline}
+\renewcommand{\phi}{\varphi}
+\newcommand{\eps}{\varepsilon}
 $$
 </div>
 
-</div>
-
-<div class="unknown">
-
-<span class="unknown"><tt class="span_name">unknown</tt><tt class="body_text"> block</tt></span>
-
-<pre>
-    KOWABUNGAAAAA
-</pre>
-
-</div>
-
-<p>And <span class="unknown"><tt class="span_name">unknown</tt><tt class="body_text">span</tt></span>.</p>
-
-<div class="section">
-
-<h2 id="Constructors_and_destructors">
-    Constructors and destructors
-    <a class="section_anchor" href="#Constructors_and_destructors">&para;</a>
-</h2>
-
-<div class="section">
-
-<h3 id="Construction_order">
-    Construction order
-    <a class="section_anchor" href="#Construction_order">&para;</a>
-</h3>
-
-<p>While constructing or restructing, one can safely access base class members only.</p>
-
-<p><strong>Construction order</strong>:</p>
-
-<div class="list ordered">
-
-<ol>
-
-<li value="1" class="even">
-
-<p>Virtual bases left–to–right depth–first in declaration order.</p>
-
-</li>
-
-<li value="2" class="odd">
-
-<p>Bases left–to–right in declaration order.</p>
-
-</li>
-
-<li value="3" class="even">
-
-<p>Members in declaration order.</p>
-
-</li>
-
-</ol>
-
-</div>
-
-<p><strong>Destruction order</strong>: reverse order of construction for local vars.</p>
-
-<div class="list unordered">
-
-<ul>
-
-<li class="even">
-
-<p>And for arrays;</p>
-
-</li>
-
-<li class="odd">
-
-<p>And for members.</p>
-
-</li>
-
-</ul>
-
-</div>
-
-</div>
-
-<div class="section">
-
-<h3 id="Constructors">
-    Constructors
-    <a class="section_anchor" href="#Constructors">&para;</a>
-</h3>
-
-<div class="list unordered">
-
-<ul>
-
-<li class="even">
-
-<p>Within constructor, you <strong>can't call other constructor.</strong></p>
-
-<div class="list unordered">
-
-<ul>
-
-<li class="even">
-
-<p><tt class="code">Foo(x, y)</tt> creates temporary variable.</p>
-
-</li>
-
-<li class="odd">
-
-<p>Default parameters might help.</p>
-
-</li>
-
-<li class="even">
-
-<p>Move functionality to <tt class="code">init()</tt> function</p>
-
-</li>
-
-<li class="odd">
-
-<p>Placement new DOES NOT work and IS EVIL since ctor does many little magicalthings.</p>
-
-</li>
-
-</ul>
-
-</div>
-
-</li>
-
-<li class="odd">
-
-<p><strong>Default constructor</strong></p>
-
-<p>Default constructor is ctor that can be called with no arguments:</p>
-
-<div class="list unordered">
-
-<ul>
-
-<li class="even">
-
-<p>Called by default;</p>
-
-</li>
-
-<li class="odd">
-
-<p>Called on array creation.</p>
-
-</li>
-
-</ul>
-
-</div>
-
-</li>
-
-<li class="even">
-
-<p><strong>Initializer lists</strong></p>
-
-<div class="list unordered">
-
-<ul>
-
-<li class="even">
-
-<p>Improved performance (inplace construction with no cctor or asop involved).</p>
-
-</li>
-
-<li class="odd">
-
-<p>Improved even for built–in types.</p>
-
-</li>
-
-</ul>
-
-</div>
-
-</li>
-
-<li class="odd">
-
-<p><strong>Return–by–value</strong></p>
-
-<div class="list unordered">
-
-<ul>
-
-<li class="even">
-
-<p>Return–by–value doesn't impose extra copy on modern compilers</p>
-
-</li>
-
-<li class="odd">
-
-<p>Number of copies and constructors invoked are not stdized.GCC optimizes, MSVC constructs result, then copy–constructs value.</p>
-
-</li>
-
-</ul>
-
-</div>
-
-</li>
-
-</ul>
-
-</div>
-
-</div>
-
-<div class="section">
-
-<h3 id="Destructors">
-    Destructors
-    <a class="section_anchor" href="#Destructors">&para;</a>
-</h3>
-
-<div class="list unordered">
-
-<ul>
-
-<li class="even">
-
-<p>One <strong>MUST NOT call dtor explicitly</strong></p>
-
-<p>If you want to, use <tt class="code">{}</tt>.</p>
-
-</li>
-
-<li class="odd">
-
-<p>One <strong>MUST call dtor</strong> explicitly <strong>on placement new</strong>.</p>
-
-</li>
-
-</ul>
-
-</div>
-
-</div>
-
-</div>
-
-<div class="section">
-
-<h2 id="Autogenerated_members">
-    Autogenerated members
-    <a class="section_anchor" href="#Autogenerated_members">&para;</a>
-</h2>
-
-<p><span class="unknown"><tt class="span_name">todo</tt><tt class="body_text"> table</tt></span>
-</p>
-
-<div class="code"><pre>=============== ======================= =============== =================== ==================================
-Entity          Default constructor     Destructor      Copy constructor    Assign operator
-=============== =======================+=============== =================== ==================================
-When generated  When there are no other|                 When not written
-                constructors           |
---------------- -----------------------+---------------+------------------------------------------------------
-Parameters                      None                   | `const T&amp;` if possible
-                                                       | (member and base cctors/asops get const parameter).
-                                                       | Else `T&amp;`.
---------------- -----------------------+---------------+------------------------------------------------------
-Behaviour       Call bases&#39; default    |        Call members&#39; dtors/cctors/asops
-                cctors                 |
---------------- -----------------------+----------------------------------------------------------------------
-</pre></div>
-
-
-<p>Base can make derived class write ctor, cctor, and asop in order to instantiate.Nothing in C++ can make child write its own destructor: default will always begood.</p>
-
-</div>
-
-<div class="section">
-
-<h2 id="Virtuality">
-    Virtuality
-    <a class="section_anchor" href="#Virtuality">&para;</a>
-</h2>
-
-<div class="section">
-
-<h3 id="Constructor_and_destructor">
-    Constructor and destructor
-    <a class="section_anchor" href="#Constructor_and_destructor">&para;</a>
-</h3>
-
-<div class="list unordered">
-
-<ul>
-
-<li class="even">
-
-<p><strong>Virtual ctor</strong></p>
-
-<p>No support in C++, use <tt class="code">virtual clone();</tt> or <tt class="code">virtual create();</tt>.</p>
-
-</li>
-
-<li class="odd">
-
-<p><strong>Virtual dtor</strong></p>
-
-<div class="list unordered">
-
-<ul>
-
-<li class="even">
-
-<p>Needed when someone will delete via base ptr.</p>
-
-</li>
-
-<li class="odd">
-
-<p>Rationale: make dtor virtual if class has virtual functions.</p>
-
-</li>
-
-</ul>
-
-</div>
-
-</li>
-
-<li class="even">
-
-<p><strong>No virtual function calls in constructor or destructor</strong></p>
-
-<p>Because while construction is in process, object is of <tt class="code">Base</tt> class yet,not of <tt class="code">Derived</tt>.</p>
-
-<p>If a called virtual function is pure virtual, you'll get an error,else you'll just get unexpected behaviour.</p>
-
-<div class="list unordered">
-
-<ul>
-
-<li class="even">
-
-<p>To fix, use two–stage init with <tt class="code">init()</tt> functionand named constructor idiom (don't forget <tt class="code">auto_ptr</tt> ownership on object(to crash properly).</p>
-
-</li>
-
-<li class="odd">
-
-<p>Other approach: move virtual constructor pieces into helper class,and pass helper to a constructor.</p>
-
-</li>
-
-</ul>
-
-</div>
-
-</li>
-
-</ul>
-
-</div>
-
-</div>
-
-<div class="section">
-
-<h3 id="Pure_virtual">
-    Pure virtual
-    <a class="section_anchor" href="#Pure_virtual">&para;</a>
-</h3>
-
-<div class="list unordered">
-
-<ul>
-
-<li class="even">
-
-<p>How to <strong>seal a class</strong></p>
-
-<div class="list ordered">
-
-<ol>
-
-<li class="even">
-
-<p>Comments and the docs.</p>
-
-</li>
-
-<li class="odd">
-
-<p>Private ctor.</p>
-
-</li>
-
-</ol>
-
-</div>
-
-</li>
-
-<li class="odd">
-
-<p>How to <strong>seal a method</strong></p>
-
-<div class="list ordered">
-
-<ol>
-
-<li class="even">
-
-<p>Comments and the docs.</p>
-
-</li>
-
-</ol>
-
-</div>
-
-</li>
-
-<li class="even">
-
-<p><strong>Pure virtualness means "override is needed"</strong> to instantiate.</p>
-
-<p>It doesn't meen "function has no body". For example, pure virtual <strong>destructorMUST have a body.</strong></p>
-
-</li>
-
-</ul>
-
-</div>
-
-</div>
-
-</div>
-
-<div class="section">
-
-<h2 id="Inheritance">
-    Inheritance
-    <a class="section_anchor" href="#Inheritance">&para;</a>
-</h2>
-
-<div class="list unordered">
-
-<ul>
-
-<li class="even">
-
-<p>Use explicit <strong><tt class="code">Base::f()</tt> to call base function</strong></p>
-
-<p>Not a virtual call, not a virtual cost.</p>
-
-</li>
-
-<li class="odd">
-
-<p><strong>No C–style downcasts</strong> on MI/VI. <tt class="code">dynamic_cast</tt> only!</p>
-
-<p>See implementation.</p>
-
-</li>
-
-</ul>
-
-</div>
-
-<div class="section">
-
-<h3 id="Privacy">
-    Privacy
-    <a class="section_anchor" href="#Privacy">&para;</a>
-</h3>
-
-<div class="list unordered">
-
-<ul>
-
-<li class="even">
-
-<p>Derived class can hide members</p>
-
-<div class="code"><pre><span class="k">class</span> <span class="nc">D</span><span class="o">:</span> <span class="k">public</span> <span class="n">B</span>
-<span class="p">{</span>
-<span class="k">private</span><span class="o">:</span>
-    <span class="k">using</span> <span class="n">B</span><span class="o">::</span><span class="n">f</span><span class="p">();</span>
-<span class="p">};</span>
-</pre></div>
-
-
-</li>
-
-<li class="odd">
-
-<p><strong><tt class="code">derived** -&gt; base**</tt></strong> conversion is not allowed (see const correctness).</p>
-
-</li>
-
-<li class="even">
-
-<p><strong>Private inheritance is kinda composition</strong>, except composition is better</p>
-
-</li>
-
-<li class="odd">
-
-<p><strong>Private virtuals</strong> are valid</p>
-
-<p>They can be overloaded but still can't be called.</p>
-
-</li>
-
-<li class="even">
-
-<p>Inheritance <strong>access control</strong> controls whether you can <strong>convert</strong> <tt class="code">Derived*</tt> to<tt class="code">Base*</tt></p>
-
-</li>
-
-</ul>
-
-</div>
-
-</div>
-
-<div class="section">
-
-<h3 id="Multiple_inheritance">
-    Multiple inheritance
-    <a class="section_anchor" href="#Multiple_inheritance">&para;</a>
-</h3>
-
-<p>Dreaded diamond:</p>
-
-<div class="code"><pre>    Base
-    /  \
-   /    \
-  /      \
-Der1      Der2
-  \      /
-   \    /
-    \  /
-    Join
-</pre></div>
-
-
-<p>Base is included twice, ambiguous base member assignment.</p>
-
-<p>Resolved via vitrual inheritance:</p>
-
-<div class="code"><pre>          Base
-          /  \
-         /    \
-virtual /      \ virtual
-    Der1      Der2
-        \      /
-         \    /
-          \  /
-          Join
-</pre></div>
-
-
-<p><strong>Virtual base constructors are invoked DIRECTLY</strong> from most–derived constructor.</p>
-
-<p>It should have all the parameters.</p>
-
-</div>
-
-</div>
-
-<div class="section">
-
-<h2 id="Pointers_to__member__functions">
-    Pointers to (member) functions
-    <a class="section_anchor" href="#Pointers_to__member__functions">&para;</a>
-</h2>
-
-<div class="list unordered">
-
-<ul>
-
-<li class="even">
-
-<p><strong>Pointer to function</strong>: <tt class="code">int (*)(char,float)</tt></p>
-
-</li>
-
-<li class="odd">
-
-<p><strong>Pointer to member function</strong>: <tt class="code">int (Fred::*)(char,float)</tt></p>
-
-</li>
-
-<li class="even">
-
-<p>(Non–static) member functions <strong>need an object</strong> to be called.</p>
-
-<p>You need to pass an object to use member function as a callback.Use functor objects.</p>
-
-</li>
-
-<li class="odd">
-
-<p><strong>Static</strong> functions are the <em>same as plain</em> functions</p>
-
-</li>
-
-<li class="even">
-
-<p><strong>Use typedefs</strong></p>
-
-<div class="code"><pre><span class="k">typedef</span>  <span class="kt">int</span> <span class="p">(</span><span class="n">Fred</span><span class="o">::*</span><span class="n">FredMemFn</span><span class="p">)(</span><span class="kt">char</span> <span class="n">x</span><span class="p">,</span> <span class="kt">float</span> <span class="n">y</span><span class="p">);</span>  <span class="o">&lt;</span> <span class="n">please</span> <span class="k">do</span> <span class="k">this</span><span class="o">!</span>
-<span class="n">FredMemFn</span> <span class="n">p</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">Fred</span><span class="o">::</span><span class="n">f</span><span class="p">;</span>
-<span class="n">Fred</span> <span class="n">fred</span><span class="p">;</span>
-<span class="n">fred</span><span class="p">.</span><span class="o">*</span><span class="n">p</span><span class="p">;</span>
-<span class="p">(</span><span class="o">&amp;</span><span class="n">fred</span><span class="p">)</span><span class="o">-&gt;*</span><span class="n">p</span><span class="p">;</span>
-</pre></div>
-
-
-</li>
-
-<li class="odd">
-
-<p>You <strong>can't convert func ptr</strong> to <tt class="code">void*</tt></p>
-
-<p>Machine might be non–von–neumann. (LOLWHAT?)</p>
-
-</li>
-
-<li class="even">
-
-<p>You <strong>can't convert member func ptr</strong> to <tt class="code">void*</tt></p>
-
-<p>Consider a pointer to a virtual member function.</p>
-
-</li>
-
-</ul>
-
-</div>
-
-</div>
+</div><span class="math">$\eps \phi$</span></p>
 
 </div>
 

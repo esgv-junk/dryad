@@ -2,26 +2,17 @@
 
 /* ----------------------------- Spacing ------------------------------------ */
 
-body, div, p, pre, ol, ul, span, tt, table, td, tr {
+body, div, p, pre, span, tt, table, td, tr, th {
     margin: 0;
     padding: 0;
 }
 
-div + p, p + div, div + div {
+* + p, * + div, * + table, * + ul, * + ol, * + center {
     margin-top: 1em;
 }
 
 p + p {
     margin-top: 0.5em;
-}
-
-table {
-    border-collapse: collapse;
-    table-layout: fixed;
-}
-
-td {
-    vertical-align: top;
 }
 
 pre {
@@ -53,15 +44,23 @@ a:hover {
 
 /* ----------------------------- Columns ---------------------------------- */
 
+table.layout {
+    border-collapse: collapse;
+    table-layout: fixed;
+    border: none;
+    margin: 0;
+    padding: 0;
+}
+
 div.central_column {
     margin-top: 0;                         /* don't need spacing for this one*/
  
-    width: 46em;
+    width: 50em;
     padding: 0em 3em 3em 3em;
 }
 
 div.left_column {
-    width: 14em; 
+    width: 13em; 
     padding: 1em;
 }
 
