@@ -6,6 +6,8 @@ math_include = """
 \\newcommand{\\rank}{\\mathrm{rank}}
 \\newcommand{\\tr}{\\mathrm{tr}}
 \\newcommand{\\dim}{\\mathrm{dim}}
+\\newcommand{\\ker}{\\mathrm{ker}}
+\\newcommand{\\im}{\\mathrm{im}}
 
 \\newcommand{\\to}{\\mathop\\longrightarrow}
 \\newcommand{\\intl}{\\int\\limits}
@@ -16,6 +18,7 @@ math_include = """
 \\renewcommand{\\bar}{\\overline}
 \\renewcommand{\\phi}{\\varphi}
 \\newcommand{\\eps}{\\varepsilon}
+\\newcommand{\\vbar}{\ \\Big|\ }
 """
 
 math_include_done = False
@@ -28,7 +31,7 @@ def yield_math_includes():
     
     from dryad.plugins.elements.invisible import InvisibleBlock
     return [
-        InvisibleBlock([ MathBlock(math_include) ])
+        InvisibleBlock([ MathSpan(math_include) ])
     ]
     
 def reset_state():
@@ -37,7 +40,6 @@ def reset_state():
 before_parse_document = [reset_state]
 
 class MathBlock:
-    @partial(works_with_line_list, (1, 'body_lines'))
     def __init__(self, body_lines):
         self.body_lines = list(body_lines)
         

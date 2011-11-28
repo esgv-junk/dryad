@@ -6,7 +6,7 @@ math_admonition_template = """\
 
 <span class="math_admonition_type {{admonition_type}}">\
 {{type_text}}\
-{{#has_number}} {{number}}{{/has_number}}.\
+{{#has_number}} {{number}}{{/has_number}}\
 </span>
 
 {{#has_title}}

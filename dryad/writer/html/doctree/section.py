@@ -28,7 +28,7 @@ class Section:
         context = {
             'lvl':         section_level,
             'title_text':  str_nodes(*self.title_nodes),
-            'anchor_url':  to_id(self.get_title_as_string()),
+            'anchor_url':  self.section_id,
             'child_lines': child_lines
         }
         

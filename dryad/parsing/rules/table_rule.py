@@ -41,6 +41,9 @@ def parse_table(source):
     )
     body_lines = dedented_by(body_lines, outline_indent)
     body_lines = list(body_lines)
+    if not body_lines:
+        body_lines = [header_line]
+        header_line = None
     eat(source, 1)
     
     

@@ -2,11 +2,11 @@ import pystache
 from dryad.writer import str_nodes
 
 invisible_block_template = """\
-<div class="invisible">
+<span class="invisible">
 
 {{{child_lines}}}
 
-</div>"""
+</span>"""
 
 
 class InvisibleBlock:
