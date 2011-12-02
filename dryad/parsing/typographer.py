@@ -1,6 +1,7 @@
 import re
 from pyforge.all import *
 
+
 typographic_escapes = {
     '->' : '\u2192',
     '<-' : '\u2190',

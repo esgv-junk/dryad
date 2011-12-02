@@ -15,13 +15,13 @@
 <!-- stylesheets -->
 {{#stylesheets}}
 <link rel="stylesheet" type="text/css" 
-    href="file:///D:/Dropbox/code/dryad/{{filename}}" />
+    href="file:///{{basename}}/{{filename}}" />
 
 {{/stylesheets}}
 
 {{#scripts}}
 <script type="text/javascript"
-    src="file:///D:/Dropbox/code/dryad/{{filename}}" />
+    src="file:///{{basename}}/{{filename}}" />
 </script>
     
 {{/scripts}}

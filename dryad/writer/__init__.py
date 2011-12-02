@@ -1,8 +1,12 @@
-writer_name = 'debug'
+import traceback
+from dryad.writer.template import make_renderer
 
 def set_writer(new_writer_name):
-    global writer_name
+    global writer_name, render
     writer_name = new_writer_name
+    render = make_renderer()
+    
+set_writer('debug')
 
 def str_node(node):
     node_class_path = str(type(node))[14:-2]
@@ -16,13 +20,14 @@ def str_node(node):
     try:
         exec('import ' + writer_module)
     except ImportError:
+        traceback.print_exc()
         return ''
     
     return eval(writer_class_path + '.write(node)') or ''
 
 def str_nodes(*nodes, sep=''):
     return sep.join(str_node(node) for node in nodes)
-        
+
 def pystache_lines(lines):
     if isinstance(lines, str):
         if lines[-1:] == '\n':

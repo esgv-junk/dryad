@@ -1,4 +1,4 @@
-import pystache
+from dryad.writer import render 
 import pygments, pygments.lexers, pygments.formatters
 
 span_template = """\
@@ -38,5 +38,5 @@ class CodeSpan:
             'body_text': self.body_text
         }
         
-        return pystache.render(span_template, context)
+        return render(span_template, context)
     

@@ -1,4 +1,4 @@
-import pystache
+from dryad.writer import render
 
 image_template = """\
 <center>
@@ -11,5 +11,5 @@ class ImageBlock:
             'path': self.path
         }
         
-        return pystache.render(image_template, context)
+        return render(image_template, context)
         

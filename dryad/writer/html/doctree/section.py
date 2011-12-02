@@ -1,6 +1,5 @@
-import pystache
 from pyforge.all import *
-from dryad.writer import str_nodes
+from dryad.writer import str_nodes, render
 
 
 section_template = """\
@@ -32,4 +31,4 @@ class Section:
             'child_lines': child_lines
         }
         
-        return pystache.render(section_template, context)
+        return render(section_template, context)

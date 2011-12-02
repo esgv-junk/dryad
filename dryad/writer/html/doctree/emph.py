@@ -1,5 +1,4 @@
-from dryad.writer import *
-import pystache
+from dryad.writer import str_nodes, render
 
 emph_template = '<em>{{{child_text}}}</em>'
 
@@ -9,4 +8,4 @@ class Emph:
             'child_text': str_nodes(*self.child_nodes)
         }
         
-        return pystache.render(emph_template, context)
+        return render(emph_template, context)

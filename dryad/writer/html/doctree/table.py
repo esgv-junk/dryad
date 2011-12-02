@@ -1,5 +1,4 @@
-import pystache
-from dryad.writer import str_nodes, pystache_lines
+from dryad.writer import str_nodes, pystache_lines, render
 
 table_template = """\
 <center>
@@ -37,7 +36,7 @@ class Table():
             'row_lines': str_nodes(*self.rows, sep='\n\n')
         }
         
-        return pystache.render(table_template, context)
+        return render(table_template, context)
     
 class TableRow():
     def write(self):
@@ -46,7 +45,7 @@ class TableRow():
             'ord_class' : (self.ord_number % 2) and 'odd' or 'even'
         }
         
-        return pystache.render(row_template, context)
+        return render(row_template, context)
     
 class TableCell():
     def write(self):
@@ -60,4 +59,4 @@ class TableCell():
             else cell_template
         )
         
-        return pystache.render(template, context)
+        return render(template, context)

@@ -1,8 +1,8 @@
-import os, os.path
+import os, os.path, traceback
 from dryad.parsing import parse_document
 from dryad import writer
 
-def should_render(filename):
+def is_input_file(filename):
     return (os.path.splitext(filename)[1] == '.txt')
 
 def replace_ext(filename, new_ext):
@@ -14,6 +14,7 @@ def render_file(in_filename, ignore_rendered=False):
     try:
         exec('import dryad.writer.' + writer.writer_name)
     except ImportError:
+        traceback.print_exc()
         return False
     
     new_ext = eval('dryad.writer.' + writer.writer_name + '.extension')
@@ -39,7 +40,7 @@ def render_file(in_filename, ignore_rendered=False):
 def render_dir(in_path, ignore_rendered=False):
     for (dirpath, dirnames, filenames) in os.walk(in_path):
         for filename in filenames:
-            if not should_render(filename):
+            if not is_input_file(filename):
                 continue
             in_filename = os.path.join(dirpath, filename)
             has_rendered = \

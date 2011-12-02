@@ -1,5 +1,4 @@
-from dryad.writer import *
-import pystache
+from dryad.writer import str_nodes, render
 
 strong_template = '<strong>{{{child_text}}}</strong>'
 
@@ -9,4 +8,4 @@ class Strong:
             'child_text': str_nodes(*self.child_nodes)
         }
         
-        return pystache.render(strong_template, context)
+        return render(strong_template, context)

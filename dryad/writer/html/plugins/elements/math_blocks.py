@@ -1,5 +1,4 @@
-import pystache
-from dryad.writer import str_nodes
+from dryad.writer import str_nodes, render
 
 math_admonition_template = """\
 <div class="math_admonition {{admonition_type}}">
@@ -39,17 +38,6 @@ has_number = frozenset((
     'lemma'
 ))
 
-has_title = frozenset((
-    'theorem', 
-    'definition', 
-    'paradox', 
-    'hypothesis', 
-    'consequence',
-    'remark', 
-    'example',
-    'lemma'
-))
-
 class MathAdmonitionBlock:
     def write(self):
         context = {
@@ -59,9 +47,8 @@ class MathAdmonitionBlock:
             
             'has_number'     : self.admonition_type in has_number,
             'number'         : self.number,
-            'has_title'      : \
-                self.title_nodes and self.admonition_type in has_title,
+            'has_title'      : bool(self.title_nodes),
             'title_text'     : str_nodes(*self.title_nodes),
         }
         
-        return pystache.render(math_admonition_template, context)
+        return render(math_admonition_template, context)

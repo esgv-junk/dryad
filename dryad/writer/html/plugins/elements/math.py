@@ -1,5 +1,5 @@
-import pystache
 from pyforge.all import *
+from dryad.writer import render
 
 math_escapes = {
     r'\$': r'\$',
@@ -26,7 +26,7 @@ class MathBlock:
             'body_lines': '\n'.join(escaped_lines)
         }
         
-        return pystache.render(block_template, context)
+        return render(block_template, context)
 
 class MathSpan:
     def write(self):
@@ -36,5 +36,5 @@ class MathSpan:
             'body_text': escaped_text
         }
         
-        return pystache.render(span_template, context)
+        return render(span_template, context)
     

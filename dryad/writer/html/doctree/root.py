@@ -1,4 +1,4 @@
-import glob
+import glob, os
 import pystache
 from dryad.doctree.section import Section
 from dryad.writer import str_nodes, pystache_list
@@ -16,8 +16,9 @@ class Root:
         css_filenames = glob.glob('dryad/writer/html/html_specific/css/*.css')
         js_filenames = glob.glob('dryad/writer/html/html_specific/js/*.js');
                                             
-        context = {                         # create context                         
-            'title': title,
+        context = {                         # create context
+            'basename'   : os.getcwd(),                         
+            'title'      : title,
             'stylesheets': pystache_list(css_filenames, 'filename'),
             'scripts'    : pystache_list(js_filenames, 'filename'),
             'child_lines': str_nodes(*self.child_nodes, sep='\n\n')

@@ -2,7 +2,12 @@
 
 /* ----------------------------- Spacing ------------------------------------ */
 
-body, div, p, pre, span, tt, table, td, tr, th {
+/*body, div, p, pre, span, tt, table, td, tr, th {
+    margin: 0;
+    padding: 0;
+}*/
+
+* {
     margin: 0;
     padding: 0;
 }
@@ -12,17 +17,33 @@ body, div, p, pre, span, tt, table, td, tr, th {
 }
 
 p + p {
-    margin-top: 0.5em;
+    margin-top: 2px;
 }
 
 pre {
     overflow: auto;
 }
 
+/* ----------------------------- Text indent -------------------------------- */
+
+* {
+    text-indent: 0;
+    text-align: justify;
+}
+
+p {
+    text-indent: 12px;
+}
+
+li > p, td > p, p[display=inline], div + p, center + p {
+    text-indent: 0;
+}
+
+
 /* -------------------------- Colors & Fonts -------------------------------- */
 
 body {
-    font-family: Verdana;
+    font-family: Georgia;
     font-size: 10pt;
 }
 
@@ -42,7 +63,7 @@ a:hover {
 }
 
 
-/* ----------------------------- Columns ---------------------------------- */
+/* ------------------------------ Columns ----------------------------------- */
 
 table.layout {
     border-collapse: collapse;
@@ -55,8 +76,8 @@ table.layout {
 div.central_column {
     margin-top: 0;                         /* don't need spacing for this one*/
  
-    width: 50em;
-    padding: 0em 3em 3em 3em;
+    width: 45em;
+    padding: 1em 3em 3em 3em;
 }
 
 div.left_column {

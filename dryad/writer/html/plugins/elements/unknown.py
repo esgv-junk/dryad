@@ -1,4 +1,4 @@
-import pystache
+from dryad.writer import render
 
 block_template = """\
 {{#has_lines}}
@@ -43,7 +43,7 @@ class UnknownBlock:
             }
         }
         
-        return pystache.render(block_template, context)
+        return render(block_template, context)
 
 class UnknownSpan:
     def write(self):
@@ -53,5 +53,5 @@ class UnknownSpan:
             'body_text'    : self.body_text
         }
         
-        return pystache.render(span_template, context)
+        return render(span_template, context)
     

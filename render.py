@@ -1,4 +1,5 @@
-input_path = r'D:\Dropbox\knowledge'
+import os
+input_path = os.getcwd() + r'\..\..\knowledge'
 
 rebuild = False
 #rebuild = True

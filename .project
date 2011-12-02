@@ -3,8 +3,8 @@
 	<name>dryad</name>
 	<comment></comment>
 	<projects>
+		<project>3rd_party</project>
 		<project>pyforge</project>
-		<project>pystache</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>

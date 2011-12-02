@@ -27,6 +27,7 @@ def yield_math_includes():
     global math_include_done
     if math_include_done: 
         return []
+    
     math_include_done = True
     
     from dryad.plugins.elements.invisible import InvisibleBlock
@@ -35,6 +36,7 @@ def yield_math_includes():
     ]
     
 def reset_state():
+    global math_include_done
     math_include_done = False
     
 before_parse_document = [reset_state]

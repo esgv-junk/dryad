@@ -1,5 +1,4 @@
-import pystache
-from dryad.writer import str_nodes
+from dryad.writer import str_nodes, render
 
 ordered_list_template = """\
 <ol>
@@ -34,7 +33,7 @@ class List:
             else unordered_list_template
         )
         
-        return pystache.render(template, context)
+        return render(template, context)
 
 class ListItem:
     def write(self):
@@ -45,4 +44,4 @@ class ListItem:
             'child_lines': str_nodes(*self.child_nodes, sep='\n\n')
         }
         
-        return pystache.render(item_template, context)
+        return render(item_template, context)

@@ -38,7 +38,7 @@ def parse_math_admonition(block_name, inline_text, body_lines):
     )
     
 def reset_state():
-    admonition_numbers = defaultdict(lambda: 1)
+    admonition_numbers.clear()
 
 admonition_type_re    = make_strings_re(admonition_types)
 before_parse_document = [reset_state]

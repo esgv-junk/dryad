@@ -1,5 +1,4 @@
-import pystache
-from dryad.writer import *
+from dryad.writer import str_nodes, render
 
 paragraph_template = '<p>{{{child_text}}}</p>'
 
@@ -9,4 +8,4 @@ class Paragraph:
             'child_text': str_nodes(*self.child_nodes)
         }
         
-        return pystache.render(paragraph_template, context)
+        return render(paragraph_template, context)
