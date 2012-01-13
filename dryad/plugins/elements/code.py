@@ -30,6 +30,7 @@ def parse_code_span(span_name, body_text):
     yield CodeSpan(span_name, body_text)
 
 supported_languages_re = make_strings_re(supported_languages)
+
 block_parsers          = [(supported_languages_re, parse_code_block)]
 span_parsers           = [(supported_languages_re, parse_code_span )]
 

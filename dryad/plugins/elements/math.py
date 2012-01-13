@@ -14,12 +14,14 @@ math_include = """
 \\newcommand{\\iintl}{\\iint\\limits}
 \\newcommand{\\iiintl}{\\iiint\\limits}
 \\newcommand{\\d}{\\partial}
+\\newcommand{\\vbar}{\ \\big|\ }
 
-\\renewcommand{\\bar}{\\overline}
 \\renewcommand{\\phi}{\\varphi}
 \\newcommand{\\eps}{\\varepsilon}
-\\newcommand{\\vbar}{\ \\Big|\ }
+\\renewcommand{\\emptyset}{\\varnothing}
 """
+
+"""\\renewcommand{\\bar}{\\overline}"""
 
 math_include_done = False
  

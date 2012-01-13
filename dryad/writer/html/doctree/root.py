@@ -1,27 +1,28 @@
 import glob, os
 import pystache
-from dryad.doctree.section import Section
-from dryad.writer import str_nodes, pystache_list
+from dryad.plugins.elements.toc import make_table_of_contents
+from dryad.writer import str_nodes, pystache_files, pystache_list
 
 root_template_path = 'dryad/writer/html/html_specific/templates/root.txt'
 
 class Root:
     def write(self):
-        title = ''                          # gather title
-        for node in self.child_nodes:
-            if isinstance(node, Section):
-                title = node.get_title_as_string()
-                break
+                                            # add TOC to the first section
+        self.child_nodes[0].child_nodes.insert(0, make_table_of_contents(self))
+        
                                             # gather css files and scripts
         css_filenames = glob.glob('dryad/writer/html/html_specific/css/*.css')
-        js_filenames = glob.glob('dryad/writer/html/html_specific/js/*.js');
-                                            
+        js_filenames  = glob.glob('dryad/writer/html/html_specific/js/*.js')
+        
         context = {                         # create context
-            'basename'   : os.getcwd(),                         
-            'title'      : title,
-            'stylesheets': pystache_list(css_filenames, 'filename'),
-            'scripts'    : pystache_list(js_filenames, 'filename'),
-            'child_lines': str_nodes(*self.child_nodes, sep='\n\n')
+            'basename'    : os.getcwd(),                         
+            'title'       : self.get_first_section_title() or '',
+            'child_lines' : str_nodes(*self.child_nodes, sep='\n\n'),
+            
+            'embedded_css': pystache_files(css_filenames, 'lines'),
+            'embedded_js' : pystache_files(js_filenames, 'lines'),
+            #'external_css': pystache_list(css_filenames, 'filename'),
+            #'external_js' : pystache_list(js_filenames, 'filename')
         }
                                             # render template
         return pystache.render(

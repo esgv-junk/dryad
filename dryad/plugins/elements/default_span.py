@@ -1,5 +1,4 @@
 preferred_default_name = 'default'
-
 default_span_name = preferred_default_name 
 
 def set_default_span(block_name, inline_text, body_lines):
@@ -18,9 +17,10 @@ def parse_default_span(span_name, body_text):
     from dryad.parsing import parse_span 
     return parse_span(default_span_name, body_text)
 
-def reset_state():
+def reset_default_span():
+    global default_span_name
     default_span_name = preferred_default_name 
 
-before_parse_document = [reset_state]
+before_parse_document = [reset_default_span]
 block_parsers         = [('default_span', set_default_span  )]
 span_parsers          = [(''            , parse_default_span)]

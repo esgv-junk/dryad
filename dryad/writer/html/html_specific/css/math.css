@@ -1,3 +1,7 @@
 .math {
     font-variant: normal;
 }
+
+div.math {
+    overflow-x: auto;
+}

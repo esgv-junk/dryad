@@ -1,19 +1,14 @@
 from pyforge.all import *
-
-taken_ids = {}
+from dryad.doctree import id_dispatcher
 
 class Section:
     def __init__(self, title_nodes, child_nodes):
         self.title_nodes = list(title_nodes)
         self.child_nodes = list(child_nodes)
         
-        section_id = to_id(self.get_title_as_string())
-        if section_id not in taken_ids:
-            taken_ids[section_id] = 0
-        else:
-            taken_ids[section_id] += 1
-            section_id += str(taken_ids[section_id])
-        self.section_id = section_id
+        self.section_id = id_dispatcher.dispatch_id(
+            to_id(self.get_title_as_string())
+        )
         
     def get_title_as_string(self):
         def get_span_text(span_node):
@@ -33,9 +28,5 @@ def parse_section(block_name, inline_text, body_lines):
     child_nodes = parse_blocks(body_lines)
     yield Section(title_nodes, child_nodes)
 
-def reset_state():
-    taken_ids = {}
-    
 block_parsers        = [('section', parse_section)]
-after_parse_document = [reset_state]
         

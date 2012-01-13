@@ -9,7 +9,7 @@ math_admonition_template = """\
 </span>
 
 {{#has_title}}
-<p><span class="math_admonition_title"> ({{{title_text}}})</span></p>
+<p class="math_admonition_title"> [{{{title_text}}}]</p>
 {{/has_title}}
 
 {{{child_lines}}}

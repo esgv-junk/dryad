@@ -12,19 +12,37 @@
 <!-- encoding -->
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 
+<!-- embedded stylesheets -->
+{{#embedded_css}}
+<style>
+{{{lines}}}
+</style>
+
+{{/embedded_css}}
+
+<!-- embdedded scripts -->
+{{#embedded_js}}
+<script>
+{{{lines}}}
+</script>
+
+{{/embedded_js}}
+
 <!-- stylesheets -->
-{{#stylesheets}}
+{{#external_css}}
 <link rel="stylesheet" type="text/css" 
     href="file:///{{basename}}/{{filename}}" />
 
-{{/stylesheets}}
+{{/external_css}}
 
-{{#scripts}}
+<!-- scripts -->
+
+{{#external_js}}
 <script type="text/javascript"
     src="file:///{{basename}}/{{filename}}" />
 </script>
     
-{{/scripts}}
+{{/external_js}}
 
 </head>
 

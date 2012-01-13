@@ -6,7 +6,7 @@ def load_plugins(module_names):
     lists_to_gather = get_objects_names(globals(), list)
     
     for module_name in module_names:
-        module = __import__(module_name, fromlist=[module_name])
+        module = import_module(module_name)
         
         for list_name in lists_to_gather: 
             gather_list(module, list_name, globals())
@@ -118,10 +118,10 @@ def parse_document(lines):
     for callback in before_parse_document:
         callback()
         
-    result = Root(parse_blocks(lines))
+    root = Root(parse_blocks(lines))
     
     for callback in after_parse_document:
-        callback()
+        callback(root)
         
-    return result
+    return root
 

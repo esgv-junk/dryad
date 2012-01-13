@@ -7,17 +7,17 @@ div.central_column > div.section:first-child > *:first-child {
 }
 
 h1, h2, h3, h4, h5, h6 {
-    font-family: Georgia;
-    font-weight: normal;
-    margin-bottom: 0.75em;
-    text-indent: 12px;
+    font-family: serif;
+    color: black;
+    margin-bottom: 0.7em;
+    border-bottom: 1px dotted;
 }
 
-h1 { font-size: 220%; margin-top: 2em;   }
-h2 { font-size: 170%; margin-top: 1.2em;   }
-h3 { font-size: 150%; margin-top: 0.7em; }
-h4 { font-size: 120% }
-h5 { font-size: 100% }
+h1 { font-size: 250%; margin-top: 0.5em; } /* letter-spacing: 2px; } */
+h2 { font-size: 200%; margin-top: 0.4em; } /* letter-spacing: 2px; } */
+h3 { font-size: 170%; margin-top: 0.3em; } /* letter-spacing: 1px; } */
+h4 { font-size: 150% }
+h5 { font-size: 120% }
 h6 { font-size: 100% }
 
 a.section_anchor {

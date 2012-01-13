@@ -1,4 +1,5 @@
 import os, os.path, traceback
+from pyforge.all import *
 from dryad.parsing import parse_document
 from dryad import writer
 
@@ -11,13 +12,8 @@ def replace_ext(filename, new_ext):
     return os.path.join(dir, bare_name + '.' + new_ext)
 
 def render_file(in_filename, ignore_rendered=False):
-    try:
-        exec('import dryad.writer.' + writer.writer_name)
-    except ImportError:
-        traceback.print_exc()
-        return False
-    
-    new_ext = eval('dryad.writer.' + writer.writer_name + '.extension')
+    new_ext = \
+        eval_with_import('dryad.writer.' + writer.writer_name + '.extension')
     out_filename = replace_ext(in_filename, new_ext)
     
     needs_update = (
@@ -31,8 +27,9 @@ def render_file(in_filename, ignore_rendered=False):
         root = parse_document(in_file.readlines())
         in_file.close()
         
+        rendered_document = writer.str_nodes(root)
         out_file = open(out_filename, 'w', encoding='utf_8')
-        out_file.write(writer.str_nodes(root))
+        out_file.write(rendered_document)
         out_file.close()
         
     return needs_update

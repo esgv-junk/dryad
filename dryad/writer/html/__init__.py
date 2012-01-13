@@ -1,8 +1,9 @@
-from dryad.writer import template
-
 extension = 'html'
 
-html_escapes = {
+escapes = {
+    '<': '&lt;',
+    '>': '&gt;',
+    '&': '&amp;', 
+    '"': '&quot;'
 }
 
-render = template.make_renderer(html_escapes)

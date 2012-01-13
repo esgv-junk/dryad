@@ -1,0 +1,15 @@
+a {
+    color: hsl(10, 60%, 50%);
+    text-decoration: none;
+}
+
+a:visited {
+    color: hsl(20, 50%, 50%);
+}
+
+a:hover{
+    /* color: hsl(0, 80%, 50%); */
+    /* color: hsl(220, 40%, 50%); */
+    color: white;
+    background-color: hsl(10, 50%, 50%); 
+}

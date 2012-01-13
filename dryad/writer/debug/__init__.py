@@ -1,8 +1,9 @@
-from dryad.writer import template
-
 extension = 'debug'
 
-debug_escapes = {
+escapes = {
+    '<': '&lt;',
+    '>': '&gt;',
+    '&': '&amp;', 
+    '"': '&quot;'
 }
 
-render = template.make_renderer(debug_escapes)

@@ -10,7 +10,6 @@ center > table > tbody > tr:first-child > td {
     border-top: 1px solid #777;
 }
 
-
 center > table tr.odd {
     background-color: rgba(0, 0, 0, 0.02);    
 }
@@ -21,6 +20,10 @@ center > table td, th {
     border-right: 1px solid #777;
 }
 
+center > table td > *, th > * {
+    text-align: center;
+}
+
 center > table td {
     border-top: 1px solid #ddd;
     border-bottom: 1px solid #ddd;
@@ -28,9 +31,11 @@ center > table td {
 
 center > table th {
     text-align: left;
-    font-variant: small-caps;
     border-top: 1px solid #777;
     border-bottom: 1px solid #777;
     background: rgba(0, 0, 0, 0.06);
 }
 
+th:first-child, td:first-child {
+    white-space: nowrap;
+}
