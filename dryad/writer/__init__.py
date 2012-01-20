@@ -31,8 +31,15 @@ def str_node(node):
     
     return eval(writer_class_path + '.write(node)') or ''
 
-def str_nodes(*nodes, sep=''):
-    return sep.join(str_node(node) for node in nodes)
+def str_nodes(*nodes, sep='', writer=None):
+    global writer_name
+    if writer is not None:
+        old_writer = writer_name
+        set_writer(writer)
+    result = sep.join(str_node(node) for node in nodes)
+    if writer is not None:
+        set_writer(old_writer)
+    return result
 
 def pystache_lines(lines):
     if isinstance(lines, str):

@@ -7,7 +7,7 @@ rebuild = False
 from dryad import *
 
 def main():
-    set_writer('html')
+    set_writer('wiki_html')
     render_dir(input_path, rebuild)
     print('Done')
     

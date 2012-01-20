@@ -1,9 +1,8 @@
 import glob, os
-import pystache
 from dryad.plugins.elements.toc import make_table_of_contents
-from dryad.writer import str_nodes, pystache_files, pystache_list
+from dryad.writer import str_nodes, render, pystache_files, pystache_list
 
-root_template_path = 'dryad/writer/html/html_specific/templates/root.txt'
+root_template_path = 'dryad/writer/html/html_specific/templates/root.html'
 
 class Root:
     def write(self):
@@ -19,13 +18,13 @@ class Root:
             'title'       : self.get_first_section_title() or '',
             'child_lines' : str_nodes(*self.child_nodes, sep='\n\n'),
             
-            'embedded_css': pystache_files(css_filenames, 'lines'),
-            'embedded_js' : pystache_files(js_filenames, 'lines'),
-            #'external_css': pystache_list(css_filenames, 'filename'),
-            #'external_js' : pystache_list(js_filenames, 'filename')
+            #'embedded_css': pystache_files(css_filenames, 'lines'),
+            #'embedded_js' : pystache_files(js_filenames, 'lines'),
+            'external_css': pystache_list(css_filenames, 'filename'),
+            'external_js' : pystache_list(js_filenames, 'filename')
         }
                                             # render template
-        return pystache.render(
+        return render(
             open(root_template_path, 'r').read(), 
             context
         )

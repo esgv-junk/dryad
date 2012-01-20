@@ -2,18 +2,9 @@
 
 /* ----------------------------- Spacing ------------------------------------ */
 
-/*body, div, p, pre, span, tt, table, td, tr, th {
-    margin: 0;
-    padding: 0;
-}*/
-
 * {
     margin: 0;
     padding: 0;
-}
-
-* + p, * + div, * + table, * + ul, * + ol, * + center {
-    margin-top: 1em;
 }
 
 p + p {
@@ -28,7 +19,7 @@ pre {
 
 body {
     text-indent: 0;
-    text-align: justify;
+    text-align: center;
 }
 
 p {
@@ -39,9 +30,8 @@ p {
 li > p, 
 th > p, td > p, 
 p[display=inline], 
-div + p, center + p,
-tt,
-span {
+div + p, center + p, ol + p, ul + p,
+tt, span {
     text-indent: 0;
 }
 
@@ -58,39 +48,24 @@ pre, tt {
 
 /* ------------------------------ Columns ----------------------------------- */
 
-table.layout {
-    border-collapse: collapse;
-    table-layout: fixed;
-    border: none;
-    margin: 0;
-    padding: 0;
-}
 
 div.central_column {
     margin-top: 0;                         /* don't need spacing for this one*/
  
-    width: 45em;
-    padding: 1em 3em 2em 1.5em;
+    width: 650px;
+    padding: 1em 3em 2em 3em;
     overflow-x: auto;
-}
-
-div.left_column {
-    width: 13em; 
-    padding: 1em;
+    
+    color: black;
+    background-color: white;
+    border-left: 1px solid #666;                /* colors */
+    border-right: 1px solid #666;
+    box-shadow: 0 0 12px #333;
+    
+    text-align: justify;
+    display: inline-block;
 }
 
 body {
-    background-color: #cccccc;
-}
-
-td.central_column {
-    color: #333333;
-    background-color: white;
-    
-    border-left: 1px solid #ccc;                /* colors */
-    border-right: 1px solid #777;
-}
-
-td.left_column {
-   background-color: #f6f6f6;
+    background-color: #999;
 }

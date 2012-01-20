@@ -12,7 +12,7 @@ typographic_escapes = {
 
 typographic_replaces = {
     (' - '     , ' \u2014 '),          # em dash (expreimental)
-    ('-'       , '\u2013'),            # en dash
+    #('-'       , '\u2013'),            # en dash
     (r'"(.*?)"', '\u00ab\\1\u00bb')
 }
 

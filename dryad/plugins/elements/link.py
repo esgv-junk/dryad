@@ -1,10 +1,9 @@
 class Link:
-    def __init__(self, href, child_nodes):
+    def __init__(self, href, body_text):
         self.href = href
-        self.child_nodes = child_nodes
+        self.body_text = body_text
 
 def parse_link(span_name, body_text):
-    from dryad.parsing import parse_spans
-    yield Link(span_name, parse_spans(body_text))
+    yield Link(span_name, body_text)
     
 span_parsers = [(r'[a-z]+://.*', parse_link)]

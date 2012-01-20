@@ -1,5 +1,7 @@
 center > table {
     border-collapse: collapse;
+    margin: 1em 0;
+    box-shadow: 0 0 7px #ddd;
 }
 
 center > table > tbody > tr:last-child > td {

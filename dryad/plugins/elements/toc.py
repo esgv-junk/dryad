@@ -2,12 +2,12 @@ from dryad.doctree.section import Section
 
 class TableOfContents:
     def __init__(self, entries):
-        self.entries = entries
+        self.entries = list(entries)
 
 class TOCEntry:
     def __init__(self, section, child_entries):
         self.section = section
-        self.child_entries = child_entries
+        self.child_entries = list(child_entries)
       
 def gather_toc_entry_list(node):
     return [

@@ -49,7 +49,7 @@ class MathBlock:
         
 class MathSpan:
     def __init__(self, body_text):
-        self.body_text = typograph_math(body_text)
+        self.body_text = body_text
        
 def parse_math_block(block_name, inline_text, body_lines):
     for node in yield_math_includes():

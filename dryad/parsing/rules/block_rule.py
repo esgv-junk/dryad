@@ -2,7 +2,7 @@ import re
 from pyforge.all import *
 
 block_capturing_re = r'^\s*\[(.*?)\](.*)$'
-block_re           = capture_groups_removed(block_capturing_re)
+block_re           = r'^\s*\[.*?]([^`].*)?$'
 
 class BlockRule:
     lookahead = 0

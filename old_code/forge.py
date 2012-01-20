@@ -69,3 +69,45 @@ def walk_doctree(start_node, on_enter, on_exit):
         for child_node in start_node.child_nodes:
             walk_doctree(child_node, on_enter, on_exit)
     on_exit(start_node)
+ 
+""" 
+    
+table.layout {
+    border-collapse: collapse;
+    table-layout: fixed;
+    border: none;
+    margin: 0;
+    padding: 0;
+}
+
+td.central_column {
+    color: #333333;
+    background-color: white;
+    
+    border-left: 1px solid #ccc;                /* colors */
+    border-right: 1px solid #777;
+}
+
+td.left_column {
+   background-color: #f6f6f6;
+}
+
+div.left_column {
+    width: 13em; 
+    padding: 1em;
+    display: none;
+}    
+"""    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
