@@ -28,5 +28,5 @@ def parse_section(block_name, inline_text, body_lines):
     child_nodes = parse_blocks(body_lines)
     yield Section(title_nodes, child_nodes)
 
-block_parsers        = [('section', parse_section)]
+block_parsers = [('section', parse_section)]
         

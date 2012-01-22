@@ -11,7 +11,7 @@ span_escapes = {
 char_marker_re = make_strings_re(char_markers)
 str_marker_re = r'\[.*?\]'
 body_re = r'`({escaped_text_re})`'.format(
-    escaped_text_re=escaped_text_re
+    escaped_text_re=backslash_escaped_text_re
 )
 
 span_capturing_re = \

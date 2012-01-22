@@ -1,3 +1,5 @@
+# -*- coding: utf8 -*-
+
 from dryad.writer import str_nodes, render
 
 math_admonition_template = """\

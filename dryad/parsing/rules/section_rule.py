@@ -60,15 +60,15 @@ def parse_section(section_rule, source):
     
     eat(source, num_lines_heading_takes)
     
-    def is_next_same_level_section_start(source):
-        nonlocal section_rule, outline_char
+    def is_next_same_level_section_start(source, section_rule, outline_char):
+        # 3to2 fix: removed nonlocal
         current_outline_char = \
             section_rule.extract_heading_attributes(source)[1]
         return (outline_char == current_outline_char and
                 section_rule.applies_to(source))
     
     body_lines = source.takewhile(
-        lambda s: not is_next_same_level_section_start(s))
+        lambda s: not is_next_same_level_section_start(s, section_rule, outline_char))
     
     from dryad.parsing import parse_block
     return parse_block('section', title, body_lines)

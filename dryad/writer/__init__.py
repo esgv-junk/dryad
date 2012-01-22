@@ -29,7 +29,9 @@ def str_node(node):
         traceback.print_exc()
         return ''
     
-    return eval(writer_class_path + '.write(node)') or ''
+    # 3to2 fix
+    return eval(writer_class_path + '.write.im_func(node)') or ''
+    #return eval(writer_class_path + '.write(node)') or ''
 
 def str_nodes(*nodes, sep='', writer=None):
     global writer_name

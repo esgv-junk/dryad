@@ -9,7 +9,7 @@ emph_escapes = {
 }
 
 class EmphRule:
-    rule_regexp = '\*{body_re}\*'.format(body_re=escaped_text_re)
+    rule_regexp = '\*{body_re}\*'.format(body_re=backslash_escaped_text_re)
     
     @staticmethod
     def parse(text):

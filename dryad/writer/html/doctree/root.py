@@ -18,10 +18,10 @@ class Root:
             'title'       : self.get_first_section_title() or '',
             'child_lines' : str_nodes(*self.child_nodes, sep='\n\n'),
             
-            #'embedded_css': pystache_files(css_filenames, 'lines'),
-            #'embedded_js' : pystache_files(js_filenames, 'lines'),
-            'external_css': pystache_list(css_filenames, 'filename'),
-            'external_js' : pystache_list(js_filenames, 'filename')
+            'embedded_css': pystache_files(css_filenames, 'lines'),
+            'embedded_js' : pystache_files(js_filenames, 'lines'),
+            #'external_css': pystache_list(css_filenames, 'filename'),
+            #'external_js' : pystache_list(js_filenames, 'filename')
         }
                                             # render template
         return render(
