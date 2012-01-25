@@ -1,5 +1,6 @@
 .settings
 .project
 .pydevproject
+.idea
 *.pyc
 *.pyo

@@ -1,0 +1,26 @@
+ol.toc {
+    font-family: Georgia, serif;
+    font-variant: small-caps;
+    letter-spacing: 1px;
+    font-size: 100%;
+}
+
+ol.toc ol.toc {
+    margin: 0;
+    margin-left: -0.5em;
+    font-variant: normal;
+    font-family: Verdana;
+    letter-spacing: normal;
+    list-style-type: square;
+}
+
+ol.toc > li {
+    margin: 0;
+    padding: 1px;
+}
+
+
+
+ol.toc > li               {font-size: 125%;}
+ol.toc ol.toc > li        {font-size: 100%;}
+ol.toc ol.toc ol.toc > li {font-size: 80%;}

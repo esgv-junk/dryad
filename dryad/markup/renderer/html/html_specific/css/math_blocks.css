@@ -1,0 +1,48 @@
+/* ---------------------------- Math admonitions ---------------------------- */
+
+span.math_admonition_type + p {
+    display: inline;
+}
+
+span.math_admonition_type + * {
+    margin-top: 0.5em;
+}
+
+span.math_admonition_type {
+    color: hsl(0, 60%, 25%);
+    font-weight: bold;
+    margin-right: 3px;
+    
+    font-family: Georgia, serif;
+    font-size: 100%;
+    letter-spacing: 1px;
+}
+
+p.math_admonition_title{
+    font-variant: small-caps;
+    font-family: Georgia, serif;
+    font-size: 120%;
+    letter-spacing: 1px;
+}
+
+p.math_admonition_title + * {
+    margin-top: 0.5em;
+}
+
+div.math_admonition {
+    padding: 7px 12px;
+    margin: 1em 0;
+    box-shadow: 0 0 7px #eee;
+    background: rgba(0, 0, 0, 0.04);
+    border: 1px solid #999;
+    border-radius: 2px;
+}
+
+div.math_admonition div.math_admonition {
+    margin-left: 5px;
+    box-shadow: none;
+}
+
+div.math_admonition img {
+    border: 1px solid rgba(0, 0, 0, 0.03);
+}

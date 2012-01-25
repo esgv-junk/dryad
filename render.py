@@ -4,10 +4,11 @@ input_path = os.getcwd() + r'\..\..\knowledge'
 rebuild = False
 #rebuild = True
 
-from dryad import *
+from dryad.markup.renderer import *
+from dryad.markup.renderer.batch_writer import *
 
 def main():
-    set_writer('html')
+    push_renderer('html')
     render_dir(input_path, rebuild)
     print('Done')
     
