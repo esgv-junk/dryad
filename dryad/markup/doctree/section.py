@@ -2,7 +2,8 @@ from pyforge.all import *
 from dryad.markup.doctree import id_dispatcher
 
 class Section:
-    def __init__(self, title_nodes, child_nodes):
+    def __init__(self, section_level, title_nodes, child_nodes):
+        self.section_level = section_level
         self.title_nodes = list(title_nodes)
         self.child_nodes = list(child_nodes)
         
@@ -20,12 +21,20 @@ class Section:
             get_span_text(title_node) 
             for title_node in self.title_nodes
         )
-    
+
+section_level = 0
+
 def parse_section(block_name, inline_text, body_lines):
+    #HACK: assigning section levels while parsing
+    global section_level
+    section_level += 1
+
     from dryad.markup.parser import parse_spans, parse_blocks
     
     title_nodes = parse_spans(inline_text)
     child_nodes = parse_blocks(body_lines)
-    yield Section(title_nodes, child_nodes)
+    yield Section(section_level, title_nodes, child_nodes)
+
+    section_level -= 1
 
 block_parsers = [('section', parse_section)]

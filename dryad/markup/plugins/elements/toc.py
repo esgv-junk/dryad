@@ -18,4 +18,9 @@ def gather_toc_entry_list(node):
     
 def make_table_of_contents(root_node):
     return TableOfContents(gather_toc_entry_list(root_node))
-    
+
+def insert_table_of_contents(root_node):
+    table_of_contents = make_table_of_contents(root_node)
+    root_node.child_nodes[0].child_nodes.insert(0, table_of_contents)
+
+after_parse_document = [insert_table_of_contents]

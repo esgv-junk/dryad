@@ -1,0 +1,16 @@
+{% macro Table(node) %}
+    <center><table>
+    {%- for row in node.rows %}
+        <tr class={{ loop.cycle('odd', 'even') }}>
+        {%- for cell in row.cells %}
+            {%- set rendered_children = cell.child_nodes | render_nodes(sep='\n') %}
+            {%- if cell.is_header_cell %}
+            <th>{{ rendered_children }}</th>
+            {%- else %}
+            <td>{{ rendered_children }}</td>
+            {%- endif %}
+        {%- endfor %}
+        </tr>
+    {%- endfor %}
+    </table></center>
+{% endmacro %}

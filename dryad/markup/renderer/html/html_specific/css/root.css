@@ -8,7 +8,12 @@
 }
 
 p + p {
-    margin-top: 6px;
+    margin-top: 4px;
+}
+
+p {
+    line-height: 1.25;
+    text-indent: 24px;
 }
 
 pre {
@@ -44,12 +49,7 @@ div.central_column {
     border-color: #ddd;*/
 }
 
-p {
-    line-height: 1.3;
-    text-indent: 24px;
-}
-
-li > p, 
+li > p:first-child,
 th > p, td > p, 
 p[display=inline], 
 div + p, center + p, ol + p, ul + p,

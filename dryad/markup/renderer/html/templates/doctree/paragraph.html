@@ -1,0 +1,3 @@
+{% macro Paragraph(node) %}
+    <p>{{ node.child_nodes | render_nodes(sep='') }}</p>
+{% endmacro %}

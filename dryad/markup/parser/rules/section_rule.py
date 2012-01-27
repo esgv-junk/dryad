@@ -61,7 +61,7 @@ def parse_section(section_rule, source):
     eat(source, num_lines_heading_takes)
     
     def is_next_same_level_section_start(source, section_rule, outline_char):
-        # 3to2 fix: removed nonlocal
+        # 3to2 FIX: not using nonlocal for section_file and outline_char
         current_outline_char = \
             section_rule.extract_heading_attributes(source)[1]
         return (outline_char == current_outline_char and

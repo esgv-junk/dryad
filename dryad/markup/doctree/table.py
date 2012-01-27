@@ -1,6 +1,8 @@
 class Table:
     def __init__(self, rows):
         self.rows = list(rows)
+
+        #DEPRECATED: ord_number is not needed anymore
         for ord_number, row in enumerate(self.rows, 1):
             row.ord_number = ord_number
         
@@ -12,5 +14,5 @@ class TableRow:
 class TableCell:
     def __init__(self, child_nodes, is_header_cell=False, horiz_span=1):
         self.child_nodes = list(child_nodes)
-        self.horiz_span = 1
+        self.horiz_span = horiz_span
         self.is_header_cell = is_header_cell

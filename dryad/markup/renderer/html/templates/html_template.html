@@ -1,0 +1,54 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <title>{{ title }}</title>
+
+    <!-- encoding -->
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+    <!-- embedded stylesheets -->
+    {% for text in embedded_css %}
+    <style>
+        {{ text }}
+    </style>
+    {% endfor %}
+
+    <!-- embedded scripts -->
+    {% for text in embedded_js %}
+    <script>
+        {{ text }}
+    </script>
+    {% endfor %}
+
+    <!-- external stylesheets -->
+    {% for filename in external_css %}
+    <link rel="stylesheet" type="text/css"
+          href="file:///{{ basename }}/{{ filename }}" />
+    {% endfor %}
+
+    <!-- external scripts -->
+
+    {% for filename in external_js %}
+    <script type="text/javascript"
+            src="file:///{{ basename }}/{{ filename }}" >
+    </script>
+    {% endfor %}
+
+</head>
+
+
+
+<body>
+
+<div class="central_column">
+
+{{ body }}
+
+</div>
+
+</body>
+
+</html>

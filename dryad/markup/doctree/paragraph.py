@@ -7,7 +7,7 @@ class Paragraph:
 def parse_paragraph(block_name, inline_text, body_lines):
     text = ' '.join(
         line.strip()
-        for line in chain([inline_text], body_lines)
+        for line in body_lines
     )
 
     from dryad.markup.parser import parse_spans

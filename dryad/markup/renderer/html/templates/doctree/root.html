@@ -1,0 +1,11 @@
+{% macro Root(node, view) %}
+    {% set title = node.get_first_section_title() or '' %}
+
+    {% set basename = view.basename %}
+    {% set external_css = view.css_filenames %}
+    {% set external_js = view.js_filenames %}
+
+    {% set body = node.child_nodes | render_nodes(sep='\n\n') %}
+
+    {% include "html_template" %}
+{% endmacro %}

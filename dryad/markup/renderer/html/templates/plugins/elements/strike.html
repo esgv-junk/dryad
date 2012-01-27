@@ -1,0 +1,3 @@
+{% macro Strike(node) -%}
+    <s>{{ node.child_nodes | render_nodes(sep='') }}</s>
+{%- endmacro %}

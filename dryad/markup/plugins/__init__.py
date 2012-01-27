@@ -17,6 +17,7 @@ plugin_list = [
     'dryad.markup.plugins.elements.math', 
     'dryad.markup.plugins.elements.strike',
     'dryad.markup.plugins.elements.symbols',
+    'dryad.markup.plugins.elements.toc',
     'dryad.markup.plugins.elements.unknown',
     
     'dryad.markup.plugins.index',

@@ -3,15 +3,19 @@ ol.toc {
     font-variant: small-caps;
     letter-spacing: 1px;
     font-size: 100%;
+    padding-left: 30px;
 }
 
 ol.toc ol.toc {
-    margin: 0;
-    margin-left: -0.5em;
+    margin: 2px 0 0 -1em;
     font-variant: normal;
     font-family: Verdana;
     letter-spacing: normal;
     list-style-type: square;
+}
+
+ol.toc ol.toc ol.toc {
+    margin-top: 2px;
 }
 
 ol.toc > li {
@@ -19,8 +23,6 @@ ol.toc > li {
     padding: 1px;
 }
 
-
-
-ol.toc > li               {font-size: 125%;}
-ol.toc ol.toc > li        {font-size: 100%;}
-ol.toc ol.toc ol.toc > li {font-size: 80%;}
+ol.toc > li               { font-size: 125%;}
+ol.toc ol.toc > li        { font-size: small; }
+ol.toc ol.toc ol.toc > li { font-size: smaller; }

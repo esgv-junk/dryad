@@ -5,8 +5,7 @@ class k_iter:
     def __init__ (self, seq, lookahead=1, end_padding='', do_rstrip=True):
         if do_rstrip:
             seq = map(str.rstrip, seq)
-        # 3to2 fix
-        # added iter()
+        # 3to2 FIX: added iter()
         self._k_iter = iter(group_k_forward(iter(seq), lookahead, end_padding))
         self.context_ = None
         self.is_done = False

@@ -1,0 +1,5 @@
+{% macro InvisibleBlock(node) %}
+    <span class=invisible>
+        {{ node.child_nodes | render_nodes(sep='\n') }}
+    </span>
+{% endmacro %}

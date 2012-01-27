@@ -7,8 +7,8 @@ from dryad.markup.doctree.list import List, ListItem
 class UnorderedListRule:
     lookahead = 0
     
-    start_re     = r'^\s*[\-\*] '
-    capturing_re = r'^\s*([\-\*]) (.*)'
+    start_re     = r'^\s*[\-\*]( .*)?$'
+    capturing_re = r'^\s*([\-\*])(?: (.*))?$'
     
     @staticmethod
     def applies_to(source):
@@ -49,6 +49,7 @@ def parse_list(source, is_ordered):
                 get_indent(source[0]) == start_indent and 
                 list_rule.applies_to(source)
             )))
+    items_lines = list(items_lines)
     
     yield List(
         is_ordered, 
@@ -75,6 +76,8 @@ def parse_list_items(items_lines, is_ordered):
             if (is_ordered and item_marker != '#')  
             else None
         )
+        if first_line is None:
+            first_line = ''
         item_body_lines = source.takewhile(
             lambda source: (
                 get_indent(source[0]) > start_indent or 
@@ -82,7 +85,7 @@ def parse_list_items(items_lines, is_ordered):
             ))
         item_all_lines = itertools.chain([first_line], item_body_lines)
         
-        from dryad.markup.parser import parse_blocks, parse_spans
+        from dryad.markup.parser import parse_blocks
         yield ListItem(item_num, parse_blocks(item_all_lines))
         
         if source.is_done:

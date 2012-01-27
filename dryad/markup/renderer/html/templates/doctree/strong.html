@@ -1,0 +1,3 @@
+{% macro Strong(node) -%}
+    <strong>{{ node.child_nodes | render_nodes(sep='') }}</strong>
+{%- endmacro %}

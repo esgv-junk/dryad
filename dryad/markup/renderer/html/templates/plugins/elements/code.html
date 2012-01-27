@@ -1,0 +1,7 @@
+{% macro CodeBlock(node, view) %}
+    {{ view.render_code(node.body_lines | join('\n'), node.language) }}
+{% endmacro %}
+
+{% macro CodeSpan(node, view) -%}
+    <tt class="code">{{ node.body_text | escape }}</tt>
+{%- endmacro %}

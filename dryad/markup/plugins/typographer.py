@@ -15,6 +15,7 @@
     # Non-breaking spaces where needed (propositions, articles, dashes).
     # Automatic quotes.
     # Periods and commas should be taken inside strongs and emphs.
+    # Automatic links.
 
 # Math typographer
 # ================

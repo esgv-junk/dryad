@@ -1,0 +1,9 @@
+{% macro List(node) %}
+    {% if node.is_ordered %}<ol>{% else %}<ul>{% endif %}
+    {%- for item in node.items %}
+        <li{% if item.value is not none %} value="{{ item.value }}"{% endif %}>
+            {{ item.child_nodes | render_nodes(sep='\n') }}
+        </li>
+    {%- endfor %}
+    {% if node.is_ordered %}</ol>{% else %}</ul>{% endif %}
+{% endmacro %}

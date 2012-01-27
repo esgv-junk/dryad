@@ -1,0 +1,14 @@
+{% macro MathAdmonitionBlock(node, view) %}
+    <div class="math_admonition {{ node.admonition_type }}">
+        <span class="math_admonition_type {{ node.admonition_type }}">
+            {{ view.type_texts[node.admonition_type] }}
+            {% if node.admonition_type in view.has_number %}{{ node.number }}{% endif %}
+        </span>
+
+        {% if node.title_nodes %}
+            <p class="math_admonition_title"> [{{ node.title_nodes | render_nodes(sep='') }}]</p>
+        {% endif %}
+
+        {{ node.child_nodes | render_nodes(sep='\n') }}
+    </div>
+{% endmacro %}

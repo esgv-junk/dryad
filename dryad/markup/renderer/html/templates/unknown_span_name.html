@@ -1,0 +1,8 @@
+<span class="unknown">
+    <tt class="span_name">{{ span_name | escape }}</tt>
+    {%- if body_text %}
+    <tt class="body_text">{{ body_text | escape }}</tt>
+    {%- else %}
+    <span style="margin-right: 1pt;"></span>
+    {%- endif %}
+</span>
