@@ -1,14 +1,10 @@
 from pyforge.all import *
-from dryad.markup.parser.typographer import typograph_text
-from dryad.markup.doctree.text import Text
- 
- 
+
 text_escapes = { 
     '\\\\': '\\',
     r'\`' : '`',
     r'\*' : '*'
 }
-
 
 class TextRule:
     rule_regexp = '.*?'

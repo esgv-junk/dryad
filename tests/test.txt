@@ -1,8 +1,0 @@
-=====================
-Linear spaces
-=====================
-
-See [http://groups.google.com/groups?q=reverse+bits&num=100&hl=en&group=comp.graphics.algorithms&imgsafe=off&safe=off&rnum=2&ic=1&selm=4fulhm%248dn%40atlas.uniserve.com]`Ian Ashdown's nice newsgroup post`.
-
-Linear spaces
--------------

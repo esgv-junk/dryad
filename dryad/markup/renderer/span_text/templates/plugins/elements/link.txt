@@ -1,0 +1,7 @@
+{% macro Link(node) %}
+    {%- if node.body_text -%}
+        {{ node.body_text }} ({{ node.href }})
+    {%- else -%}
+        {{ node.href }}
+    {%- endif -%}
+{% endmacro %}

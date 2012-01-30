@@ -24,6 +24,8 @@ class MathAdmonitionBlock:
         
         if admonition_type != 'consequence':
             admonition_numbers.reset_id('consequence')
+
+    doctree = ['title_nodes', 'child_nodes']
     
 def parse_math_admonition(block_name, inline_text, body_lines):
     from dryad.markup.parser import parse_blocks, parse_spans

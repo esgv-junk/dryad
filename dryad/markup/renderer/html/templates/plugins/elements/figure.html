@@ -1,6 +1,6 @@
 {% macro Figure(node) %}
     <div class="figure">
-        {{ node.child_nodes | render_nodes(sep='\n') }}
+        {{ node.child_nodes | render(sep='\n') }}
         <p class="caption">{{ node.caption | escape }}</p>
     </div>
 {% endmacro %}

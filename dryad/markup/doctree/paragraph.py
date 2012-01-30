@@ -1,8 +1,14 @@
-from itertools import chain
-
 class Paragraph:
     def __init__(self, child_nodes):
-        self.child_nodes = list(child_nodes)        
+        self.child_nodes = list(child_nodes)
+
+    def __eq__(self, other):
+        return (
+            isinstance(other, Paragraph) and
+            self.child_nodes == other.child_nodes
+        )
+
+    doctree = ['child_nodes']
 
 def parse_paragraph(block_name, inline_text, body_lines):
     text = ' '.join(

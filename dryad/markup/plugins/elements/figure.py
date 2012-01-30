@@ -5,6 +5,8 @@ class Figure:
         self.caption = caption
         self.child_nodes = list(child_nodes)
 
+    doctree = ['child_nodes']
+
 def parse_figure(block_name, inline_text, body_lines):
     from dryad.markup.parser import parse_blocks
     yield Figure(inline_text.strip(), parse_blocks(body_lines))

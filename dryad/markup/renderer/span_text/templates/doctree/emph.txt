@@ -1,0 +1,3 @@
+{% macro Emph(node) -%}
+    {{ node.child_nodes | render }}
+{%- endmacro %}

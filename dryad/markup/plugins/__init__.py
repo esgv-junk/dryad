@@ -1,7 +1,7 @@
 plugin_list = [
     'dryad.markup.doctree',                        # standart elements
     'dryad.markup.doctree.emph',                   
-    'dryad.markup.doctree.list',
+    'dryad.markup.doctree.list_',
     'dryad.markup.doctree.paragraph',
     'dryad.markup.doctree.section',
     'dryad.markup.doctree.strong',
@@ -20,7 +20,5 @@ plugin_list = [
     'dryad.markup.plugins.elements.toc',
     'dryad.markup.plugins.elements.unknown',
     
-    'dryad.markup.plugins.index',
-    'dryad.markup.plugins.settings',               # other plugins
-    'dryad.markup.plugins.typographer'
+    'dryad.markup.plugins.typographer'             # other plugins
 ]

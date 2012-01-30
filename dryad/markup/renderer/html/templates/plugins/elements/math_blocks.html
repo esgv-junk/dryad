@@ -6,9 +6,9 @@
         </span>
 
         {% if node.title_nodes %}
-            <p class="math_admonition_title"> [{{ node.title_nodes | render_nodes(sep='') }}]</p>
+            <p class="math_admonition_title"> [{{ node.title_nodes | render }}]</p>
         {% endif %}
 
-        {{ node.child_nodes | render_nodes(sep='\n') }}
+        {{ node.child_nodes | render(sep='\n') }}
     </div>
 {% endmacro %}

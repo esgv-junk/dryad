@@ -4,7 +4,7 @@
     <ol class="toc">
         {% for entry in entries recursive %}
         <li>
-            <a href="#{{ entry.section.section_id }}">{{ entry.section.title_nodes | render_nodes(sep='') }}</a>
+            <a href="#{{ entry.section.section_id }}">{{ entry.section.title_nodes | render }}</a>
             {% if entry.child_entries %}
             <ol class="toc">
                 {{ loop(entry.child_entries) }}

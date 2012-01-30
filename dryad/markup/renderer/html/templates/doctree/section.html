@@ -2,11 +2,11 @@
     <div class="section">
 
         <h{{ node.section_level }} id="{{ node.section_id }}">
-            {{ node.title_nodes | render_nodes(sep='') }}
+            {{ node.title_nodes | render }}
             <a class="section_anchor" href="#{{ node.section_id }}">&para;</a>
         </h{{ node.section_level }}>
 
-        {{ node.child_nodes | render_nodes(sep='\n\n') }}
+        {{ node.child_nodes | render(sep='\n\n') }}
 
     </div>
 {% endmacro %}

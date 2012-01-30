@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 type_texts = {
     'theorem'    : 'Теорема',
     'definition' : 'Опр.',

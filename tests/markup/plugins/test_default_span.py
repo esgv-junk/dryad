@@ -1,0 +1,73 @@
+from unittest import TestCase
+
+from dryad.markup.doctree import create_doctree_structure
+from dryad.markup.doctree.text import Text
+from dryad.markup.doctree.emph import Emph
+from dryad.markup.plugins.elements.default_span import (
+    SetDefaultSpan, DefaultSpan, replace_default_spans, preferred_default_name
+)
+
+from tests.markup.doctree.test_walker import doctree_structure_ok
+
+class DefaultSpanTestCase(TestCase):
+    def test_simple(self):
+        root_node = Emph([
+            SetDefaultSpan("text"),
+            Text("1"),
+            DefaultSpan("2")
+        ])
+        create_doctree_structure(root_node)
+
+        replace_default_spans(root_node)
+        correct_node = Emph([Text("1"), Text("2")])
+
+        self.assertEqual(root_node, correct_node)
+        self.assertTrue(doctree_structure_ok(root_node))
+
+    def test_horiz_scope(self):
+        from dryad.markup.parser import parse_span
+
+        root_node = Emph([
+            DefaultSpan("1"),
+            SetDefaultSpan("text"),
+            DefaultSpan("2"),
+            SetDefaultSpan("emph"),
+            DefaultSpan("3")
+        ])
+        create_doctree_structure(root_node)
+
+        replace_default_spans(root_node)
+        correct_node = Emph(
+            list(parse_span(preferred_default_name, "1")) + [
+                Text("2"),
+                Emph([
+                    Text("3")
+                ])
+            ])
+
+        self.assertEqual(root_node, correct_node)
+        self.assertTrue(doctree_structure_ok(root_node))
+
+    def test_vert_scope(self):
+        root_node = Emph([
+            SetDefaultSpan("text"),
+            DefaultSpan("1"),
+            Emph([
+                DefaultSpan("2"),
+                SetDefaultSpan("emph"),
+                DefaultSpan("3")
+            ])
+        ])
+        create_doctree_structure(root_node)
+
+        replace_default_spans(root_node)
+        correct_node = Emph([
+            Text("1"),
+            Emph([
+                Text("2"),
+                Emph([Text("3")])
+            ])
+        ])
+
+        self.assertEqual(root_node, correct_node)
+        self.assertTrue(doctree_structure_ok(root_node))

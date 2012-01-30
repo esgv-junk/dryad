@@ -1,6 +1,5 @@
 from pyforge.all import *
 from dryad.markup.parser.k_iter import k_iter
-from dryad.markup.parser.typographer import typograph_math
 
 math_include = """
 \\newcommand{\\rank}{\\mathrm{rank}}
@@ -65,10 +64,7 @@ def parse_math_block(block_name, inline_text, body_lines):
         while is_blank(source[0]):      # lines
             eat(source, 1)
         
-        body_lines = map(
-            typograph_math,
-            source.takewhile(lambda source: not is_blank(source[0]))
-        )
+        body_lines = source.takewhile(lambda source: not is_blank(source[0]))
         yield MathBlock(body_lines)
                   
         if source.is_done: 

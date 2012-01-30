@@ -1,7 +1,7 @@
 import re
 from pyforge.all import *
 from dryad.markup.parser.k_iter import k_iter
-from dryad.markup.doctree.list import List, ListItem
+from dryad.markup.doctree.list_ import List, ListItem
 
 
 class UnorderedListRule:

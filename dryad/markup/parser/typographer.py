@@ -27,3 +27,4 @@ def typograph_text(text):
     
 def typograph_math(body_text):
     return multiple_replace_re(body_text, math_replaces)
+

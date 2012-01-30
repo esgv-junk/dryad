@@ -29,7 +29,7 @@ def render_file(in_filename, ignore_rendered=False):
         in_file.close()
         
         #rendered_document = render_document(root)
-        rendered_document = render_nodes([root])
+        rendered_document = render_nodes(root)
         out_file = open(out_filename, 'w', encoding='utf_8')
         out_file.write(rendered_document)
         out_file.close()

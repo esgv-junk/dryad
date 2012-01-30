@@ -1,4 +1,4 @@
-import re, itertools
+from importlib import import_module
 from pyforge.all import *
 from dryad.markup.parser.k_iter import *
 

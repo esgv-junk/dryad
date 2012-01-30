@@ -5,7 +5,12 @@ def render_code(body_text, language):
         pygments_lexer = pygments.lexers.TextLexer()
 
     elif language == 'auto':       # automatically guess language
-        pygments_lexer = pygments.lexers.guess_lexer(body_text)
+        try:
+            pygments_lexer = pygments.lexers.guess_lexer(body_text)
+        except TypeError:
+            # Pygments has a bug: on certain input, guess_lexer can raise
+            # TypeError exception
+            pygments_lexer = pygments.lexers.TextLexer()
 
     else:
         pygments_lexer = (         # language has been specified
