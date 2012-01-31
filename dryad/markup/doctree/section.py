@@ -7,10 +7,6 @@ class Section:
         self.title_nodes = list(title_nodes)
         self.child_nodes = list(child_nodes)
         
-        self.section_id = id_dispatcher.dispatch_id(
-            to_id(render(*self.title_nodes, renderer='span_text'))
-        )
-
     def __eq__(self, other):
         return (
             isinstance(other, Section) and
@@ -27,13 +23,16 @@ def parse_section(block_name, inline_text, body_lines):
     child_nodes = parse_blocks(body_lines)
     yield Section(title_nodes, child_nodes)
 
-def assign_section_levels(root):
+def assign_section_levels_and_ids(root):
     section_level = 0
 
     def on_enter(node):
         nonlocal section_level
         section_level += 1
         node.section_level = section_level
+        node.section_id = id_dispatcher.dispatch_id(
+            to_id(render(*node.title_nodes, renderer='span_text'))
+        )
 
     def on_exit(node):
         nonlocal section_level
@@ -42,4 +41,4 @@ def assign_section_levels(root):
     eat(walk(root, on_enter, on_exit, type_selector(Section)))
 
 block_parsers        = [('section', parse_section)]
-after_parse_document = [assign_section_levels]
+after_parse_document = [assign_section_levels_and_ids]

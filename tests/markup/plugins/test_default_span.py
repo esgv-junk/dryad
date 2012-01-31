@@ -3,6 +3,7 @@ from unittest import TestCase
 from dryad.markup.doctree import create_doctree_structure
 from dryad.markup.doctree.text import Text
 from dryad.markup.doctree.emph import Emph
+from dryad.markup.doctree.section import Section, assign_section_levels_and_ids
 from dryad.markup.plugins.elements.default_span import (
     SetDefaultSpan, DefaultSpan, replace_default_spans, preferred_default_name
 )
@@ -20,6 +21,22 @@ class DefaultSpanTestCase(TestCase):
 
         replace_default_spans(root_node)
         correct_node = Emph([Text("1"), Text("2")])
+
+        self.assertEqual(root_node, correct_node)
+        self.assertTrue(doctree_structure_ok(root_node))
+
+    def test_not_set(self):
+        from dryad.markup.parser import parse_span
+
+        root_node = Emph([
+            DefaultSpan("1")
+        ])
+        create_doctree_structure(root_node)
+
+        replace_default_spans(root_node)
+        correct_node = Emph(
+            list(parse_span(preferred_default_name, "1"))
+        )
 
         self.assertEqual(root_node, correct_node)
         self.assertTrue(doctree_structure_ok(root_node))
@@ -68,6 +85,33 @@ class DefaultSpanTestCase(TestCase):
                 Emph([Text("3")])
             ])
         ])
+
+        self.assertEqual(root_node, correct_node)
+        self.assertTrue(doctree_structure_ok(root_node))
+
+    def test_section_title(self):
+        """
+        Test default spans within section titles.
+
+        Sections get their IDs by rendering their title_nodes. By that moment,
+        default spans should already be replaced, since there is no renderer for
+        DefaultSpan nodes. If they are not replaced, renderer could raise
+        TemplateNotFound or just ignore DefaultSpan nodes, both are bad.
+        """
+
+        from dryad.markup.parser import parse_span
+
+        root_node = Section([
+            DefaultSpan("1")
+        ], [])
+        create_doctree_structure(root_node)
+        replace_default_spans(root_node)
+        assign_section_levels_and_ids(root_node)
+
+        correct_node = Section(
+            list(parse_span(preferred_default_name, "1")),
+            []
+        )
 
         self.assertEqual(root_node, correct_node)
         self.assertTrue(doctree_structure_ok(root_node))
