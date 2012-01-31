@@ -3,6 +3,7 @@ from importlib import import_module
 import jinja2
 from pyforge.all import *
 
+@cache
 def find_view_module(node_class, renderer):
     node_module_local_path = drop_first_module(
         node_class.__module__,
@@ -39,6 +40,7 @@ class DryadRendererLoader(jinja2.BaseLoader):
     def get_source(self, environment, template):
         return self._get_source(template, get_renderer())
 
+@cache
 def find_template_render_func(node_class, renderer):
     node_module_local_path = drop_first_module(
         node_class.__module__,

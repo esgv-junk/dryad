@@ -1,10 +1,10 @@
 {% macro MathBlock(node, view) %}
-    <div class="math">$$
+    <div class="math preloaded">$$
         {{ view.escape_math(node.body_lines | join('\n')) | escape }}
     $$</div>
 {% endmacro %}
 
 {% macro MathSpan(node, view) -%}
-    <span class="math">${{ view.escape_math(node.body_text) | escape }}$</span>
+    <span class="math preloaded">${{ view.escape_math(node.body_text) | escape }}$</span>
 {%- endmacro %}
 

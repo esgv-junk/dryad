@@ -1,5 +1,8 @@
 .math {
     font-variant: normal;
+}
+
+.math.preloaded {
     color: #666;
 }
 

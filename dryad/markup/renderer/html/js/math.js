@@ -56,7 +56,10 @@ function processAllMathElements() {
 		}
 		
 		for (var i = 0; i < mathElements.length; ++i) {
-			MathJax.Hub.Queue(["Typeset", MathJax.Hub, mathElements[i]]);
+            MathJax.Hub.Queue(
+              ["Typeset", MathJax.Hub, mathElements[i]],
+              ["remove", mathElements[i].classList, "preloaded"]
+            )
 		}
 	}
 }
