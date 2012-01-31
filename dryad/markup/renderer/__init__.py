@@ -94,9 +94,11 @@ def push_renderer(renderer):
     if isinstance(renderer, str):
         renderer = get_bundled_renderer_module(renderer)
 
+    jinja_env.cache.clear()
     renderers_stack.append(renderer)
 
 def pop_renderer():
+    jinja_env.cache.clear()
     renderers_stack.pop()
 
 def get_renderer():

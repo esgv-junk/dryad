@@ -12,6 +12,7 @@ h1, h2, h3, h4, h5, h6 {
     color: hsl(200, 50%, 30%);
     margin-bottom: 12px;
     margin-top: 12px;
+    text-align: left;
 }
 
 h1 { font-size: 250%; color: hsl(200, 50%, 25%); }
