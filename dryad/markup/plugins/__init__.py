@@ -1,11 +1,13 @@
 plugin_list = [
+    # First plugin, registering callbacks for creating doctree structure
+    'dryad.markup.doctree',
+
     # default_span goes before section, because section renders its title_nodes
     # to get its ID, so default spans within title_nodes should already be
     # replaced at that moment
     'dryad.markup.plugins.elements.default_span',
 
-    'dryad.markup.doctree',                        # standart elements
-    'dryad.markup.doctree.emph',                   
+    'dryad.markup.doctree.emph',                   # standart elements
     'dryad.markup.doctree.list_',
     'dryad.markup.doctree.paragraph',
     'dryad.markup.doctree.section',
