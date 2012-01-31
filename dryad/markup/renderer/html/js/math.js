@@ -8,8 +8,7 @@ function loadScript(src, innerHTML) {
   if (window.opera) {
     script.innerHTML = innerHTML;
   }
-  else 
-  {
+  else {
     script.text = innerHTML;
   }
   
@@ -21,8 +20,8 @@ function loadMathJax() {
 		return;
 	}
 	
-	var jaxSrc = "http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
-	//var jaxSrc = "http://cdn.mathjax.org/mathjax/latest/MathJax.js";
+	//var jaxSrc = "http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+  var jaxSrc = "file:///D:/Dropbox/code/3rd_party/mathjax/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
 	
 	var jaxConfig = 
 	  'MathJax.Hub.Config({' +
@@ -48,20 +47,20 @@ function processAllMathElements() {
 	mathElements = document.getElementsByClassName("math");
 
 	if (mathElements.length > 0) {
-		loadMathJax();
-		
-		if (typeof MathJax === 'undefined') {
-		  setTimeout(processAllMathElements, 10);
-		  return;
-		}
-		
-		for (var i = 0; i < mathElements.length; ++i) {
-            MathJax.Hub.Queue(
-              ["Typeset", MathJax.Hub, mathElements[i]],
-              ["remove", mathElements[i].classList, "preloaded"]
-            )
-		}
-	}
+    loadMathJax();
+
+    if (typeof MathJax === 'undefined') {
+      setTimeout(processAllMathElements, 10);
+      return;
+    }
+
+    for (var i = 0; i < mathElements.length; ++i) {
+      MathJax.Hub.Queue(
+        ["Typeset", MathJax.Hub, mathElements[i]],
+        ["remove", mathElements[i].classList, "preloaded"]
+      )
+    }
+  }
 }
 
 window.onload = processAllMathElements;
