@@ -6,7 +6,7 @@
         <div class="unknown">
             {% include "unknown_span_name" %}
             <pre>
-                {{ node.body_lines | join('\n') | escape }}
+                {{- node.body_lines | join('\n') | escape -}}
             </pre>
         </div>
     {% else %}
