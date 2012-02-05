@@ -2,11 +2,11 @@ from pyforge.all import *
 from dryad.markup.parser.k_iter import k_iter
 
 math_include = """
-\\newcommand{\\rank}{\\mathrm{rank}}
-\\newcommand{\\tr}{\\mathrm{tr}}
-\\newcommand{\\dim}{\\mathrm{dim}}
-\\newcommand{\\ker}{\\mathrm{ker}}
-\\newcommand{\\im}{\\mathrm{im}}
+\\newcommand{\\rank}{\\mathop\\mathrm{rank}}
+\\newcommand{\\tr}{\\mathop\\mathrm{tr}}
+\\newcommand{\\dim}{\\mathop\\mathrm{dim}}
+\\newcommand{\\ker}{\\mathop\\mathrm{ker}}
+\\newcommand{\\im}{\\mathop\\mathrm{im}}
 
 \\newcommand{\\to}{\\mathop\\longrightarrow}
 \\newcommand{\\intl}{\\int\\limits}
