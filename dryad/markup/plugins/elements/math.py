@@ -2,6 +2,9 @@ from pyforge.all import *
 from dryad.markup.parser.k_iter import k_iter
 
 math_include = """
+\\newcommand{\\prob}{\\mathrm{P}}
+\\newcommand{\\mean}{\\mathrm{E}}
+
 \\newcommand{\\rank}{\\mathrm{rank}}
 \\newcommand{\\tr}{\\mathrm{tr}}
 \\newcommand{\\dim}{\\mathrm{dim}}
@@ -18,9 +21,8 @@ math_include = """
 \\renewcommand{\\phi}{\\varphi}
 \\newcommand{\\eps}{\\varepsilon}
 \\renewcommand{\\emptyset}{\\varnothing}
+\\renewcommand{\\mod}{\,\\mathop{\\mathrm{mod}}\,}
 """
-
-"""\\renewcommand{\\bar}{\\overline}"""
 
 math_include_done = False
  
