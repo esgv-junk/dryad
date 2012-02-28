@@ -158,6 +158,14 @@ class DoctreeStructureTestCase(DoctreeTestCase):
             self.assertEqual(node.sibling_index, self.sibling_indices[i])
 
         self.assertTrue(doctree_structure_ok(self.root_node))
+        
+    def test_replace_empty(self):
+        correct_nodes = self.all_nodes[0:1] + self.all_nodes[4:]
+        replace_node(self.all_nodes[1], [])
+        walk_nodes = walk(self.root_node)
+
+        self.assertSequenceEqual(list(walk_nodes), correct_nodes)
+        self.assertTrue(doctree_structure_ok(self.root_node))
 
     def test_replace_single(self):
         target = Text("3")

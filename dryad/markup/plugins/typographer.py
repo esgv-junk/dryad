@@ -48,11 +48,11 @@ typographic_replaces = {
 }
 
 math_replaces = [
-    (r'\\left\s*([(\[\\lfloor])' , r'\1'),
-    (r'\\right\s*([)\\\rfloor]])', r'\1'),
-    (r'\((.*)\)', r'\\left( \1 \\right)'),
-    (r'\[(.*)\]', r'\\left[ \1 \\right]'),
-    (r'\\lfloor(.*)\\rfloor', r'\\left\lfloor \1 \\right\\rfloor'),
+    (r'\\left\s*([(\[]|\\lfloor)' , r'\1'),
+    (r'\\right\s*([)\]]\\rfloor)', r'\1'),
+    (r'\((.*?)\)', r'\\left( \1 \\right)'),
+    (r'\[(.*?)\]', r'\\left[ \1 \\right]'),
+    (r'\\lfloor(.*?)\\rfloor', r'\\left\lfloor \1 \\right\\rfloor'),
 ]
 
 def typograph_text(text):

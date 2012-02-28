@@ -83,6 +83,7 @@ jinja_env = jinja2.Environment(
 
 renderers_stack = []
 
+@cache
 def get_bundled_renderer_module(renderer_name):
     try:
         renderer_name = 'dryad.markup.renderer.' + renderer_name

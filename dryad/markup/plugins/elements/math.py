@@ -18,12 +18,15 @@ math_include = """
 \\newcommand{\\iintl}{\\iint\\limits}
 \\newcommand{\\iiintl}{\\iiint\\limits}
 \\newcommand{\\d}{\\partial}
+\\newcommand{\\vbar}{\ \\big|\ }
 
 \\renewcommand{\\phi}{\\varphi}
 \\newcommand{\\eps}{\\varepsilon}
 \\renewcommand{\\emptyset}{\\varnothing}
 \\renewcommand{\\mod}{\,\\mathop{\rm mod}\,}
 """
+
+"""\\renewcommand{\\bar}{\\overline}"""
 
 math_include_done = False
  
