@@ -2,26 +2,27 @@ from pyforge.all import *
 from dryad.markup.parser.k_iter import k_iter
 
 math_include = """
-\\newcommand{\\prob}{\\mathrm{P}}
-\\newcommand{\\mean}{\\mathrm{E}}
+\\renewcommand{\\Pr}{\\mathop{\\rm P}\\nolimits}
+\\newcommand{\\mean}{\\mathop{\\rm E}\\nolimits}
+\\newcommand{\\var}{\\mathop{\\rm D}\\nolimits}
+\\newcommand{\\ind}{\\mathop{\\rm I}\\nolimits}
 
-\\newcommand{\\rank}{\\mathrm{rank}}
-\\newcommand{\\tr}{\\mathrm{tr}}
-\\newcommand{\\dim}{\\mathrm{dim}}
-\\newcommand{\\ker}{\\mathrm{ker}}
-\\newcommand{\\im}{\\mathrm{im}}
+\\newcommand{\\rank}{\\mathop{\\rm rank}\\nolimits}
+\\newcommand{\\tr}{\\mathop{\\rm tr}\\nolimits}
+\\newcommand{\\dim}{\\mathop{\\rm dim}\\nolimits}
+\\newcommand{\\ker}{\\mathop{\\rm ker}\\nolimits}
+\\newcommand{\\im}{\\mathop{\\rm im}\\nolimits}
 
 \\newcommand{\\to}{\\mathop\\longrightarrow}
 \\newcommand{\\intl}{\\int\\limits}
 \\newcommand{\\iintl}{\\iint\\limits}
 \\newcommand{\\iiintl}{\\iiint\\limits}
 \\newcommand{\\d}{\\partial}
-\\newcommand{\\vbar}{\ \\big|\ }
 
 \\renewcommand{\\phi}{\\varphi}
 \\newcommand{\\eps}{\\varepsilon}
 \\renewcommand{\\emptyset}{\\varnothing}
-\\renewcommand{\\mod}{\,\\mathop{\\mathrm{mod}}\,}
+\\renewcommand{\\mod}{\,\\mathop{\rm mod}\,}
 """
 
 math_include_done = False
