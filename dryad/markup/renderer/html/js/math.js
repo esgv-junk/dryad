@@ -24,8 +24,8 @@ function loadMathJax() {
   var jaxSrc = "file:///D:/Dropbox/code/3rd_party/mathjax/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
 	
 	var jaxConfig = 
-	  'MathJax.Hub.Config({' +
-	    'skipStartupTypeset: true,' +
+    'MathJax.Hub.Config({' +
+      'skipStartupTypeset: true,' +
       'tex2jax: {' +
         'inlineMath: [["$", "$"]]' +
       '},' +

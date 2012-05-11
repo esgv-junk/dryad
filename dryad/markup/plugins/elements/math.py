@@ -1,11 +1,13 @@
 from pyforge.all import *
 from dryad.markup.parser.k_iter import k_iter
+from dryad.markup.doctree.walker import find, type_selector
 
 math_include = """
 \\renewcommand{\\Pr}{\\mathop{\\rm P}\\nolimits}
+\\newcommand{\\ind}{\\mathop{\\rm I}\\nolimits}
 \\newcommand{\\mean}{\\mathop{\\rm E}\\nolimits}
 \\newcommand{\\var}{\\mathop{\\rm D}\\nolimits}
-\\newcommand{\\ind}{\\mathop{\\rm I}\\nolimits}
+\\newcommand{\\cov}{\\mathop{\\rm cov}}
 
 \\newcommand{\\rank}{\\mathop{\\rm rank}\\nolimits}
 \\newcommand{\\tr}{\\mathop{\\rm tr}\\nolimits}
@@ -13,40 +15,23 @@ math_include = """
 \\newcommand{\\ker}{\\mathop{\\rm ker}\\nolimits}
 \\newcommand{\\im}{\\mathop{\\rm im}\\nolimits}
 
+\\renewcommand{\\liminf}{\\mathop{\\overline{\lim}}}
+\\renewcommand{\\limsup}{\\mathop{\\underline{\lim}}}
 \\newcommand{\\to}{\\mathop\\longrightarrow}
+\\newcommand{\\implies}{\\Rightarrow}
 \\newcommand{\\intl}{\\int\\limits}
 \\newcommand{\\iintl}{\\iint\\limits}
 \\newcommand{\\iiintl}{\\iiint\\limits}
 \\newcommand{\\d}{\\partial}
-\\newcommand{\\vbar}{\ \\big|\ }
+\\renewcommand{\\l}{\\left}
+\\renewcommand{\\r}{\\right}
 
 \\renewcommand{\\phi}{\\varphi}
 \\newcommand{\\eps}{\\varepsilon}
 \\renewcommand{\\emptyset}{\\varnothing}
-\\renewcommand{\\mod}{\,\\mathop{\rm mod}\,}
+\\renewcommand{\\mod}{\\,\\mathop{\\rm mod}\\,}
+\\newcommand{\\const}{\\mathrm{const}}
 """
-
-"""\\renewcommand{\\bar}{\\overline}"""
-
-math_include_done = False
- 
-def yield_math_includes():
-    global math_include_done
-    if math_include_done: 
-        return []
-    
-    math_include_done = True
-    
-    from dryad.markup.plugins.elements.invisible import InvisibleBlock
-    return [
-        InvisibleBlock([ MathSpan(math_include) ])
-    ]
-    
-def reset_state():
-    global math_include_done
-    math_include_done = False
-    
-before_parse_document = [reset_state]
 
 class MathBlock:
     def __init__(self, body_lines):
@@ -57,12 +42,6 @@ class MathSpan:
         self.body_text = body_text
        
 def parse_math_block(block_name, inline_text, body_lines):
-    for node in yield_math_includes():
-        yield node
-    
-    if inline_text:                     # inline text goes into separate
-        yield MathBlock([inline_text])  # block
-        
     source = k_iter(body_lines, lookahead=0)
     next(source, None)
 
@@ -77,10 +56,19 @@ def parse_math_block(block_name, inline_text, body_lines):
             break
         
 def parse_math_span(span_name, body_text):
-    for node in yield_math_includes():
-        yield node
-    
     yield MathSpan(body_text)
 
-block_parsers = [(r'math'   , parse_math_block)]
-span_parsers  = [(r'math|\$', parse_math_span )]
+def make_math_includes(root):
+    # if math includes are not necessary, don't do them
+    math_nodes = find(root, type_selector(MathBlock, MathSpan))
+    if is_empty(math_nodes):
+        return
+
+    from dryad.markup.plugins.elements.invisible import InvisibleBlock
+    # HACK: inserting into child_nodes[0], since it won't break TOC incorrect
+    # behaviour
+    root.child_nodes[0].child_nodes.insert(0, InvisibleBlock([ MathSpan(math_include) ]))
+
+block_parsers        = [(r'math'   , parse_math_block)]
+span_parsers         = [(r'math|\$', parse_math_span )]
+after_parse_document = [make_math_includes]

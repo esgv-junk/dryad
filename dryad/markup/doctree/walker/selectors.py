@@ -4,5 +4,5 @@ def true_selector(node):
 def false_selector(node):
     return False
 
-def type_selector(node_type):
-     return lambda node: isinstance(node, node_type)
+def type_selector(*node_types):
+     return lambda node: isinstance(node, node_types)

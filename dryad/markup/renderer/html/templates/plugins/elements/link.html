@@ -1,5 +1,3 @@
 {% macro Link(node) -%}
-    <a href="{{ node.href | escape }}">
-        {{ (node.body_text or node.href) | escape }}
-    </a>
+    <a href="{{ node.href | escape }}">{{ (node.body_text or node.href) | escape }}</a>
 {%- endmacro %}

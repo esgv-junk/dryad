@@ -7,6 +7,9 @@ plugin_list = [
     # replaced at that moment
     'dryad.markup.plugins.elements.default_span',
 
+    # math should do its includes after default_span replacements have been done.
+    'dryad.markup.plugins.elements.math',
+
     'dryad.markup.doctree.emph',                   # standart elements
     'dryad.markup.doctree.list_',
     'dryad.markup.doctree.paragraph',
@@ -20,7 +23,6 @@ plugin_list = [
     'dryad.markup.plugins.elements.invisible',
     'dryad.markup.plugins.elements.link',
     'dryad.markup.plugins.elements.math_blocks', 
-    'dryad.markup.plugins.elements.math', 
     'dryad.markup.plugins.elements.strike',
     'dryad.markup.plugins.elements.symbols',
     'dryad.markup.plugins.elements.toc',

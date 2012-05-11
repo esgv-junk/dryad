@@ -60,7 +60,8 @@ def typograph_text(text):
     return multiple_replace_re(text, typographic_replaces)
 
 def typograph_math(body_text):
-    return multiple_replace_re(body_text, math_replaces)
+    #return multiple_replace_re(body_text, math_replaces)
+    return body_text
 
 def typograph_all_text(root):
     for node in find(root, type_selector(Text)):

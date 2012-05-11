@@ -1,4 +1,5 @@
-from dryad.markup.doctree.walker.selectors import true_selector, false_selector
+from dryad.markup.doctree.walker.selectors import \
+    true_selector, false_selector, type_selector
 
 class StopPropagation(Exception):
     def __init__(self, levels = 1, message=''):
