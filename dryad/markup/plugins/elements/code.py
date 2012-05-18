@@ -5,7 +5,8 @@ supported_languages = [
     'code',                     # Do not highlight.
     'auto',                     # Automatically determine language. 
     'c++', 'cpp',               # C++         
-    'python', 'python3'         # Python
+    'python', 'python3',        # Python
+    'yaml', 'xml',              # markup
 ]
 
 class CodeBlock:

@@ -9,7 +9,7 @@ admonition_types = [
     'statement',
     'proof',
     'remark',
-    'consequence',
+    'corollary',
     'lemma'
 ]
 
@@ -22,8 +22,8 @@ class MathAdmonitionBlock:
         self.child_nodes = list(child_nodes)
         self.number = admonition_numbers.dispatch_id(admonition_type)
         
-        if admonition_type != 'consequence':
-            admonition_numbers.reset_id('consequence')
+        if admonition_type != 'corollary':
+            admonition_numbers.reset_id('corollary')
 
     doctree = ['title_nodes', 'child_nodes']
     

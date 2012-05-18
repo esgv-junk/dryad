@@ -26,3 +26,7 @@ ol.toc > li {
 ol.toc > li               { font-size: 125%;}
 ol.toc ol.toc > li        { font-size: small; }
 ol.toc ol.toc ol.toc > li { font-size: smaller; }
+
+div.section > .toc {
+    margin-bottom: 1em;
+}

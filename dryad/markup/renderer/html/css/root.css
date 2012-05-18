@@ -8,12 +8,12 @@
 }
 
 p + p {
-    margin-top: 4px;
+    margin-top: 1em;
+    /* text-indent: 24px; */
 }
 
 p {
     line-height: 1.25;
-    text-indent: 24px;
 }
 
 pre {
@@ -28,7 +28,7 @@ body {
     
     font-family: Verdana;
     font-size: 10pt;
-    background: #f8f8f8;
+    /* background: #f8f8f8; */
 }
 
 div.central_column {
@@ -49,10 +49,10 @@ div.central_column {
     border-color: #ddd;*/
 }
 
-li > p:first-child,
+/*li > p:first-child,
 th > p, td > p, 
-p[display=inline], 
-div + p, center + p, ol + p, ul + p,
+p[display=inline],
+div + p, center + p, ol + p, ul + p,*/
 tt, span {
     text-indent: 0;
 }
