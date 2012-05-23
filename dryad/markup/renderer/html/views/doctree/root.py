@@ -11,8 +11,8 @@ def get_first_section(node):
 
 basename = os.getcwd()
 
-css_filenames = glob.glob('dryad/markup/renderer/html/css/*.css')
-js_filenames  = glob.glob('dryad/markup/renderer/html/js/*.js')
+css_filenames = glob.glob('D:/Dropbox/code/dryad/dryad/markup/renderer/html/css/*.css')
+js_filenames  = glob.glob('D:/Dropbox/code/dryad/dryad/markup/renderer/html/js/*.js')
 
 css_content = list(map(read_text_file, css_filenames))
 js_content = list(map(read_text_file, js_filenames))
