@@ -2,11 +2,11 @@ import itertools
 from pyforge.all import *
 
 supported_languages = [
-    'code',                     # Do not highlight.
-    'auto',                     # Automatically determine language. 
-    'c++', 'cpp',               # C++         
-    'python', 'python3',        # Python
-    'yaml', 'xml',              # markup
+    u'code',                     # Do not highlight.
+    u'auto',                     # Automatically determine language.
+    u'c++', u'cpp',               # C++
+    u'python', u'python3',        # Python
+    u'yaml', u'xml',              # markup
 ]
 
 class CodeBlock:

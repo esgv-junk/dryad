@@ -43,8 +43,8 @@ block_rules = [SectionRule2, SectionRule3]
 def title_matches_outline(title, outline):
     indents_match = (get_indent(title) == get_indent(outline) == 0)
     
-    outline_re = "^{char}{{{min_repeats},}}$".format(
-        char='[=\-~]',
+    outline_re = u"^{char}{{{min_repeats},}}$".format(
+        char=u'[=\-~]',
         min_repeats=len(title)
     )
     
@@ -71,4 +71,4 @@ def parse_section(section_rule, source):
         lambda s: not is_next_same_level_section_start(s, section_rule, outline_char))
     
     from dryad.markup.parser import parse_block
-    return parse_block('section', title, body_lines)
+    return parse_block(u'section', title, body_lines)

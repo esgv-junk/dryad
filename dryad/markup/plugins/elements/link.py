@@ -6,4 +6,4 @@ class Link:
 def parse_link(span_name, body_text):
     yield Link(span_name, body_text)
     
-span_parsers = [(r'[a-z]+://.*', parse_link)]
+span_parsers = [(ur'[a-z]+://.*', parse_link)]

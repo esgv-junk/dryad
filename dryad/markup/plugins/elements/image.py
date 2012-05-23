@@ -6,5 +6,5 @@ def parse_image(block_name, inline_text, body_lines):
     path = inline_text.strip()
     yield ImageBlock(path)
     
-block_parsers = [('image', parse_image)]
+block_parsers = [(u'image', parse_image)]
 

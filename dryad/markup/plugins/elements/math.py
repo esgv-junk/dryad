@@ -69,6 +69,6 @@ def make_math_includes(root):
     # behaviour
     root.child_nodes[0].child_nodes.insert(0, InvisibleBlock([ MathSpan(math_include) ]))
 
-block_parsers        = [(r'math'   , parse_math_block)]
-span_parsers         = [(r'math|\$', parse_math_span )]
+block_parsers        = [(u'math'   , parse_math_block)]
+span_parsers         = [(ur'math|\$', parse_math_span )]
 after_parse_document = [make_math_includes]

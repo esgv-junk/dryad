@@ -4,8 +4,8 @@ from dryad.markup.doctree.emph import Emph
 
 
 emph_escapes = {
-    '\\\\': '\\',
-   r'\*'   : '*' 
+    u'\\\\': u'\\',
+   ur'\*'  : u'*'
 }
 
 class EmphRule:
@@ -16,6 +16,6 @@ class EmphRule:
         body_text = multiple_replace(text[1:-1], emph_escapes)
         
         from dryad.markup.parser import parse_span
-        return parse_span('emph', body_text)
+        return parse_span(u'emph', body_text)
     
 span_rules = [EmphRule]

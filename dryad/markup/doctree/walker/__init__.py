@@ -79,6 +79,6 @@ def find_first(node,
                stop_siblings=false_selector,
                stop_walk=false_selector):
     return next(
-        find(node, selector, stop_propagation, stop_siblings, stop_walk),
+        iter(find(node, selector, stop_propagation, stop_siblings, stop_walk)),
         None
     )

@@ -1,8 +1,8 @@
 from pyforge.all import *
 
 math_escapes = {
-    r'\$': r'\$',
-    r'$' : r'\$'
+    ur'\$': ur'\$',
+    ur'$' : ur'\$'
 }
 
 def escape_math(string):

@@ -2,9 +2,10 @@ from pyforge.all import *
 
 class k_iter:
     
-    def __init__ (self, seq, lookahead=1, end_padding='', do_rstrip=True):
+    def __init__ (self, seq, lookahead=1, end_padding=u'', do_rstrip=True):
+        seq = list(seq)
         if do_rstrip:
-            seq = map(str.rstrip, seq)
+            seq = map(unicode.rstrip, seq)
         # 3to2 FIX: added iter()
         self._k_iter = iter(group_k_forward(iter(seq), lookahead, end_padding))
         self.context_ = None
@@ -17,6 +18,8 @@ class k_iter:
             self.is_done = True
             raise
         return self.context_[0]
+
+    next = __next__
 
     def __iter__(self):
         return self

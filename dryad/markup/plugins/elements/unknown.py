@@ -29,6 +29,6 @@ def parse_unknown_block(block_name, inline_text, body_lines):
 def parse_unknown_span(span_name, body_text):
     yield UnknownSpan(span_name, body_text)
 
-block_parsers = [('.*', parse_unknown_block)]
-block_parsers = [('.*', parse_unknown_block)]
-span_parsers  = [('.*', parse_unknown_span )]
+block_parsers = [(u'.*', parse_unknown_block)]
+block_parsers = [(u'.*', parse_unknown_block)]
+span_parsers  = [(u'.*', parse_unknown_span )]

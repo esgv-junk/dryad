@@ -34,25 +34,25 @@ from dryad.markup.doctree.text import Text
 from dryad.markup.plugins.elements.math import MathBlock
 
 typographic_escapes = {
-    '->' : '\u2192',
-    '<-' : '\u2190',
-    '<->': '\u2194',
-    '--' : '\u2014',    # em dash
-    '<<' : '\u00ab',    # left quote
-    '>>' : '\u00bb'     # right quote
+    u'->' : u'\u2192',
+    u'<-' : u'\u2190',
+    u'<->': u'\u2194',
+    u'--' : u'\u2014',    # em dash
+    u'<<' : u'\u00ab',    # left quote
+    u'>>' : u'\u00bb'     # right quote
 }
 
 typographic_replaces = {
-    (' - '     , ' \u2014 '),          # em dash (expreimental)
-    (r'"(.*?)"', '\u00ab\\1\u00bb')
+    (u' - '     , u' \u2014 '),          # em dash (expreimental)
+    (ur'"(.*?)"', u'\u00ab\\1\u00bb')
 }
 
 math_replaces = [
-    (r'\\left\s*([(\[]|\\lfloor)' , r'\1'),
-    (r'\\right\s*([)\]]\\rfloor)', r'\1'),
-    (r'\((.*?)\)', r'\\left( \1 \\right)'),
-    (r'\[(.*?)\]', r'\\left[ \1 \\right]'),
-    (r'\\lfloor(.*?)\\rfloor', r'\\left\lfloor \1 \\right\\rfloor'),
+    (ur'\\left\s*([(\[]|\\lfloor)' , ur'\1'),
+    (ur'\\right\s*([)\]]\\rfloor)', ur'\1'),
+    (ur'\((.*?)\)', ur'\\left( \1 \\right)'),
+    (ur'\[(.*?)\]', ur'\\left[ \1 \\right]'),
+    (ur'\\lfloor(.*?)\\rfloor', ur'\\left\lfloor \1 \\right\\rfloor'),
 ]
 
 def typograph_text(text):

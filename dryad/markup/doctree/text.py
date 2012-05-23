@@ -8,4 +8,4 @@ class Text:
 def parse_text(span_name, body_text):
     yield Text(body_text)
         
-span_parsers = [('text', parse_text)]
+span_parsers = [(u'text', parse_text)]

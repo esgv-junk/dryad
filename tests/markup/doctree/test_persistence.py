@@ -12,9 +12,12 @@ from dryad.markup.doctree.text      import Text
 
 make_child_nodes = lambda: (Text(i) for i in range(10))
 
+class Class:
+    pass
+
 class DoctreePersistenceTestCase(TestCase):
     def _test_node(self, node, child_nodes_name='child_nodes'):
-        if (isinstance(node, type)):
+        if (type(node) is type(Class)):
             node = node(**{child_nodes_name: make_child_nodes()})
         eat(getattr(node, child_nodes_name))
         self.assertSequenceEqual(

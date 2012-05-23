@@ -1,21 +1,21 @@
 import re
 from pyforge.all import *
 
-char_markers = ['!', '@', '#', '$', '&']
+char_markers = [u'!', u'@', u'#', u'$', u'&']
 
 span_escapes = {
-    '\\\\': '\\',
-   r'\`'  : '`'
+    u'\\\\': u'\\',
+   ur'\`'  : u'`'
 }
 
 char_marker_re = make_strings_re(char_markers)
-str_marker_re = r'\[.*?\]'
-body_re = r'`({escaped_text_re})`'.format(
+str_marker_re = ur'\[.*?\]'
+body_re = ur'`({escaped_text_re})`'.format(
     escaped_text_re=backslash_escaped_text_re
 )
 
 span_capturing_re = \
-    r'({str_marker}|{char_marker})?{body}|({str_marker})'.format(
+    ur'({str_marker}|{char_marker})?{body}|({str_marker})'.format(
         char_marker=char_marker_re,
         str_marker=str_marker_re,
         body=body_re

@@ -3,7 +3,7 @@ from itertools import chain, islice
 from pyforge.all import *
 from dryad.markup.doctree.table import Table, TableRow, TableCell
  
-table_outline_re = r'\s*({char}+( {char}+)+)'.format(char='[=\-]')
+table_outline_re = ur'\s*({char}+( {char}+)+)'.format(char='[=\-]')
 
 class SimpleTableRule:
     lookahead = 2
@@ -53,7 +53,7 @@ def parse_table(source):
     )
     
     all_rows = body_rows
-    if header_line is not None and header_line != '':
+    if header_line is not None and header_line != u'':
         header_row = parse_table_row(header_line, space_positions, True)
         all_rows = chain([header_row], body_rows)
     

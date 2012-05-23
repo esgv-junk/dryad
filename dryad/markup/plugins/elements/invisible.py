@@ -10,4 +10,4 @@ def parse_invisible_block(block_name, inline_text, body_lines):
     from dryad.markup.parser import parse_blocks
     yield InvisibleBlock(parse_blocks(body_lines))
 
-block_parsers = [('invisible', parse_invisible_block)]
+block_parsers = [(u'invisible', parse_invisible_block)]

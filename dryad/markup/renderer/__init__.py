@@ -63,7 +63,10 @@ def render_node(node, node_class=None):
     else:
         return render_template(node, view_module)
 
-def render_nodes(*nodes, sep='', renderer=None):
+def render_nodes(*nodes, **kwargs):
+    sep = kwargs.get('sep', '')
+    renderer = kwargs.get('renderer', None)
+
     if not (renderer is None):
         push_renderer(renderer)
 

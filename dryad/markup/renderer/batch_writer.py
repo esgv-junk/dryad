@@ -4,6 +4,7 @@ from dryad.markup.parser import parse_document
 from dryad.markup.renderer import get_renderer
 from dryad.markup import render_document
 from dryad.markup.renderer import render_nodes
+import codecs
 
 def is_input_file(filename):
     return (os.path.splitext(filename)[1] == '.txt')
@@ -24,13 +25,13 @@ def render_file(in_filename, ignore_rendered=False):
     )
     
     if needs_update:        
-        in_file = open(in_filename, 'r', encoding='utf_8_sig')
+        in_file = codecs.open(in_filename, 'r', encoding='utf_8_sig')
         root = parse_document(in_file.readlines())
         in_file.close()
         
         #rendered_document = render_document(root)
         rendered_document = render_nodes(root)
-        out_file = open(out_filename, 'w', encoding='utf_8')
+        out_file = codecs.open(out_filename, 'w', encoding='utf_8')
         out_file.write(rendered_document)
         out_file.close()
         

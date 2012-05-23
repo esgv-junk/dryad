@@ -11,4 +11,4 @@ def parse_emph(span_name, body_text):
     from dryad.markup.parser import parse_spans
     yield Emph(parse_spans(body_text))
     
-span_parsers = [('emph', parse_emph)]
+span_parsers = [(u'emph', parse_emph)]

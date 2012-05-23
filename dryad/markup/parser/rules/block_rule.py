@@ -1,8 +1,8 @@
 import re
 from pyforge.all import *
 
-block_capturing_re = r'^\s*\[(.*?)\](.*)$'
-block_re           = r'^\s*\[.*?]([^`].*)?$'
+block_capturing_re = ur'^\s*\[(.*?)\](.*)$'
+block_re           = ur'^\s*\[.*?]([^`].*)?$'
 
 class BlockRule:
     lookahead = 0

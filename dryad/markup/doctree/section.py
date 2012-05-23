@@ -26,19 +26,20 @@ def parse_section(block_name, inline_text, body_lines):
 def assign_section_levels_and_ids(root):
     section_level = 0
 
-    def on_enter(node):
-        nonlocal section_level
+    def on_enter(section_level, node):
         section_level += 1
         node.section_level = section_level
         node.section_id = id_dispatcher.dispatch_id(
             to_id(render(*node.title_nodes, renderer='span_text'))
         )
 
-    def on_exit(node):
-        nonlocal section_level
+    def on_exit(section_level, node):
         section_level -= 1
 
-    eat(walk(root, on_enter, on_exit, type_selector(Section)))
+    _on_enter = lambda node: on_enter(section_level, node)
+    _on_exit  = lambda node: on_exit(section_level, node)
 
-block_parsers        = [('section', parse_section)]
+    eat(walk(root, _on_enter, _on_exit, type_selector(Section)))
+
+block_parsers        = [(u'section', parse_section)]
 after_parse_document = [assign_section_levels_and_ids]

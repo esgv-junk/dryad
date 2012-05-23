@@ -1,16 +1,16 @@
 from pyforge.all import *
 
 admonition_types = [
-    'theorem',
-    'definition',
-    'paradox',
-    'hypothesis',
-    'example',
-    'statement',
-    'proof',
-    'remark',
-    'corollary',
-    'lemma'
+    u'theorem',
+    u'definition',
+    u'paradox',
+    u'hypothesis',
+    u'example',
+    u'statement',
+    u'proof',
+    u'remark',
+    u'corollary',
+    u'lemma'
 ]
 
 admonition_numbers = NumberDispatcher()
@@ -22,8 +22,8 @@ class MathAdmonitionBlock:
         self.child_nodes = list(child_nodes)
         self.number = admonition_numbers.dispatch_id(admonition_type)
         
-        if admonition_type != 'corollary':
-            admonition_numbers.reset_id('corollary')
+        if admonition_type != u'corollary':
+            admonition_numbers.reset_id(u'corollary')
 
     doctree = ['title_nodes', 'child_nodes']
     

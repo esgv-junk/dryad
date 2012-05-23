@@ -1,9 +1,9 @@
 from pyforge.all import *
 
 text_escapes = { 
-    '\\\\': '\\',
-    r'\`' : '`',
-    r'\*' : '*'
+    u'\\\\': u'\\',
+    ur'\`' : u'`',
+    ur'\*' : u'*'
 }
 
 class TextRule:
@@ -12,6 +12,6 @@ class TextRule:
     @staticmethod
     def parse(text):
         from dryad.markup.parser import parse_span
-        return parse_span('text', text)
+        return parse_span(u'text', text)
     
 span_rules = [TextRule]

@@ -7,8 +7,8 @@ from dryad.markup.doctree.list_ import List, ListItem
 class UnorderedListRule:
     lookahead = 0
     
-    start_re     = r'^\s*[\-\*]( .*)?$'
-    capturing_re = r'^\s*([\-\*])(?: (.*))?$'
+    start_re     = ur'^\s*[\-\*]( .*)?$'
+    capturing_re = ur'^\s*([\-\*])(?: (.*))?$'
     
     @staticmethod
     def applies_to(source):
@@ -18,14 +18,14 @@ class UnorderedListRule:
     def parse(source):
         return parse_list(source, is_ordered=False)            
         
-int_re = r'0|[1-9][0-9]*'
+int_re = ur'0|[1-9][0-9]*'
 
 
 class OrderedListRule:
     lookahead = 0
     
-    start_re = r'^\s*(?:{int_re}|\#)[.)] '.format(int_re=int_re)
-    capturing_re = r'^\s*({int_re}|\#)[.)] (.*)$'.format(int_re=int_re)
+    start_re = ur'^\s*(?:{int_re}|\#)[.)] '.format(int_re=int_re)
+    capturing_re = ur'^\s*({int_re}|\#)[.)] (.*)$'.format(int_re=int_re)
     
     @staticmethod
     def applies_to(source):
@@ -73,11 +73,11 @@ def parse_list_items(items_lines, is_ordered):
         item_marker, first_line = match_obj.groups()
         item_num = (
             int(item_marker)
-            if (is_ordered and item_marker != '#')  
+            if (is_ordered and item_marker != u'#')
             else None
         )
         if first_line is None:
-            first_line = ''
+            first_line = u''
         item_body_lines = source.takewhile(
             lambda source: (
                 get_indent(source[0]) > start_indent or 

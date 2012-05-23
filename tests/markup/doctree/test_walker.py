@@ -127,7 +127,7 @@ class DoctreeWalkerTestCase(DoctreeTestCase):
 
 class DoctreeStructureTestCase(DoctreeTestCase):
     def setUp(self):
-        super().setUp()
+        super(DoctreeStructureTestCase, self).setUp()
 
         self.parents = [
             None,
