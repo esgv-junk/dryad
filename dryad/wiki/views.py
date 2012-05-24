@@ -1,10 +1,27 @@
-import codecs
-from django.http import HttpResponse
+from django.shortcuts import render
+from dryad.wiki.models import Page
+from django.http import HttpResponse, HttpResponseRedirect
+from dryad import markup
 
-from dryad.markup import *
+def get_page(name):
+    return Page.objects.get_or_create(name=name)[0]
 
-def test_markup(request):
-    path = ur'D:\Dropbox\knowledge\cs & math\algo\3_struct\4_hash.txt'
-    source = codecs.open(path, encoding='utf-8-sig').readlines()
-    return HttpResponse(parse_and_render_document(source, renderer='html'))
+def show_page(request, name):
+    rendered_page = markup.render(get_page(name).source, renderer='html')
+    return render(request, 'show_page.html', locals())
 
+def show_editor(request, name):
+    source = get_page(name).source
+    return render(request, 'edit_page.html', locals())
+
+def submit_page(request, name):
+    page = get_page(name)
+    page.source = request.POST['source']
+    page.save()
+    return HttpResponseRedirect('/wiki/' + name)
+
+def edit_page(request, name):
+    if request.method == 'GET':
+        return show_editor(request, name)
+    else:
+        return submit_page(request, name)

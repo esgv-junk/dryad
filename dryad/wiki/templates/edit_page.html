@@ -1,0 +1,9 @@
+{% extends "html_base.html" %}
+
+{% block body %}
+  <form action="" method="post">
+    {% csrf_token %}
+    <textarea name="source" style="width:50%; height: 500px;">{{ source }}</textarea>
+    <input type="submit" value="Save">
+  </form>
+{% endblock %}

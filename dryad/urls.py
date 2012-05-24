@@ -4,8 +4,10 @@ from django.contrib import admin
 admin.autodiscover()
 
 urlpatterns = patterns('',
+    # admin
     url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
     url(r'^admin/', include(admin.site.urls)),
 
-    url(r'^test_markup', 'dryad.wiki.views.test_markup'),
+    # wiki
+    url(r'', include('dryad.wiki.urls'))
 )

@@ -4,9 +4,9 @@ from pyforge.all import *
 supported_languages = [
     u'code',                     # Do not highlight.
     u'auto',                     # Automatically determine language.
-    u'c++', u'cpp',               # C++
-    u'python', u'python3',        # Python
-    u'yaml', u'xml',              # markup
+    u'c++', u'cpp',              # C++
+    u'python', u'python3',       # Python
+    u'yaml', u'xml',             # markup
 ]
 
 class CodeBlock:

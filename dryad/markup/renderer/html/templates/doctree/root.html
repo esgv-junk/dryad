@@ -1,14 +1,3 @@
 {% macro Root(node, view) %}
-    {% set title = view.get_first_section(node).title_nodes | render(renderer='span_text', sep='') %}
-
-    {% set basename = view.basename %}
-    {#% set external_css = view.css_filenames %#}
-    {#% set external_js = view.js_filenames %#}
-
-    {% set embedded_css = view.css_content %}
-    {% set embedded_js = view.js_content %}
-
-    {% set body = node.child_nodes | render(sep='\n\n') %}
-
-    {% include "html_template" %}
+  {{ node.child_nodes | render(sep='\n\n') }}
 {% endmacro %}
