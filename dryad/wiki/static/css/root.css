@@ -28,6 +28,7 @@ body {
     
     font-family: Verdana;
     font-size: 10pt;
+    overflow-y: scroll;
     /* background: #f8f8f8; */
 }
 

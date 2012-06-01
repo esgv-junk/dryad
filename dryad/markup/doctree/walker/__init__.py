@@ -2,7 +2,7 @@ from dryad.markup.doctree.walker.selectors import \
     true_selector, false_selector, type_selector
 
 class StopPropagation(Exception):
-    def __init__(self, levels = 1, message=''):
+    def __init__(self, levels=1, message=''):
         Exception.__init__(self, message)
         self.levels = levels
 

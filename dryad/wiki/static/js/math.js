@@ -20,8 +20,8 @@ function loadMathJax() {
     return;
   }
     
-    //var jaxSrc = "http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
-  var jaxSrc = "file:///D:/Dropbox/code/3rd_party/mathjax/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+  var jaxSrc = "http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+  //var jaxSrc = "file:///D:/Dropbox/code/3rd_party/mathjax/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
     
   var jaxConfig = 
   'MathJax.Hub.Config({' +
@@ -35,13 +35,6 @@ function loadMathJax() {
     '},' +
     'NativeMML: {' +
         'scale: 100' +
-    '},' +
-    'TeX: {' +
-      'noErrors: {'+
-        'style: {' +
-          '"font-family": "Verdana"'+
-        '}' +
-      '}' +
     '}' +
   '});'+
   'MathJax.Hub.Startup.onload();';

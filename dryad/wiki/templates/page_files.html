@@ -1,0 +1,11 @@
+{% extends "html_base.html" %}
+
+{% block body %}
+  <div class="central_column">
+    <form action="" method="post" enctype="multipart/form-data">
+      {% csrf_token %}
+      <input type="file" name="upload" multiple />
+      <input type="submit" name="submitter" value="Do upload" />
+    </form>
+  </div>
+{% endblock %}

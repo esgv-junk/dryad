@@ -1,0 +1,5 @@
+<h1> All pages </h1>
+
+{% for page in pages %}
+  <a href="/wiki{{ page.path }}">{{ page.path }}</a><br>
+{% endfor %}

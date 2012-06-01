@@ -1,27 +1,81 @@
+# rendering
 from django.shortcuts import render
-from dryad.wiki.models import Page
+from django.template.loader import render_to_string
 from django.http import HttpResponse, HttpResponseRedirect
+
+# dryad markup
 from dryad import markup
+from dryad.wiki.models import *
 
-def get_page(name):
-    return Page.objects.get_or_create(name=name)[0]
+# uploading
+from django.core.files.storage import default_storage
 
-def show_page(request, name):
-    rendered_page = markup.render(get_page(name).source, renderer='html')
+# ==============================================================================
+#                                    SHOW
+# ==============================================================================
+
+def show_page(request, path):
+    page, _ = Page.get(path)
+    if not page.source:
+        return show_page_children(request, path)
+
+    parents = get_parents(path)
+    rendered_page = markup.render(page.source, renderer='html')
     return render(request, 'show_page.html', locals())
 
-def show_editor(request, name):
-    source = get_page(name).source
+# ==============================================================================
+#                                    META
+# ==============================================================================
+
+def show_page_children(request, path):
+    pages = Page.get(path)[0].children()
+    parents = get_parents(path)
+    rendered_page = render_to_string('list_pages.html', locals())
+    return render(request, 'show_page.html', locals())
+
+def show_page_files(request, path):
+    return render(request, 'page_files.html', locals())
+
+def upload_files(request, path):
+    for file in request.FILES.getlist('upload'):
+        save_path = path[1:] + '/' + file.name
+        if default_storage.exists(save_path):
+            return HttpResponse('Upload FAILED: ' + save_path + ' already exists')
+        default_storage.save(save_path, file)
+
+    return HttpResponse('Upload OK: ' + path)
+
+def page_files(request, path):
+    if request.method == 'GET':
+        return show_page_files(request, path)
+    else:
+        return upload_files(request, path)
+
+# ==============================================================================
+#                                    EDIT
+# ==============================================================================
+
+def show_editor(request, path):
+    page, _ = Page.get(path)
     return render(request, 'edit_page.html', locals())
 
-def submit_page(request, name):
-    page = get_page(name)
-    page.source = request.POST['source']
-    page.save()
-    return HttpResponseRedirect('/wiki/' + name)
+def submit_page(request, path):
+    page, page_is_new = Page.get(path)
+    page.source = request.POST['source'].rstrip()
 
-def edit_page(request, name):
+    if page.source:
+        page.save()
+    elif not page_is_new:
+        if not page.children():
+            page.delete()
+        else:
+            page.save()
+
+    return HttpResponseRedirect('/wiki' + path)
+
+def edit_page(request, path):
     if request.method == 'GET':
-        return show_editor(request, name)
+        return show_editor(request, path)
     else:
-        return submit_page(request, name)
+        return submit_page(request, path)
+
