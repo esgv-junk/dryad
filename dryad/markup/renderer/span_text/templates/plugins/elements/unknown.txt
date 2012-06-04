@@ -1,4 +1,0 @@
-{% macro UnknownSpan(node) -%}
-    {{ node.body_text }}
-{%- endmacro %}
-

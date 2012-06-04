@@ -6,7 +6,6 @@ def reset_id_dispatcher():
     global id_dispatcher
     id_dispatcher.clear()
 
-from dryad.markup.doctree.walker.selectors import *
 from dryad.markup.doctree.walker import *
 
 def create_doctree_structure(node,

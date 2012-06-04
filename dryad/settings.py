@@ -66,7 +66,7 @@ INSTALLED_APPS = (
     'django.contrib.admindocs',
 
     'dryad.wiki'
-    )
+)
 
 #
 #                          REST OF THEM SETTINGS

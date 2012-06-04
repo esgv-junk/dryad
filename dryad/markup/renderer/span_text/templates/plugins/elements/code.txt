@@ -1,3 +1,0 @@
-{% macro CodeSpan(node) -%}
-    {{ node.body_text }}
-{%- endmacro %}

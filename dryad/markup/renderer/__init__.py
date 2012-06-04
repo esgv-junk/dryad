@@ -1,121 +1,101 @@
-from os.path import join, exists, extsep, getmtime
+from os.path import join
 from importlib import import_module
-import jinja2
 from pyforge.all import *
+from jinja2 import Environment, FileSystemLoader
 
-@cache
-def find_view_module(node_class, renderer):
-    node_module_local_path = drop_first_module(
-        node_class.__module__,
-        num_dropped=2
-    )
-
-    node_view_module_path = (
-        renderer.__name__ +
-        '.views.' +
-        node_module_local_path
-        )
-
-    try:
-        return import_module(node_view_module_path)
-    except (ImportError, AttributeError):
-        return None
-
-class DryadRendererLoader(jinja2.BaseLoader):
-    @staticmethod
-    def _get_source(template, renderer):
-        path = join(
-            renderer.__path__[0],
-            'templates',
-            template.replace('.', '/') + extsep + renderer.extension
-        )
-
-        if not exists(path):
-            raise jinja2.TemplateNotFound(template)
-
-        mtime = getmtime(path)
-        source = read_text_file(path)
-        return source, path, lambda: mtime == getmtime(path)
-
-    def get_source(self, environment, template):
-        return self._get_source(template, get_renderer())
-
-@cache
-def find_template_render_func(node_class, renderer):
-    node_module_local_path = drop_first_module(
-        node_class.__module__,
-        num_dropped=2
-    )
-
-    template = jinja_env.get_template(node_module_local_path)
-    return getattr(template.module, node_class.__name__)
-
-def render_node(node, node_class=None):
-    renderer = get_renderer()
-    if node_class is None:
-        node_class = node.__class__
-
-    view_module = find_view_module(node_class, renderer)
-    render_template = find_template_render_func(node_class, renderer)
-
-    if view_module is None:
-        return render_template(node)
-    else:
-        return render_template(node, view_module)
-
-def render_nodes(*nodes, **kwargs):
-    sep = kwargs.get('sep', '')
-    renderer = kwargs.get('renderer', None)
-
-    if not (renderer is None):
-        push_renderer(renderer)
-
-    result = sep.join(render_node(node) for node in nodes)
-
-    if not (renderer is None):
-        pop_renderer()
-
-    return result
-
-jinja_env = jinja2.Environment(
+#
+#                           JINJA ENVIRONMENT
+#
+jinja_env = Environment(
     trim_blocks=False,
-    autoescape=False,
-    loader=DryadRendererLoader(),
+    loader=FileSystemLoader("/"),
     auto_reload=False
 )
 
-renderers_stack = []
+jinja_env.filters['escape'] = \
+    lambda string: multiple_replace(string, get_renderer().ESCAPES)
+
+jinja_env.filters['render'] = \
+    lambda nodes, **kwargs: render(*nodes, **kwargs)
+
+jinja_env.filters['hyphenate'] = hyphenate
+
+#
+#                          SEARCH FUNCTIONS
+#
+def get_plugin_template_path(node_class, renderer):
+    """
+    Transforms "dryad.plugins.Text" and renderer "html" into
+    "dryad/plugins/renderers/html/Text.html"
+
+    """
+    return join(
+        node_class.__module__.__path__,
+        'renderers',
+        renderer.__name__,
+        node_class.__name__ + '.' + renderer.TEMPLATE_EXTENSION)
+
+def get_renderer_template_path(node_class, renderer):
+    """
+    Transforms "dryad.plugins.Text" and renderer "html" into
+    "dryad/renderer/html/templates/Text.html"
+
+    """
+    return None
+
+@cache
+def get_template_path(node_class, renderer):
+    return (get_plugin_template_path(node_class, renderer) or
+            get_renderer_template_path(node_class, renderer))
+
+@cache
+def get_view(node_class, renderer):
+    return {}
 
 @cache
 def get_bundled_renderer_module(renderer_name):
-    try:
-        renderer_name = 'dryad.markup.renderer.' + renderer_name
-        renderer_module = import_module(renderer_name)
-    except ImportError:
-        raise NotImplementedError('Renderer {0} not found'.format(renderer_name))
+    return import_module('dryad.renerer.' + renderer_name)
 
-    return renderer_module
+#
+#                           RENDERERS STACK
+#
+_renderers_stack = []
 
 def push_renderer(renderer):
     if isinstance(renderer, str):
         renderer = get_bundled_renderer_module(renderer)
-
     jinja_env.cache.clear()
-    renderers_stack.append(renderer)
+    _renderers_stack.append(renderer)
 
 def pop_renderer():
     jinja_env.cache.clear()
-    renderers_stack.pop()
+    _renderers_stack.pop()
 
 def get_renderer():
-    return renderers_stack[-1]
+    return _renderers_stack[-1]
 
-jinja_env.filters['escape'] = \
-    lambda string: multiple_replace(string, get_renderer().escapes)
-jinja_env.filters['render'] = \
-    lambda nodes, **kwargs: render_nodes(*nodes, **kwargs)
-jinja_env.filters['hyphenate'] = hyphenate
+#
+#                           RENDER FUNCTIONS
+#
+def render_node(node, renderer):
+    path = get_template_path(node.__class__, renderer)
+    if path is None:
+        raise NotImplementedError(
+            'Rendering of {0} nodes is not supported by {1} renderer'.format(
+                node.__class__, renderer.__name__))
 
-render = render_nodes
+    template = jinja_env.get_template(path)
+    view_env = get_view(node.__class__, renderer)
+    view_env['node'] = node
+    return template.render(view_env)
 
-push_renderer('html')
+def render(*nodes, **kwargs):
+    sep = kwargs.get('sep', '')
+    renderer = kwargs.get('renderer', None)
+
+    if renderer is not None:
+        push_renderer(renderer)
+    result = sep.join(render_node(node, get_renderer()) for node in nodes)
+    if renderer is not None:
+        pop_renderer()
+    return result

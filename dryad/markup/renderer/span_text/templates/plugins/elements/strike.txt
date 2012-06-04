@@ -1,3 +1,0 @@
-{% macro Strike(node) -%}
-    {{ node.child_nodes | render }}
-{%- endmacro %}

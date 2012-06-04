@@ -58,7 +58,7 @@ load_plugins([
 ])
 
 from dryad.markup import plugins
-load_plugins(plugins.plugin_list)
+load_plugins(plugins.PLUGIN_LIST)
 
 max_lookahead = max(map(lambda r: r.lookahead, block_rules))
 

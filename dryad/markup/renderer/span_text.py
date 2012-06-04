@@ -1,0 +1,3 @@
+RENDERER_NAME = 'span_text'
+TEMPLATE_EXTENSION = 'txt'
+ESCAPES = {}
