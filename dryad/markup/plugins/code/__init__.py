@@ -29,8 +29,8 @@ def parse_code_block(block_name, inline_text, body_lines):
 def parse_code_span(span_name, body_text):
     return CodeSpan(span_name, body_text)
 
-supported_languages_re = make_strings_re(supported_languages)
+supported_languages_re = u'^' + make_strings_re(supported_languages) + u'$'
 
-block_parsers = [(supported_languages_re, parse_code_block)]
-span_parsers  = [(supported_languages_re, parse_code_span )]
+BLOCK_PARSERS = [(supported_languages_re, parse_code_block)]
+SPAN_PARSERS  = [(supported_languages_re, parse_code_span )]
 

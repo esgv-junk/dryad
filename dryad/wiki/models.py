@@ -45,7 +45,7 @@ class Page(models.Model):
 
     def children(self):
         return Page.objects.filter(
-            path__regex='^{0}/{1}$'.format(self.path, '[_a-zA-Z0-9]+'))
+            path__regex='^{0}/{1}$'.format(self.path, '[^/]+'))
 
     # --------------------------------------------------------------------------
     #                              INTEGRITY

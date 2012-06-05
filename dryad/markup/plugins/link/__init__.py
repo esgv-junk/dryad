@@ -8,4 +8,4 @@ def parse_link(span_name, body_text):
         span_name = body_text
     return Link(span_name, body_text)
 
-span_parsers = [(ur'@|[a-z]+://.*', parse_link)]
+SPAN_PARSERS = [(u'^(@|[a-z]+://.*)$', parse_link)]

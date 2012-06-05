@@ -30,7 +30,7 @@ PLUGINS = [
     'dryad.markup.plugins.typographer'             # other plugins
 ]
 
-MATH_INCLUDES = ur'''
+MATH_DEFINES = ur'''
     \renewcommand{\Pr}{\mathop{\rm P}\nolimits}
     \newcommand{\ind}{\mathop{\rm I}\nolimits}
     \newcommand{\mean}{\mathop{\rm E}\nolimits}
@@ -60,3 +60,5 @@ MATH_INCLUDES = ur'''
     \renewcommand{\mod}{\,\mathop{\rm mod}\,}
     \newcommand{\const}{\mathrm{const}}
 '''
+
+UNSET_DEFAULT_SPAN_NAME = 'default'

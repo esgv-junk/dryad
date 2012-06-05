@@ -1,38 +1,34 @@
 import re
 from pyforge.all import *
+from dryad.markup.parser.utils import take_while
 
-block_capturing_re = ur'^\s*\[(.*?)\](.*)$'
-block_re           = ur'^\s*\[.*?]([^`].*)?$'
+#                              RULES
 
-class BlockRule:
-    lookahead = 0
-    
-    @staticmethod
-    def applies_to(source):
-        # match name in brackets at the line start: '[name]...'
-        return bool(re.match(block_re, source[0]))
-        
-    @staticmethod
-    def parse(source):                  # extract block_name and inline_text
-        match_obj = re.match(block_capturing_re, source[0])                      
-        block_name, inline_text = match_obj.groups()
-        
-                                        # take all body_lines blank or more 
-                                        # indented than the block itself
-        start_indent = get_indent(source[0])
-        eat(source, 1)
-        body_lines = source.takewhile(
-            lambda source: (
-                get_indent(source[0]) > start_indent or 
-                is_blank(source[0])
-            ))
-                                        # dedent them, strip blank body_lines 
-        body_lines = dedented_by(       # at the end
-            blank_lines_stripped_end(body_lines),
-            start_indent
-        )                               # and pass further
-                                        # (depending on block type)
-        from dryad.markup.parser import parse_block
-        return parse_block(block_name, inline_text, body_lines)
-    
-block_rules = [BlockRule]
+block_re           = ur'^\s*\[(.*?)\]((?:[^`].*)?)$'
+
+def block_parsing_action(source_iter):
+    match_obj = re.match(block_re, source_iter[0])
+    block_name, inline_text = match_obj.groups()
+
+    # take all body_lines blank or more indented than the block's first line
+    start_indent = get_indent(source_iter[0])
+    next(source_iter)
+    body_lines = take_while(
+        lambda iter: (
+            get_indent(iter[0]) > start_indent or
+            is_blank(iter[0])
+        ))
+
+    # dedent taken lines, remove blank body_lines at the end
+    body_lines = dedented_by(
+        blank_lines_stripped_end(body_lines),
+        start_indent
+    )
+
+    # pass further, depending on block type
+    from dryad.markup.parser import parse_block
+    return parse_block(block_name, inline_text, body_lines)
+
+#                              PLUGIN
+
+BLOCK_RULES = [(block_re, block_parsing_action)]
