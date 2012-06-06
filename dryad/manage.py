@@ -1,4 +1,11 @@
 #!/usr/bin/env python
+import sys
+sys.path.extend([
+    'D:/Dropbox/code/dryad', 
+    'D:/Dropbox/code/3rd_party', 
+    'D:/Dropbox/code/forge/pyforge_stable'
+])
+
 from django.core.management import execute_manager
 import imp
 from dryad import settings
