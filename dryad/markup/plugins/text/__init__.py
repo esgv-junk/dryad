@@ -8,10 +8,7 @@ class Text:
 
 #                             PARSING
 
-text_escapes = {
-    u'\\\\': u'\\',
-    ur'\`' : u'`',
-}
+text_escapes = {u'``': u'`'}
 
 def text_parse_action(text):
     body_text = multiple_replace(text, text_escapes)

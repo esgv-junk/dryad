@@ -13,7 +13,7 @@ def block_parsing_action(source_iter):
     # take all body_lines blank or more indented than the block's first line
     start_indent = get_indent(source_iter[0])
     next(source_iter)
-    body_lines = take_while(
+    body_lines = take_while(source_iter,
         lambda iter: (
             get_indent(iter[0]) > start_indent or
             is_blank(iter[0])

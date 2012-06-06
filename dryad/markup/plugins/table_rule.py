@@ -1,8 +1,8 @@
 import re
-from itertools import chain, islice
 from pyforge.all import *
-from dryad.markup.plugins.table import Table, TableRow, TableCell
- 
+
+#                               PARSING
+
 table_outline_re = ur'\s*({char}+( {char}+)+)'.format(char='[=\-]')
 
 class SimpleTableRule:

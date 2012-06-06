@@ -1,12 +1,11 @@
 from unittest import TestCase
+from dryad.markup.parser.java_iter import JavaIter
 
-from dryad.markup.parser.lookahead_iter import LookaheadIter
-
-class LookaheadIterTestCase(TestCase):
+class JavaIterTestCase(TestCase):
     def setUp(self):
         self.lines = list(map(unicode, range(10)))
         self.padding = ''
-        self.iter = LookaheadIter(self.lines, padding=self.padding)
+        self.iter = JavaIter(self.lines, padding=self.padding)
 
     def test_iteration(self):
         lines_from_iter = list(self.iter)

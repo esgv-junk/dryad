@@ -7,15 +7,19 @@ PLUGIN_LIST = [
     # replaced at that moment
     'dryad.markup.plugins.default_span',
 
-    # math should do its includes after default_span replacements have been done.
+    # math should do its includes after default_span replacements have been
+    # done.
     'dryad.markup.plugins.math',
 
     'dryad.markup.plugins.emph',                   # standart elements
     'dryad.markup.plugins.list_',
-    'dryad.markup.plugins.paragraph',
     'dryad.markup.plugins.section',
     'dryad.markup.plugins.strong',
+
+    # paragraph and text should be last, since their parsing rules are
+    # last-resort rules
     'dryad.markup.plugins.text',
+    'dryad.markup.plugins.paragraph',
 
     'dryad.markup.plugins.code',                   # advanced elements
     'dryad.markup.plugins.figure',

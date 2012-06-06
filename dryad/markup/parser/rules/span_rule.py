@@ -3,10 +3,7 @@ from pyforge.all import *
 
 #                                ESCAPES
 
-span_escapes = {
-    u'\\\\': u'\\',
-    ur'\`'  : u'`'
-}
+span_escapes = {u'``': u'`'}
 
 #                                MARKERS
 
