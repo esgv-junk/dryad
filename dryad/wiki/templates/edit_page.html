@@ -1,20 +1,50 @@
 {% extends "html_base.html" %}
 
-{% block styles %}
+{% block head %}
   <style>
-    #editor {
-      width: 50%;
-      height: 500px;
-      font-family: Lucida Console;
-      font-size: 10pt;
+    div.CodeMirror pre {
+      overflow: visible;
+    }
+    
+    div.CodeMirror-scroll {
+      overflow: visible;
+      height: auto;
+    }
+    
+    .CodeMirror-lines, .CodeMirror-gutter-text {
+      font-family: Consolas;
+      font-size: 9pt;
+    }
+
+    .nocenter {
+      width: 100%;
+      text-align: left;
     }
   </style>
+
+  <script src="/static/codemirror/lib/codemirror.js"></script>
+  <link rel="stylesheet" href="/static/codemirror/lib/codemirror.css">
 {% endblock %}
 
 {% block body %}
-  <form action="" method="post">
-    {% csrf_token %}
-    <textarea name="source" id="editor">{{ page.source }}</textarea>
-    <input type="submit" value="Save">
-  </form>
+  <script type="text/javascript">
+    window.onload = (function() {
+      var area = document.getElementById("editor")
+      CodeMirror.fromTextArea(area, {
+        "indentUnit": 4,
+        "tabSize": 4,
+        "autoClearEmptyLines": true,
+        "lineWrapping": true,
+        "lineNumbers": true
+      });
+    });
+  </script>
+
+  <div class="nocenter">
+    <form action="" method="post">
+      {% csrf_token %}
+      <textarea name="source" id="editor">{{ page.source }}</textarea>
+      <input type="submit" value="Save">
+    </form>
+  </div>
 {% endblock %}

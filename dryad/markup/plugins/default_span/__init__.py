@@ -1,22 +1,24 @@
-from dryad.markup.doctree import replace_node, iter_find, type_selector
+from dryad.markup.doctree import \
+    Span, Block, replace_node, iter_find, type_selector
 
 preferred_default_name = 'default'
 
-class DefaultSpan:
+class DefaultSpan(Span):
     def __init__(self, body_text):
         self.body_text = body_text
 
-class SetDefaultSpan:
+class SetDefaultSpan(Block):
     def __init__(self, default_span_name):
         self.default_span_name = default_span_name
 
 def parse_default_span(span_name, body_text):
-    yield DefaultSpan(body_text)
+    return DefaultSpan(body_text)
 
 def parse_set_default_span(block_name, inline_text, body_text):
-    yield SetDefaultSpan(inline_text.strip())
+    return SetDefaultSpan(inline_text.strip())
 
 def replace_default_spans(root):
+    from dryad.markup.parser import parse_span
     to_delete = []
 
     # starting from all SetDefaultSpan nodes in the doctree
@@ -26,7 +28,7 @@ def replace_default_spans(root):
         to_delete.append(set_node)
 
         # for all following siblings
-        for sibling in set_node.siblings[sib_index:]:
+        for sibling in set_node.siblings[sib_index+1:]:
             if isinstance(sibling, SetDefaultSpan):
                 break
 
@@ -36,7 +38,6 @@ def replace_default_spans(root):
                   stop_siblings=type_selector(SetDefaultSpan)):
 
                 # parse and replace
-                from dryad.markup.parser import parse_span
                 span_replace = \
                     parse_span(set_node.default_span_name, span_node.body_text)
                 replace_node(span_node, span_replace)

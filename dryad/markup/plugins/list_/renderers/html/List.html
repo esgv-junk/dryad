@@ -1,7 +1,8 @@
-{% if node.is_ordered %}<ol>{% else %}<ul>{% endif %}
+{%- set is_ordered = node.marker_type not in unordered_markers -%}
+{% if is_ordered %}<ol>{% else %}<ul>{% endif %}
 {%- for item in node.items %}
-  <li{% if item.value is not none %} value="{{ item.value }}"{% endif %}>
+  <li{% if item.marker %} value="{{ item.marker }}"{% endif %}>
     {{ item.child_nodes | render(sep='\n') }}
   </li>
 {%- endfor %}
-{% if node.is_ordered %}</ol>{% else %}</ul>{% endif %}
+{% if is_ordered %}</ol>{% else %}</ul>{% endif %}

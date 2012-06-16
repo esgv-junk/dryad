@@ -1,11 +1,10 @@
-from os.path import join, exists, getmtime, extsep
+from os.path import join, exists, getmtime, extsep, dirname
 from importlib import import_module
 from pyforge.all import *
 from jinja2 import Environment, BaseLoader, TemplateNotFound
 
-#
-#                           JINJA ENVIRONMENT
-#
+# JINJA ENVIRONMENT
+
 class FileSystemLoader(BaseLoader):
     """
     Not like jinja2.FileSystemLoader. This class truly loads templates from
@@ -35,9 +34,11 @@ jinja_env.filters['render'] = \
 
 jinja_env.filters['hyphenate'] = hyphenate
 
-#
-#                        TEMPLATE SEARCH FUNCTIONS
-#
+jinja_env.globals['hasattr'] = hasattr
+
+
+# TEMPLATE SEARCH FUNCTIONS
+
 def get_plugin_template_path(node_class, renderer):
     """
     Transforms "dryad.markup.plugins.text.Text" and renderer "html" into
@@ -59,7 +60,7 @@ def get_renderer_template_path(node_class, renderer):
 
     """
     path = join(
-        renderer.__path__[0],
+        dirname(renderer.__file__),
         'templates',
         node_class.__name__ + extsep + renderer.TEMPLATE_EXTENSION)
 
@@ -71,9 +72,8 @@ def get_template_path(node_class, renderer):
             get_renderer_template_path(node_class, renderer))
 
 
-#
-#                          VIEW SEARCH FUNCTIONS
-#
+# VIEW SEARCH FUNCTIONS
+
 def get_plugin_view_path(node_class, renderer):
     """
     Transforms "dryad.markup.plugins.text.Text" and renderer "html" into
@@ -87,22 +87,26 @@ def get_renderer_view_path(node_class, renderer):
 
 @cache
 def get_view(node_class, renderer):
+    from dryad.markup import get_context
+
+    result = dict(get_context())
     view_path = (get_plugin_view_path(node_class, renderer) or
                  get_renderer_view_path(node_class, renderer))
     try:
-        return import_module(view_path).__dict__
+        result.update(import_module(view_path).__dict__)
     except ImportError:
-        return {}
+        pass
+    return result
 
 @cache
 def get_bundled_renderer_module(renderer_name):
     return import_module('dryad.markup.renderer.' + renderer_name)
 
 
-#
-#                           RENDERERS STACK
-#
+# RENDERERS STACK
+
 _renderers_stack = []
+_env = {}
 
 def push_renderer(renderer):
     if isinstance(renderer, str):
@@ -117,10 +121,7 @@ def pop_renderer():
 def get_renderer():
     return _renderers_stack[-1]
 
-
-#
-#                           RENDER FUNCTIONS
-#
+# RENDER FUNCTIONS
 def render_node(node, renderer):
     path = get_template_path(node.__class__, renderer)
     if path is None:
@@ -134,12 +135,13 @@ def render_node(node, renderer):
     return template.render(view_env)
 
 def render(*nodes, **kwargs):
-    sep = kwargs.get('sep', '')
-    renderer = kwargs.get('renderer', None)
+    sep = kwargs.pop('sep', '')
+    renderer = kwargs.pop('renderer', None)
 
     if renderer is not None:
         push_renderer(renderer)
     result = sep.join(render_node(node, get_renderer()) for node in nodes)
     if renderer is not None:
         pop_renderer()
+
     return result

@@ -1,7 +1,8 @@
 from pyforge.all import *
+from dryad.markup.doctree import Span
 
 #                              NODE
-class Text:
+class Text(Span):
     def __init__(self, body_text):
         self.body_text = body_text
 

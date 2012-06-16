@@ -7,8 +7,8 @@ div.central_column > div.section:first-child > *:first-child {
 }
 
 h1, h2, h3, h4, h5, h6 {
-    font-family: Georgia, serif;
-    font-weight: normal;
+    font-family: "Helvetica Neue", Helvetica, Arial, serif;
+    font-weight: bold;
     color: hsl(200, 50%, 30%);
     margin-bottom: 12px;
     margin-top: 12px;

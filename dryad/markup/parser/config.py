@@ -1,5 +1,5 @@
 from pyforge.all import *
-from dryad.markup.plugins import PLUGIN_LIST
+from dryad.markup.settings import PLUGIN_LIST
 
 BLOCK_PARSERS         = []
 SPAN_PARSERS          = []

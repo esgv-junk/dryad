@@ -1,4 +1,6 @@
-class ImageBlock:
+from dryad.markup.doctree import Block
+
+class ImageBlock(Block):
     def __init__(self, path):
         self.path = path
 

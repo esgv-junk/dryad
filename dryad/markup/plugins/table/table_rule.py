@@ -64,7 +64,7 @@ def parse_table_row(line, split_positions, is_header_row):
         parse_table_cell(cell_text, is_header_row) 
         for cell_text in split_string(line, split_positions)
     )
-        
+
 def parse_table_cell(cell_text, is_header_cell):
     from dryad.markup.parser import parse_spans
     return TableCell(parse_spans(cell_text), is_header_cell)

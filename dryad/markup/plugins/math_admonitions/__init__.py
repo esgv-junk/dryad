@@ -1,4 +1,5 @@
 from pyforge.all import *
+from dryad.markup.doctree import Block
 
 admonition_types = [
     u'theorem',
@@ -13,7 +14,7 @@ admonition_types = [
     u'lemma'
 ]
 
-class MathAdmonitionBlock:
+class MathAdmonitionBlock(Block):
     def __init__(self, admonition_type, title_nodes, child_nodes):
         self.admonition_type = admonition_type
         self.title_nodes = list(title_nodes)

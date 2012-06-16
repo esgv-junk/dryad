@@ -5,6 +5,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 
 # dryad markup
 from dryad import markup
+from dryad.wiki.path import get_parents
 from dryad.wiki.models import *
 
 # uploading
@@ -20,7 +21,8 @@ def show_page(request, path):
         return show_page_children(request, path)
 
     parents = get_parents(path)
-    rendered_page = markup.render(page.source, renderer='html')
+    rendered_page = \
+        markup.render(page.source, 'html', {'page_path': path})
     return render(request, 'show_page.html', locals())
 
 # ==============================================================================
@@ -66,7 +68,7 @@ def submit_page(request, path):
     if page.source:
         page.save()
     elif not page_is_new:
-        if not page.children():
+        if page.is_empty():
             page.delete()
         else:
             page.save()

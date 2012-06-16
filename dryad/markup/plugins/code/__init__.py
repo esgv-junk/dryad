@@ -1,4 +1,5 @@
 from pyforge.all import *
+from dryad.markup.doctree import Span, Block
 
 supported_languages = [
     u'code',                     # Do not highlight.
@@ -8,12 +9,12 @@ supported_languages = [
     u'yaml',   u'xml',           # markup
 ]
 
-class CodeBlock:
+class CodeBlock(Block):
     def __init__(self, language, body_lines):
         self.language = language
         self.body_lines = list(body_lines)
 
-class CodeSpan:
+class CodeSpan(Span):
     def __init__(self, language, body_text):
         self.language = language
         self.body_text = body_text

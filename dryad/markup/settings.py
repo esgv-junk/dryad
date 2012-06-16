@@ -1,4 +1,4 @@
-PLUGINS = [
+PLUGIN_LIST = [
     # First plugin, registering callbacks for creating doctree structure
     'dryad.markup.doctree',
 
@@ -6,28 +6,39 @@ PLUGINS = [
     # to get its ID, so default spans within title_nodes should already be
     # replaced at that moment
     'dryad.markup.plugins.default_span',
+    'dryad.markup.plugins.section',
 
-    # math should do its includes after default_span replacements have been done.
+    # math should do its includes after default_span replacements have been
+    # done.
     'dryad.markup.plugins.math',
 
-    'dryad.markup.plugins.emph',                   # standart elements
-    'dryad.markup.plugins.paragraph',
-    'dryad.markup.plugins.section',
+    # strong should go before emph because of parsing rules
     'dryad.markup.plugins.strong',
-    'dryad.markup.plugins.text',
+    'dryad.markup.plugins.emph',
 
-    'dryad.markup.plugins.code',                   # advanced elements
+    # Shut down 'image' and 'link' from 'dryad.markup.plugins'
+    'dryad.wiki.plugins.wiki_link',
+    'dryad.wiki.plugins.wiki_image',
+
+    'dryad.markup.plugins.list_',
+    'dryad.markup.plugins.code',
     'dryad.markup.plugins.figure',
-    'dryad.markup.plugins.image',
-    'dryad.markup.plugins.invisible',
-    'dryad.markup.plugins.link',
-    'dryad.markup.plugins.math_blocks',
+    'dryad.markup.plugins.math_admonitions',
     'dryad.markup.plugins.strike',
-    'dryad.markup.plugins.symbols',
-    'dryad.markup.plugins.toc',
+    #'dryad.markup.plugins.toc',
     'dryad.markup.plugins.unknown',
 
-    'dryad.markup.plugins.typographer'             # other plugins
+    # the later we do replaces, the better
+    'dryad.markup.plugins.symbols',
+
+    # paragraph and text should be last, since their parsing rules are
+    # last-resort rules
+    'dryad.markup.plugins.text',
+    'dryad.markup.plugins.paragraph',
+
+    # after all plugins have done their transformations, invoke tagger,
+    # assigning unique IDs to all doctree nodes
+    'dryad.markup.plugins.id_wrapper'
 ]
 
 MATH_DEFINES = ur'''
@@ -44,7 +55,7 @@ MATH_DEFINES = ur'''
     \newcommand{\im}{\mathop{\rm im}\nolimits}
 
     \renewcommand{\liminf}{\mathop{\overline{\lim}}}
-    \renewcommand{\limsup}{\mathop{\underline{\lim}}}
+    \renewcommand{\limsup}{\mathop{\\underline{\lim}}}
     \newcommand{\to}{\mathop\longrightarrow}
     \newcommand{\implies}{\Rightarrow}
     \newcommand{\intl}{\int\limits}
@@ -61,4 +72,4 @@ MATH_DEFINES = ur'''
     \newcommand{\const}{\mathrm{const}}
 '''
 
-UNSET_DEFAULT_SPAN_NAME = 'default'
+UNSET_DEFAULT_SPAN_NAME = u'default'

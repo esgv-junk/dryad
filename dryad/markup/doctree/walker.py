@@ -32,11 +32,12 @@ class StopWalk(Exception):
 def do_nothing(node):
     pass
 
-def iter_walk(node,
-              on_enter       =do_nothing,
-              on_exit        =do_nothing,
-              selector       =true_selector,
-              _top_level_call=True):
+def _iter_walk(node,
+               on_enter       =do_nothing,
+               on_exit        =do_nothing,
+               selector       =true_selector,
+               skip_root      =False,
+               _top_level_call=False):
     """
     If on_enter throws StopPropagation(n) on some node N, then:
 
@@ -63,7 +64,7 @@ def iter_walk(node,
 
     try:
         # on enter
-        if selector_matches:
+        if selector_matches and not skip_root:
             on_enter(node)
             on_enter_ok = True
             yield node
@@ -81,7 +82,7 @@ def iter_walk(node,
 
             # walk into each child node
             for child in children_group:
-                for _ in iter_walk(child, on_enter, on_exit, selector, False):
+                for _ in _iter_walk(child, on_enter, on_exit, selector):
                     yield _
 
     # process stoppers
@@ -96,6 +97,9 @@ def iter_walk(node,
     finally:
         if selector_matches and on_enter_ok:
             on_exit(node)
+
+def iter_walk(*args, **kwargs):
+    return _iter_walk(_top_level_call=True, *args, **kwargs)
 
 def walk(*args, **kwargs):
     eat(iter_walk(*args, **kwargs))

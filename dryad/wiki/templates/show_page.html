@@ -8,7 +8,7 @@
     </div>
 
     {% for path, name in parents %}
-      <a href="/wiki{{ path }}">{{ name }}</a>
+      <a href="/wiki{{ path }}/{{ name }}">{% if forloop.first %}Wiki{% else %}{{ name }}{% endif %}</a>
       {% if not forloop.last %} | {% endif %}
     {% endfor %}
     

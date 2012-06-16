@@ -1,8 +1,10 @@
-class MathBlock:
+from dryad.markup.doctree import Span, Block
+
+class MathBlock(Block):
     def __init__(self, body_lines):
         self.body_lines = list(body_lines)
 
-class MathSpan:
+class MathSpan(Span):
     def __init__(self, body_text):
         self.body_text = body_text
 

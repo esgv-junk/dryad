@@ -1,5 +1,14 @@
 from dryad.markup.doctree.walker import *
 
+class Node:
+    pass
+
+class Span(Node):
+    pass
+
+class Block(Node):
+    pass
+
 def link_doctree(node, parent=None, siblings=None, sibling_index=None):
     """
     Create 3 fields on each node: parent, siblings and sibling_index.
@@ -56,7 +65,7 @@ def replace_node(node, dest):
         # replace old node
         node.siblings[src_index:src_index + 1] = dest
 
-        # correct other siblings
+        # correct other siblings' indices
         old_siblings_start = src_index + len(dest)
         for i, old_sibling in enumerate(siblings[old_siblings_start:]):
             old_sibling.sibling_index = old_siblings_start + i

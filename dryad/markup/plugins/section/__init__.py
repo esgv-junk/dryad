@@ -1,20 +1,21 @@
 import re
 from urllib import quote
+from base64 import b64encode
 from pyforge.all import *
-from dryad.markup.doctree import type_selector, walk
+from dryad.markup.doctree import Block, type_selector, walk
 from dryad.markup.parser.utils import take_while
 from dryad.markup.renderer import render
 
-#                                NODE
+# NODE
 
-class Section:
+class Section(Block):
     def __init__(self, title_nodes, child_nodes):
         self.title_nodes = list(title_nodes)
         self.child_nodes = list(child_nodes)
 
     doctree = ['title_nodes', 'child_nodes']
 
-#                           GENERAL PARSING
+# GENERAL PARSING
 
 outline_chars = u'=-~'
 
@@ -33,7 +34,7 @@ def parse_section(block_name, inline_text, body_lines):
     return Section(title_nodes, child_nodes)
 
 
-#                        PARSING SINGLE OUTLINE
+# PARSING SINGLE OUTLINE
 
 def section_rule_2(source_iter, chars=outline_chars):
     return title_matches_outline(source_iter[0], source_iter[1], chars)
@@ -49,7 +50,7 @@ def section_parse_action_2(source_iter):
 
     return parse_section(u'section', title, body_lines)
 
-#                        PARSING DOUBLE OUTLINE
+# PARSING DOUBLE OUTLINE
 
 def section_rule_3(source_iter, chars=outline_chars):
     return (title_matches_outline(source_iter[1], source_iter[0], chars) and
@@ -65,10 +66,11 @@ def section_parse_action_3(source_iter):
 
     return parse_section(u'section', title, body_lines)
 
-#                              PLUGINS
+# PLUGINS
 
 def to_url(anchor):
-    return quote(anchor.replace(' ', '_').encode('utf-8'), safe='')
+    #return quote(anchor.replace(' ', '_').encode('utf-8'), safe='')
+    return quote(b64encode(anchor.encode('utf-8')).rstrip('='))
 
 def assign_section_levels_and_anchors(root):
     section_level = [0]
