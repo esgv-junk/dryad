@@ -1,3 +1,0 @@
-{% macro Text(node) -%}
-    {{ node.body_text }}
-{%- endmacro %}

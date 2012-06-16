@@ -1,3 +1,0 @@
-{% macro MathSpan(node) -%}
-    {{ node.body_text }}
-{%- endmacro %}

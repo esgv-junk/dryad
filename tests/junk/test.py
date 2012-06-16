@@ -3,7 +3,7 @@
 from dryad.markup import *
 from dryad.markup.renderer import *
 from dryad.markup.doctree import *
-from dryad.markup.doctree.text import Text
+from dryad.markup.plugins.text import Text
 
 document = unicode("""
 Section

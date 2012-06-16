@@ -1,126 +1,84 @@
-from importlib import import_module
 from pyforge.all import *
-from dryad.markup.parser.k_iter import *
+from dryad.markup.parser.java_iter import JavaIter
+from dryad.markup.parser.utils import skip_blank_lines
+from dryad.markup.plugins.root import Root
 
-def load_plugins(module_names):
-    lists_to_gather = get_objects_names(globals(), list)
-    
-    for module_name in module_names:
-        module = import_module(module_name)
-        
-        for list_name in lists_to_gather: 
-            gather_list(module, list_name, globals())
+from dryad.utils.line import works_with_line_list
 
-# callbacks
+# GENERIC MECHANISMS
 
-block_parsers         = []
-span_parsers          = []
-before_parse_document = []
-after_parse_document  = []
+def apply_parse_rules(rules, rule_arg, action_args):
+    for rule, action in rules:
+        current_arg = rule_arg
+        if isinstance(rule, unicode):
+            rule = regex_to_matcher(rule)
+            if isinstance(rule_arg, JavaIter):
+                current_arg = rule_arg[0]
 
-@partial(works_with_line_list, (2, 'body_lines'))
+        if rule(current_arg):
+            return listify(action(*action_args))
+    return []
+
+# HIGH-LEVEL PARSERS
+
+from dryad.markup.parser.config import \
+    BLOCK_PARSERS, SPAN_PARSERS, BEFORE_PARSE_DOCUMENT, AFTER_PARSE_DOCUMENT
+
+#@partial(works_with_line_list, (2, 'body_lines'))
 def parse_block(block_name, inline_text, body_lines):
-    for (block_name_re, parse_func) in block_parsers:
-        
-        block_name_re = make_exact(block_name_re)
-        
-        if re.match(block_name_re, block_name):
-            return parse_func(block_name, inline_text, body_lines)
+    return apply_parse_rules(
+        BLOCK_PARSERS,
+        block_name,
+        (block_name, inline_text, body_lines)
+    )
 
 def parse_span(span_name, body_text):
-    for (span_name_re, parse_func) in span_parsers:
-        
-        span_name_re = make_exact(span_name_re)
-        
-        if re.match(span_name_re, span_name):
-            return parse_func(span_name, body_text)
-
-# Parse functions have following flavors:
-# 1. Parse blocks from text: parse(lines) 
-# 2. Parse spans from text: parse(text)
-# 3. Block rule callback: parse(source)
-# 4. Span rule callback: parse(text)
-
-block_rules = []
-span_rules  = []
-
-load_plugins([
-    'dryad.markup.parser.rules.block_rule',
-    'dryad.markup.parser.rules.list_rule',
-    'dryad.markup.parser.rules.section_rule',
-    'dryad.markup.parser.rules.table_rule',
-    'dryad.markup.parser.rules.paragraph_rule',
-    
-    'dryad.markup.parser.rules.span_rule',
-    'dryad.markup.parser.rules.strong_rule',
-    'dryad.markup.parser.rules.emph_rule',
-    'dryad.markup.parser.rules.text_rule'
-])
-
-from dryad.markup import plugins
-load_plugins(plugins.plugin_list)
-
-max_lookahead = max(map(lambda r: r.lookahead, block_rules))
-
-@works_with_line_list
-def parse_blocks(lines):
-    source = k_iter(lines, lookahead=max_lookahead)
-    next(source, None)                   # create context iterator and open it
-
-    while True:
-        while is_blank(source[0]):       # skip blank lines
-            eat(source, 1)
-            
-        for rule in block_rules:         # check sequentially all parsing rules
-            if rule.applies_to(source):
-                for node in rule.parse(source):
-                    yield node
-                break
-            
-        if source.is_done:
-            break
-        
-united_rules_re = (
-    '(' + join_regexes(rule.rule_regexp for rule in span_rules) + ')'
-) 
-
-def parse_spans(text):
-    for part in re.split(united_rules_re, text):
-        if part == '':
-            continue
-        
-        for rule in span_rules:
-            if re.match(rule.rule_regexp, part):
-                for node in rule.parse(part):
-                    yield node
-                break
-
-# Escapes in span elements:
-#    *           - within text, within strong/emph
-#    `           - within text, within span
-#    \           - within span, within strong/emph, within text
-#    @, #, $, .. - no escapes 
-#    []          - no escapes
-#
-# There are no escapes for span markers (like "@" and "[url]"). If you want to 
-# write something like "\@``", write "@ ``" instead.
-#
-# When parser sees '\<x>' (<x> is a char) it does the following:
-#     1) If '\<x>' is known escape _in the current context_, parser
-#        replaces the escape sequence. 
-#     2) Else, parser yields verbatim '\' and verbatim '<x>'.
-
-from dryad.markup.doctree.root import Root
+    return apply_parse_rules(SPAN_PARSERS, span_name, (span_name, body_text))
 
 @works_with_line_list
 def parse_document(lines):
-    for callback in before_parse_document:
+    for callback in BEFORE_PARSE_DOCUMENT:
         callback()
-        
     root = Root(parse_blocks(lines))
-    
-    for callback in after_parse_document:
+    for callback in AFTER_PARSE_DOCUMENT:
         callback(root)
-        
     return root
 
+# LOW-LEVEL BLOCK AND SPAN PARSERS
+
+from dryad.markup.parser.config import \
+    BLOCK_RULES, SPAN_RULES
+
+#@works_with_line_list
+def parse_blocks(lines):
+    stripped_lines = map(lambda line: line.rstrip(), lines)
+    source_iter = JavaIter(stripped_lines, padding=u'')
+
+    result = []
+    while True:
+        skip_blank_lines(source_iter)
+        if source_iter.is_done(): break
+
+        # HERE
+        src_start = source_iter[0].line_number
+        src_pos = source_iter.position()
+
+        nodes = apply_parse_rules(BLOCK_RULES, source_iter, (source_iter,))
+
+        # HERE
+        if len(nodes) == 1:
+            nodes[0].src_start = src_start
+            nodes[0].src_end   = src_start + source_iter.position() - src_pos
+
+        result.extend(nodes)
+    return result
+
+_split_re = make_split_re(zip(*SPAN_RULES)[0])
+
+def parse_spans(text):
+    result = []
+    for part in re.split(_split_re, text):
+        if not part: continue
+        nodes = apply_parse_rules(SPAN_RULES, part, (part,))
+        result.extend(nodes)
+    return result

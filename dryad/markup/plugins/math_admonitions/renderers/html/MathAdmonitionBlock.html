@@ -1,0 +1,11 @@
+<div class="math_admonition {{ node.admonition_type }}">
+  <span class="math_admonition_type {{ node.admonition_type }}">
+      {{ block_name[node.admonition_type] }}
+  </span>
+
+  {% if node.title_nodes %}
+    <p class="math_admonition_title"> [{{ node.title_nodes | render }}]</p>
+  {% endif %}
+
+  {{ node.child_nodes | render(sep='\n') }}
+</div>

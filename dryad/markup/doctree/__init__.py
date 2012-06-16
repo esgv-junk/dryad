@@ -1,22 +1,26 @@
-from pyforge.all import *
-
-id_dispatcher = IdDispatcher()
-
-def reset_id_dispatcher():
-    global id_dispatcher
-    id_dispatcher.clear()
-
-from dryad.markup.doctree.walker.selectors import *
 from dryad.markup.doctree.walker import *
 
-def create_doctree_structure(node,
-                             parent=None,
-                             siblings=None,
-                             sibling_index=None):
+class Node:
+    pass
 
+class Span(Node):
+    pass
+
+class Block(Node):
+    pass
+
+def link_doctree(node, parent=None, siblings=None, sibling_index=None):
+    """
+    Create 3 fields on each node: parent, siblings and sibling_index.
+
+    If node has no siblings (standalone field), then siblings and sibling_index
+    will both be None.
+
+    """
     node.parent = parent
     node.siblings = siblings
-    node.sibling_index = sibling_index
+    node.sibling_index = sibling_index if siblings is not None else None
+    node._linked = True
 
     if not hasattr(node, 'doctree'):
         return
@@ -31,50 +35,44 @@ def create_doctree_structure(node,
             siblings = None
 
         for sibling_index, child_node in enumerate(child_nodes):
-            create_doctree_structure(
-                child_node,
-                node,
-                siblings,
-                sibling_index if not (siblings is None) else None
-            )
+            if hasattr(child_node, '_linked') and child_node._linked:
+                # a child is already linked
+                # possibly, link_doctree(node) has already been called, but
+                # someone else now just needed to replace siblings_index
+                continue
+            link_doctree(child_node, node, siblings, sibling_index)
 
 def replace_node(node, dest):
     try:
-        if node.siblings is None:
-            raise NotImplementedError('No siblings.')
-
-        node_parent = node.parent
-        node_siblings = node.siblings
+        parent = node.parent
+        siblings = node.siblings
         src_index = node.sibling_index
-
-        if hasattr(dest, '__iter__'):
-            dest = list(dest)
-
-            for dest_index, dest_node in enumerate(dest):
-                create_doctree_structure(
-                    dest_node,
-                    node.parent,
-                    node_siblings,
-                    src_index + dest_index
-                )
-
-            node.siblings[src_index:src_index + 1] = dest
-
-            untouched_siblings_start = src_index + len(dest)
-            for i, sibling in enumerate(
-                node_siblings[untouched_siblings_start:]
-            ):
-                sibling.sibling_index = untouched_siblings_start + i
-
-        else:
-            node.siblings[node.sibling_index] = dest
-            create_doctree_structure(
-                dest, node_parent, node_siblings, src_index
-            )
-
     except AttributeError:
         raise ValueError('Node {0} is not a valid doctree node'.format(node))
 
+    if node.siblings is None:
+        raise NotImplementedError(
+            "Can't replace node, when there are no siblings.")
 
-before_parse_document = [reset_id_dispatcher]
-after_parse_document  = [create_doctree_structure]
+    # replace one node with many
+    if hasattr(dest, '__iter__'):
+        dest = list(dest)
+
+        # link new nodes with correct sibling_index
+        for dest_index, dest_node in enumerate(dest):
+            link_doctree(dest_node, parent, siblings, src_index + dest_index)
+
+        # replace old node
+        node.siblings[src_index:src_index + 1] = dest
+
+        # correct other siblings' indices
+        old_siblings_start = src_index + len(dest)
+        for i, old_sibling in enumerate(siblings[old_siblings_start:]):
+            old_sibling.sibling_index = old_siblings_start + i
+
+    # simply replace one node with one node
+    else:
+        node.siblings[node.sibling_index] = dest
+        link_doctree(dest, parent, siblings, src_index)
+
+AFTER_PARSE_DOCUMENT = [link_doctree]

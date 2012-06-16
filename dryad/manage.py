@@ -1,9 +1,9 @@
 #!/usr/bin/env python
 import sys
 sys.path.extend([
-    'D:/Dropbox/code/dryad', 
-    'D:/Dropbox/code/3rd_party', 
-    'D:/Dropbox/code/forge/pyforge_stable'
+    r'D:\Dropbox\code\3rd_party',
+    r'D:\Dropbox\code\dryad',
+    r'D:\Dropbox\code\forge\pyforge',
 ])
 
 from django.core.management import execute_manager

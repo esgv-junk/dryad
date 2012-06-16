@@ -1,0 +1,7 @@
+<div class="id-node" id="id-{{ node.node.id }}">
+  {% if hasattr(node.node, 'src_start') %}
+    <span class="src-start">{{ node.node.src_start }}</span>
+    <span class="src-end">{{ node.node.src_end }}</span>
+  {% endif %}
+  {{ [node.node] | render }}
+</div>

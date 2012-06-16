@@ -1,9 +1,9 @@
 from unittest import TestCase
 
-from dryad.markup.doctree        import create_doctree_structure, replace_node
+from dryad.markup.doctree        import link_doctree, replace_node
 from dryad.markup.doctree.walker import walk, StopPropagation, StopWalk
-from dryad.markup.doctree.emph   import Emph
-from dryad.markup.doctree.text   import Text
+from dryad.markup.plugins.emph   import Emph
+from dryad.markup.plugins.text   import Text
 
 class RaiseOnIndex:
     def __init__(self, index, exception):
@@ -149,7 +149,7 @@ class DoctreeStructureTestCase(DoctreeTestCase):
 
         self.sibling_indices = [None, 0, 0, 1, 1, 2]
 
-        create_doctree_structure(self.root_node)
+        link_doctree(self.root_node)
 
     def test_doctree_strcture(self):
         for i, node in enumerate(self.all_nodes):
