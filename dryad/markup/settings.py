@@ -26,15 +26,18 @@ PLUGIN_LIST = [
     'dryad.markup.plugins.math_admonitions',
     'dryad.markup.plugins.strike',
     #'dryad.markup.plugins.toc',
-    'dryad.markup.plugins.unknown',
 
     # the later we do replaces, the better
     'dryad.markup.plugins.symbols',
 
     # paragraph and text should be last, since their parsing rules are
-    # last-resort rules
+    # last-resort rules. 
     'dryad.markup.plugins.text',
     'dryad.markup.plugins.paragraph',
+    
+    # unknown should go even after text and paragraph: after all named 
+    # blocks and spans
+    'dryad.markup.plugins.unknown',
 
     # after all plugins have done their transformations, invoke tagger,
     # assigning unique IDs to all doctree nodes

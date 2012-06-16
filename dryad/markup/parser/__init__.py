@@ -5,7 +5,7 @@ from dryad.markup.plugins.root import Root
 
 from dryad.utils.line import works_with_line_list
 
-#                          GENERIC MECHANISMS
+# GENERIC MECHANISMS
 
 def apply_parse_rules(rules, rule_arg, action_args):
     for rule, action in rules:
@@ -19,7 +19,7 @@ def apply_parse_rules(rules, rule_arg, action_args):
             return listify(action(*action_args))
     return []
 
-#                          HIGH-LEVEL PARSERS
+# HIGH-LEVEL PARSERS
 
 from dryad.markup.parser.config import \
     BLOCK_PARSERS, SPAN_PARSERS, BEFORE_PARSE_DOCUMENT, AFTER_PARSE_DOCUMENT
@@ -44,7 +44,7 @@ def parse_document(lines):
         callback(root)
     return root
 
-#                    LOW-LEVEL BLOCK AND SPAN PARSERS
+# LOW-LEVEL BLOCK AND SPAN PARSERS
 
 from dryad.markup.parser.config import \
     BLOCK_RULES, SPAN_RULES
