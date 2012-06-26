@@ -1,0 +1,112 @@
+/* == Some defines == */
+
+// Dimensions
+@width: 750px;
+@header-padding: 0.5em;
+
+// Colors
+@font-color:          #111;
+@font-light-color:    #222;
+@font-lightest-color: #444;
+@link:                hsl(206, 48%, 32%);
+
+@border-color:        #ddd;
+@border-dark-color:   #aaa;
+
+@darken:              rgba(0, 0, 0, 0.5);
+@edit-highlight-1:    hsla(52, 100%, 60%, 0.5);
+@edit-highlight-2:    @edit-highlight-1;
+@edit-highlight-3:    hsla(0, 100%, 60%, 0.35);
+@edit-highlight-4:    @edit-highlight-3;
+@edit-highlight-5:    rgba(255, 255, 255, 0.45);
+@edit-highlight-6:    @edit-highlight-5;
+
+// Fonts
+@font-size: 10pt;
+.font        { font-family: Verdana, Arial, sans-serif; }
+.header-font { font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; }
+.code-font   { font-family: Consolas, "Lucida Console", monospace; }
+strong       { color: @font-lightest-color; }
+
+// Spacing
+@line-height:   1.3em;
+@p-spacing:     0.5em;
+@block-spacing: 1em;
+@well-spacing:  0.75em;
+@li-spacing:    0.25em;
+@list-sides:    3em;
+
+/* == Tags == */
+
+body {
+  .font;
+  text-align: justify;
+  font-size: @font-size;
+  color: @font-color;
+}
+
+h1, h2, h3, h4, h5, h6  { .header-font; }
+
+pre, tt, code           { .code-font; }
+pre                     { overflow: auto; }
+.code, .math            { font-variant: normal; }
+
+p                       { line-height: @line-height; }
+p + p                   { margin-top: @p-spacing; }
+
+
+ol, ul                  { padding: 0 @list-sides; }
+ul                      { list-style-type: square; }
+li + li                 { margin-top: @li-spacing; }
+
+a {
+  @v-padding: (@line-height - 1)/2;
+  @h-padding: @v-padding * 3;
+
+  padding: @v-padding @h-padding;
+  margin: 0 -@h-padding;
+  text-decoration: none;
+  color: @link;
+}
+
+a:hover {
+  color: white;
+  background-color: fade(@link, 75%);
+}
+
+/* == Layout == */
+
+* {
+  margin: 0;
+  padding: 0;
+  position: relative;
+  border-width: 0;
+  z-index: 0;
+}
+
+header {
+  padding-top: @header-padding * 2;
+  padding-bottom: @header-padding;
+}
+
+footer {
+  height: 4em;
+}
+
+.content {
+  max-width: @width;
+  margin: auto;
+}
+
+ul, ol, .code, .math-admonition, img, div.math {
+  margin: @block-spacing 0;
+}
+
+/* == Imports == */
+
+@import "/static/wiki/less/utils.less";
+@import "/static/wiki/less/section.less";
+@import "/static/wiki/less/code.less";
+@import "/static/wiki/less/math-admonitions.less";
+
+@import "/static/wiki/less/edit.less";

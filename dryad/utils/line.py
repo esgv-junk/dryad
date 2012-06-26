@@ -18,19 +18,6 @@ class Line(unicode):
             self._indent = _indent
             self._is_blank = (_indent != -1)
 
-    """def lstrip(self, chars=' '):
-        new_string = unicode.lstrip(self, chars)
-        new_indent = 0 if ' ' in chars else self._indent
-        return Line(new_string, new_indent)
-
-    def rstrip(self, chars=' '):
-        new_string = unicode.rstrip(self, chars)
-        new_indent = self._indent
-        return Line(new_string, new_indent)
-
-    def strip(self, chars=' '):
-        return self.rstrip(chars).lstrip(chars)"""
-
     def __repr__(self):
         return unicode(self) + u'//' + unicode(self._line_number)
 
@@ -44,7 +31,7 @@ class Line(unicode):
         return Line(unicode.strip(self), None, self._line_number)
 
     def __getslice__(self, i, j):
-        return Line(unicode.__getslice__(self, i, j))
+        return Line(unicode.__getslice__(self, i, j), None, self._line_number)
 
     indent      = read_only_property('_indent')
     line_number = read_only_property('_line_number')

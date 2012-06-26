@@ -42,6 +42,8 @@ def list_action(marker):
 
 def list_parse_action(source_iter, marker):
     items = []
+    global_src_start = source_iter[0].line_number
+    global_num_lines = 0
 
     while True:
         # check if we have one more item
@@ -71,9 +73,18 @@ def list_parse_action(source_iter, marker):
         #item_lines.insert(0, u' ' * num_spaces + inline_text)
 
         # parse item
-        items.append(parse_list_item(item_lines, item_marker))
+        #items.append(parse_list_item(item_lines, item_marker))
 
-    return List(items, marker)
+        item = parse_list_item(item_lines, item_marker)
+        item.src_start = src_start
+        item.src_end = src_start + len(item_lines)
+        global_num_lines += len(item_lines)
+        items.append(item)
+
+    list_ = List(items, marker)
+    list_.src_start = global_src_start
+    list_.src_end = global_src_start + global_num_lines
+    return list_
 
 def parse_list_item(lines, marker):
     from dryad.markup.parser import parse_blocks

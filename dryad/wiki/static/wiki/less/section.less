@@ -1,0 +1,26 @@
+/* == General == */
+h1, h2, h3, h4, h5, h6 {
+  margin: @block-spacing 0 @p-spacing 0;
+  word-wrap: break-word;
+  font-weight: normal;
+  text-transform: uppercase;
+  color: @font-light-color;
+}
+
+/* == Font == */
+h1 {
+  font-size: 280%;
+  color: @font-color;
+  font-weight: bold;
+  text-align: right;
+}
+h2 { font-size: 200%; }
+h3 { font-size: 150%; }
+h4, h5, h6 { .under-construction; }
+
+/* == Spacing-fix == */
+header + section > h1,
+h1 + section > h2,
+h2 + section > h3 {
+  margin-top: @font-size * @line-height;
+}

@@ -8,6 +8,7 @@ urlpatterns = patterns('dryad.wiki.views',
     url(r'^wiki{0}/?$'.format(page_path),  'show_page'),
     url(r'^edit{0}/?$'.format(page_path),  'edit_page'),
     url(r'^files{0}/?$'.format(page_path), 'page_files'),
+    url(r'^onpage-edit{0}/?'.format(page_path), 'onpage_edit'),
 
     url(r'^children{0}/?$'.format(page_path), 'show_page_children')
 )

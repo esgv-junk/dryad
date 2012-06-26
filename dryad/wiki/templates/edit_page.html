@@ -1,29 +1,8 @@
 {% extends "html_base.html" %}
 
 {% block head %}
-  <style>
-    div.CodeMirror pre {
-      overflow: visible;
-    }
-    
-    div.CodeMirror-scroll {
-      overflow: visible;
-      height: auto;
-    }
-    
-    .CodeMirror-lines, .CodeMirror-gutter-text {
-      font-family: Consolas;
-      font-size: 9pt;
-    }
-
-    .nocenter {
-      width: 100%;
-      text-align: left;
-    }
-  </style>
-
-  <script src="/static/codemirror/lib/codemirror.js"></script>
-  <link rel="stylesheet" href="/static/codemirror/lib/codemirror.css">
+  <script src="/static/js/codemirror/lib/codemirror.js"></script>
+  <link rel="stylesheet" href="/static/js/codemirror/lib/codemirror.css">
 {% endblock %}
 
 {% block body %}

@@ -81,3 +81,65 @@ def edit_page(request, path):
     else:
         return submit_page(request, path)
 
+# =============== COOL EDIT ===================
+from pyforge.all import *
+
+def get_doctree(path):
+    page, _ = Page.get(path)
+    return markup.parse_document(page.source)
+
+def get_child(root, need_index):
+    from dryad.markup.plugins.list_ import List
+    from dryad.markup.plugins.paragraph import Paragraph
+    from dryad.markup.plugins.code import CodeBlock
+    from dryad.markup.plugins.section import Section
+    from dryad.markup.plugins.math_admonitions import MathAdmonitionBlock
+
+    if isinstance(root, List):
+        return root.items[need_index]
+
+    true_index = 0
+    index = 0
+    while true_index < len(root.child_nodes):
+        child = root.child_nodes[true_index]
+        if isinstance(child, (List, Paragraph, CodeBlock, Section, MathAdmonitionBlock)):
+            if index == need_index:
+                return child
+            index += 1
+        true_index += 1
+
+def get_node(root, node_path):
+    if not node_path:
+        return root
+    return get_node(get_child(root, node_path[0]), node_path[1:])
+
+def onpage_edit(request, path):
+
+    if request.method == 'GET':
+        lines = Page.get(path)[0].source.splitlines()
+        doctree = get_doctree(path)
+        node_path = map(int, request.GET['node_path'].split(','))
+        node = get_node(doctree, node_path)
+
+        lines = lines[node.src_start-1:node.src_end-1]
+        lines = dedented_by(lines, get_min_indent(lines))
+        node_lines = u'\n'.join(lines)
+
+        return HttpResponse(node_lines, 'text/plain')
+
+    else:
+        page = Page.get(path)[0]
+        lines = page.source.splitlines()
+        doctree = get_doctree(path)
+        node_path = map(int, request.POST['node_path'].split(','))
+        node = get_node(doctree, node_path)
+
+        node_lines = lines[node.src_start-1:node.src_end-1]
+        min_indent = get_min_indent(node_lines)
+        new_node_lines = indented_by(request.POST['new_lines'].split('\n'), min_indent)
+        lines[node.src_start-1:node.src_end-1] = new_node_lines
+        page.source = u'\n'.join(lines)
+        page.save()
+
+        return HttpResponse(lines, 'text/plain')
+

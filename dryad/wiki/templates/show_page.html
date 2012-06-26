@@ -1,17 +1,41 @@
-{% extends "html_base.html" %}
+{% extends "site_base.html" %}
 
-{% block body %}
-  <div class="central_column">
-    <div style="float:right;">
-      <a href="/">Wiki</a> |
-      <a href="/edit{{ path }}">Edit</a>
-    </div>
 
-    {% for path, name in parents %}
-      <a href="/wiki{{ path }}/{{ name }}">{% if forloop.first %}Wiki{% else %}{{ name }}{% endif %}</a>
-      {% if not forloop.last %} | {% endif %}
-    {% endfor %}
-    
-    {{ rendered_page|safe }}
+{% block onload %}
+  $(editableNodes)
+    .addClass('editable')
+    .click(editableClicked);
+  $('a').click(stopPropagation);
+  $('body').addClass('edit-mode').click(bodyClicked);
+{% endblock %}
+
+{% block scripts %}
+  var csrf_token = '{{ csrf_token }}';
+{% endblock %}
+
+{% block js %}
+  {{ block.super }}
+
+  <script src="/static/js/codemirror/lib/codemirror.js"></script>
+  <link rel="stylesheet" href="/static/js/codemirror/lib/codemirror.css">
+
+  <script type="text/javascript" src="/static/wiki/small_edit.js"></script>
+{% endblock %}
+
+{% block header %}
+  {% for path, name in parents %}
+    <a href="/wiki{{ path }}/{{ name }}">{% if forloop.first %}Wiki{% else %}{{ name }}{% endif %}</a>
+    {% if not forloop.last %} / {% endif %}
+  {% endfor %}
+
+  <div class="pull-right">
+    <a href="javascript:$('body').toggleClass('edit-mode')">Edit mode</a> /
+    <a href="/edit{{ path }}">Edit</a>
   </div>
+
+  <!--div class="button">E</div-->
+{% endblock %}
+
+{% block content %}
+    {% block test_content %}{{ rendered_page|safe }}{% endblock %}
 {% endblock %}

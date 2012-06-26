@@ -1,8 +1,7 @@
-<div class="section">
-  <h{{ node.section_level }} id="{{ node.section_anchor }}">
-    {{ node.title_nodes | render }}
-    <a class="section_anchor" href="#{{ node.section_anchor }}">&para;</a>
+<section>
+  <h{{ node.section_level }}>
+    {{- node.title_nodes | render -}}
   </h{{ node.section_level }}>
 
   {{ node.child_nodes | render(sep='\n\n') }}
-</div>
+</section>

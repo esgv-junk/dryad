@@ -17,8 +17,18 @@ DATABASES = {
         'PASSWORD': '',
         'HOST': '',
         'PORT': '',
-        }
+    },
+    'remote': {
+        'ENGINE':   'django.db.backends.postgresql_psycopg2',
+        'NAME':     'ecxsgv_mathwiki',
+        'USER':     'ecxsgv_app',
+        'PASSWORD': 'k0lm0g0r0v_c0mplexity',
+        'HOST':     'stevie.heliohost.org',
+        'PORT':     '',
+    }
 }
+
+DATABASES['default'] = DATABASES['remote']
 
 #
 #                            FILE UPLOADING

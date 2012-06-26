@@ -1,0 +1,26 @@
+/* == Heading style == */
+.math-admonition-type, .math-admonition-title {
+  font-style: italic;
+  color: @font-light-color;
+}
+
+.math-admonition-type  { font-weight: bold; }
+.math-admonition-title { text-transform: uppercase; }
+
+/* == Separator == */
+.math-admonition-type + .math-admonition-sep + p { display: inline; }
+.math-admonition-type + .math-admonition-sep     { display: none; }
+.math-admonition-title + .math-admonition-sep {
+  border-bottom: 1px solid @border-color;
+  margin: @well-spacing auto;
+}
+
+/* == Brackets and dot == */
+.math-admonition-type:after   { content: "."; }
+.math-admonition-title:before { content: "["; }
+.math-admonition-title:after  { content: "]"; }
+
+/* == Well style == */
+.math-admonition { .well; }
+.math-admonition > *:last-child   { margin-bottom: 0; }
+.math-admonition .math-admonition { .unwell; }

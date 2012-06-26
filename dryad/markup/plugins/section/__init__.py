@@ -58,7 +58,7 @@ def section_rule_3(source_iter, chars=outline_chars):
 
 def section_parse_action_3(source_iter):
     title = source_iter[1]
-    current_char = source_iter[1][0]
+    current_char = source_iter[0][0]
     eat(source_iter, 3)
 
     body_lines = take_while(source_iter, lambda iter: not(

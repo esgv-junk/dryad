@@ -1,0 +1,726 @@
+{% extends "show_page.html" %}
+
+{% block test_content %}
+  <section>
+  <h1>Plain C++</h1>
+
+  <section>
+    <h2>Declarations</h2>
+
+    <ul>
+      <li>
+        <p><strong>Translation unit</strong> — a soruce with <tt class="code">#include</tt>s processed.</p>
+      </li>
+      <li>
+        <p>Every <strong>definition is also a declaration.</strong></p>
+        <p>But not every declaration is a definition: <strong>automatic <tt class="code">extern</tt></strong> is applied on function declarations.</p>
+        <p>Declaration without a definition is called «forward declaration».</p>
+      </li>
+      <li>
+        <p><strong>Forward</strong> declaration should be enough for:</p>
+        <ol>
+          <li value="1">
+            <p>Using and declaring <strong>pointers and references;</strong></p>
+          </li>
+          <li value="2">
+            <p>Declaring <strong>return values;</strong></p>
+          </li>
+          <li value="3">
+            <p>Declaring <strong>member function parameters;</strong></p>
+          </li>
+        </ol>
+        <p>And BTW, std doesn't say that forward is not enough for template instantiation.</p>
+      </li>
+      <li>
+        <p><strong>Everything</strong> that can be treated as a function will be <strong>treated as a function</strong>.</p>
+        <ul>
+          <li>
+            <p><tt class="code">Foo x();</tt> is a declaration of a function, that returns <tt class="code">Foo</tt>!</p>
+          </li>
+          <li>
+            <p><tt class="code">Foo x(Bar())</tt> is a decl of a function called <tt class="code">x</tt> that returns a <tt class="code">Foo</tt> and that takes as a single parameter of type &quot;non-member function that takes nothing and returns a <tt class="code">Bar</tt>.&quot;</p>
+          </li>
+        </ul>
+      </li>
+    </ul>
+
+    <section>
+      <h3>Misc</h3>
+
+      <ul>
+        <li>
+          <p><tt class="code">int main()</tt> or <tt class="code">int main(int, char* [])</tt></p>
+        </li>
+        <li>
+          <p><tt class="code">using</tt> <strong>introduces names into current namespace.</strong></p>
+        </li>
+      </ul>
+    </section>
+  </section>
+
+  <section>
+    <h2>Evaluation</h2>
+
+    <ol>
+      <li value="1">
+        <p>Return value;</p>
+      </li>
+      <li value="2">
+        <p>Temporary objects.</p>
+      </li>
+    </ol>
+
+    <section>
+      <h3>Copying optimization</h3>
+
+      <p>Copying optimization is possible only in two cases:</p>
+
+      <ol>
+        <li value="1">
+          <p>Return value;</p>
+        </li>
+        <li value="2">
+          <p>Temporary objects.</p>
+        </li>
+      </ol>
+
+      <p>Note, that parameter optimization is not allowed, so following code WILL work:</p>
+
+      <div class="code"><pre><span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="n">T</span><span class="o">&gt;</span>
+<span class="kt">void</span> <span class="n">sink</span><span class="p">(</span><span class="n">auto_ptr</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="p">)</span> <span class="p">{}</span>
+</pre></div>
+
+    </section>
+
+    <section>
+      <h3>Parameter evaluation</h3>
+
+      <ul>
+        <li>
+          <p>Parameter evaluation order is not defined.</p>
+        </li>
+        <li>
+          <p><strong>Default params</strong> are not eval'd if they are actually passed.</p>
+          <p><tt class="code">f(Foo* p = new Foo)</tt> won't leak if user passes a pointer.</p>
+        </li>
+      </ul>
+    </section>
+
+    <section>
+      <h3>&quot;<tt class="code">+=</tt>&quot; operator</h3>
+
+      <p><tt class="code">a += b</tt> is not equivalent to <tt class="code">a = a + b</tt>.</p>
+
+      <p>In the second expression, parameter evaluation order is not defined, and <tt class="code">b</tt> evaluation might modify <tt class="code">a</tt>. Eg. <tt class="code">a = a + a++</tt>.</p>
+    </section>
+
+    <section>
+      <h3>Sequence points</h3>
+
+      <p><tt class="code">x = ++y + y++</tt> is bad: two modifications between <strong>sequence points</strong>.</p>
+
+      <p>At certain specified points in the execution sequence called sequence points, all side effects of previous evaluations shall be complete and no side effects of subsequent evaluations shall have taken place.</p>
+
+      <ol>
+        <li value="#">
+          <p>the semicolon (1.9p16)</p>
+        </li>
+        <li value="#">
+          <p>the non-overloaded comma-operator (1.9p18)</p>
+        </li>
+        <li value="#">
+          <p>the non-overloaded <tt class="code">||</tt> operator (1.9p18)</p>
+        </li>
+        <li value="#">
+          <p>the non-overloaded <tt class="code">&amp;&amp;</tt> operator (1.9p18)</p>
+        </li>
+        <li value="#">
+          <p>the ternary <tt class="code">?:</tt> operator (1.9p18)</p>
+        </li>
+        <li value="#">
+          <p>after evaluation of all a function's parameters but before the first expression within the function is executed (1.9p17)</p>
+        </li>
+        <li value="#">
+          <p>after a function's returned object has been copied back to the caller, but before the code just after the call has yet been evaluated (1.9p17)</p>
+        </li>
+        <li value="#">
+          <p>after the initialization of each base and member (12.6.2p3)</p>
+        </li>
+      </ol>
+    </section>
+  </section>
+
+  <section>
+    <h2>Built-in types</h2>
+
+    <section>
+      <h3><tt class="code">sizeof</tt></h3>
+
+      <ul>
+        <li>
+          <p><tt class="code">sizeof(char)</tt> is always 1 by definition.</p>
+          <p>Units of <tt class="code">sizeof</tt> are bytes, that is one byte is a <tt class="code">sizeof(char)</tt>. BTW, C++ byte can have more than 8 bits, but at least 8. (see <tt class="code">CHAR_BIT</tt> in <tt class="code">&lt;climits&gt;</tt>)</p>
+        </li>
+        <li>
+          <p><tt class="code">sizeof(unsigned x) = sizeof(x)</tt></p>
+        </li>
+      </ul>
+
+      <p>How to compute:</p>
+
+      <ul>
+        <li>
+          <p>Members;</p>
+        </li>
+        <li>
+          <p>Alignment for each member; By default compiler aligns type <tt class="code">T</tt> to <tt class="code">sizeof(T)</tt> bytes;</p>
+        </li>
+        <li>
+          <p>+4 bytes on vtable;</p>
+        </li>
+        <li>
+          <p>+4 bytes for each non-first base with vptr within class hierarchy;</p>
+        </li>
+        <li>
+          <p>+4 bytes for each virtual base ptr.</p>
+        </li>
+      </ul>
+
+      <p>See also <a href="Inheritance%20implementation">Inheritance%20implementation</a>.</p>
+    </section>
+
+    <section>
+      <h3>POD</h3>
+
+      <p>«Plain old data» is a structure with:</p>
+
+      <ul>
+        <li>
+          <p>No ctor, dtor;</p>
+        </li>
+        <li>
+          <p>No virtual functions;</p>
+        </li>
+        <li>
+          <p>No base classes;</p>
+        </li>
+        <li>
+          <p>No asop;</p>
+        </li>
+        <li>
+          <p>No private or protected non-static members;</p>
+        </li>
+        <li>
+          <p>No ptrs to inner members.</p>
+        </li>
+      </ul>
+    </section>
+
+    <section>
+      <h3>Which size to use</h3>
+
+      <ul>
+        <li>
+          <p>Use <tt class="code">int</tt> when you can, <tt class="code">int32_t</tt> when you have to.</p>
+        </li>
+        <li>
+          <p>Use <tt class="code">size_t</tt> in containers and similar shit.</p>
+        </li>
+        <li>
+          <p><tt class="code">stdint.h</tt></p>
+        </li>
+      </ul>
+    </section>
+
+    <section>
+      <h3><tt class="code">enum</tt></h3>
+
+      <ul>
+        <li>
+          <p>Each of its own type.</p>
+        </li>
+        <li>
+          <p>Can have explicitly assigned integer repr.</p>
+        </li>
+        <li>
+          <p>Can be converted to <tt class="code">int</tt>.</p>
+        </li>
+      </ul>
+    </section>
+
+    <section>
+      <h3>Pointer casts</h3>
+
+      <ul>
+        <li>
+          <p><tt class="code">T*</tt> can be cast to <tt class="code">void*</tt>, <tt class="code">const T*</tt> can be cast to <tt class="code">const void*</tt>;</p>
+        </li>
+        <li>
+          <p><tt class="code">T*</tt> can be cast to <tt class="code">const T*</tt>;</p>
+          <p>Note, that <tt class="code">const T**</tt> cannot be cast to <tt class="code">T**</tt>, since pointed types are <tt class="code">(const T)*</tt> and <tt class="code">(T)*</tt> correspondingly, they are not the same, and they are not a <tt class="code">const</tt> away.</p>
+        </li>
+        <li>
+          <p>A cast from <tt class="code">char*</tt> to <tt class="code">const char*</tt> is a <em><tt class="code">reinterpret_cast</tt></em>;</p>
+          <p>Hierarchical casts (<tt class="code">static_cast</tt> and <tt class="code">dynamic_cast</tt>) are left for inherited classes.</p>
+        </li>
+        <li>
+          <p><tt class="code">Derived*</tt> can be cast to <tt class="code">Base*</tt>.</p>
+        </li>
+      </ul>
+    </section>
+  </section>
+
+  <section>
+    <h2>Inline and macros</h2>
+
+    <section>
+      <h3>Macros</h3>
+
+      <p>Macros are <strong>evil.</strong></p>
+
+      <ul>
+        <li>
+          <p>Braces around arguments;</p>
+        </li>
+        <li>
+          <p>Braces around whole expression;</p>
+        </li>
+        <li>
+          <p>Multiple argument evaluation;</p>
+        </li>
+        <li>
+          <p>No namespace controls macro;</p>
+        </li>
+        <li>
+          <p>Macro can't be recursive (even indirectly);</p>
+        </li>
+        <li>
+          <p>Macros don't have type, address, can't be debugged;</p>
+        </li>
+      </ul>
+    </section>
+
+    <section>
+      <h3><tt class="code">inline</tt></h3>
+
+      <ul>
+        <li>
+          <p>Inline is useful for <strong>member access</strong> functions.</p>
+        </li>
+        <li>
+          <p><strong>Definition in header file is needed.</strong></p>
+          <p>And put <tt class="code">inline</tt> in definition (not declaration), since it's not an observable semantic.</p>
+        </li>
+        <li>
+          <p><strong>Speed</strong></p>
+          <ul>
+            <li>
+              <p>Faster / slower (code bloat).</p>
+            </li>
+            <li>
+              <p>Bigger / smaller code (depending on param push size).</p>
+            </li>
+            <li>
+              <p>More / less cache misses (depending on function size and layout).</p>
+            </li>
+            <li>
+              <p>Can make no effect (different bottleneck).</p>
+            </li>
+          </ul>
+        </li>
+        <li>
+          <p><strong><tt class="code">inline</tt> vs <tt class="code">define</tt></strong></p>
+          <p><tt class="code">inline</tt> is better, since:</p>
+          <ol>
+            <li value="#">
+              <p>It checks parmeters' types.</p>
+            </li>
+            <li value="#">
+              <p>Parameters eval'd once.</p>
+            </li>
+          </ol>
+        </li>
+        <li>
+          <p>Inlining can be done:</p>
+          <ul>
+            <li>
+              <p>At compile time;</p>
+            </li>
+            <li>
+              <p>At link time;</p>
+            </li>
+            <li>
+              <p>At runtime;</p>
+            </li>
+            <li>
+              <p>At any other time O_o.</p>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </section>
+  </section>
+
+  <section>
+    <h2>Static</h2>
+
+    <section>
+      <h3>Init order</h3>
+
+      <p>Init order is not defined.</p>
+
+      <p>Can strike for built-in types too, since they can be constructed from expressions.</p>
+
+      <div class="code"><pre><span class="cp">#include &lt;iostream&gt;</span>
+
+<span class="kt">int</span> <span class="n">f</span><span class="p">();</span>  <span class="c1">// forward declaration</span>
+<span class="kt">int</span> <span class="n">g</span><span class="p">();</span>  <span class="c1">// forward declaration</span>
+
+<span class="kt">int</span> <span class="n">x</span> <span class="o">=</span> <span class="n">f</span><span class="p">();</span>
+<span class="kt">int</span> <span class="n">y</span> <span class="o">=</span> <span class="n">g</span><span class="p">();</span>
+
+<span class="kt">int</span> <span class="n">f</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;using &#39;y&#39; (which is &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">y</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;)</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
+    <span class="k">return</span> <span class="mi">3</span><span class="o">*</span><span class="n">y</span> <span class="o">+</span> <span class="mi">7</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">int</span> <span class="n">g</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;initializing &#39;y&#39;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
+    <span class="k">return</span> <span class="mi">5</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+
+
+      <p>Simple solution: objects live forever</p>
+
+      <div class="code"><pre><span class="n">Fred</span><span class="o">&amp;</span> <span class="n">x</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="k">static</span> <span class="n">Fred</span><span class="o">*</span> <span class="n">ans</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Fred</span><span class="p">();</span>
+    <span class="k">return</span> <span class="o">*</span><span class="n">ans</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+
+
+      <p>NOT like this (construction order handled, destruction order still a problem):</p>
+
+      <div class="code"><pre><span class="n">Fred</span><span class="o">&amp;</span> <span class="n">x</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="k">static</span> <span class="n">Fred</span> <span class="n">ans</span><span class="p">;</span>
+    <span class="k">return</span> <span class="n">ans</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+
+
+      <p>Complicated solution: replace with a singleton pattern.</p>
+    </section>
+
+    <section>
+      <h3>Another static syntax</h3>
+
+      <div class="code"><pre><span class="c1">// Fred.h</span>
+
+<span class="k">class</span> <span class="nc">Fred</span> <span class="p">{</span>
+<span class="k">public</span><span class="o">:</span>
+    <span class="k">static</span> <span class="k">const</span> <span class="kt">int</span> <span class="n">maximum</span> <span class="o">=</span> <span class="mi">42</span><span class="p">;</span>
+    <span class="p">...</span>
+<span class="p">};</span>
+</pre></div>
+
+
+      <p>And, as with other static data members, it must be defined in exactly one compilation unit, though this time without the = initializer part:</p>
+
+      <div class="code"><pre><span class="cp">// Fred.cpp</span>
+
+<span class="cp">#include &quot;Fred.h&quot;</span>
+
+<span class="kt">int</span> <span class="n">Fred</span><span class="o">::</span><span class="n">maximum</span><span class="p">;</span>
+
+<span class="p">...</span>
+</pre></div>
+
+    </section>
+  </section>
+
+  <section>
+    <h2>Memory</h2>
+
+    <ul>
+      <li>
+        <p><strong>Deleting <tt class="code">NULL</tt></strong> ptrs is LEGAL</p>
+      </li>
+      <li>
+        <p>To <strong>force</strong> objects <strong>to be created via <tt class="code">new</tt></strong> (not on the stack, etc) use private constructor and named constructor idiom.</p>
+      </li>
+    </ul>
+
+    <section>
+      <h3>Memory regions</h3>
+
+      <ol>
+        <li value="#">
+          <p><strong>Const data</strong> — pre-allocated and immutable;</p>
+        </li>
+        <li value="#">
+          <p><strong>Global/static data</strong> — pre-allocated but may not be initialized (yet);</p>
+        </li>
+        <li value="#">
+          <p><strong>Stack;</strong></p>
+        </li>
+        <li value="#">
+          <p><strong>Freestore</strong> — <tt class="code">new</tt>/<tt class="code">delete</tt>;</p>
+        </li>
+        <li value="#">
+          <p><strong>Heap</strong> — <tt class="code">malloc</tt>/<tt class="code">free</tt>.</p>
+        </li>
+      </ol>
+    </section>
+
+    <section>
+      <h3><tt class="code">new</tt> and <tt class="code">delete</tt> overloading</h3>
+
+      <p>A <tt class="code">new</tt> operator has three versions:</p>
+
+      <div class="code"><pre><span class="kt">void</span><span class="o">*</span> <span class="k">operator</span> <span class="k">new</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">size_t</span><span class="p">)</span> <span class="k">throw</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">bad_alloc</span><span class="p">);</span>            <span class="c1">// regular new</span>
+<span class="kt">void</span><span class="o">*</span> <span class="k">operator</span> <span class="k">new</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">size_t</span><span class="p">,</span> <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">nothrow_t</span><span class="o">&amp;</span><span class="p">)</span> <span class="k">throw</span><span class="p">();</span>   <span class="c1">// nothrow new</span>
+<span class="kt">void</span><span class="o">*</span> <span class="k">operator</span> <span class="k">new</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">size_t</span><span class="p">,</span> <span class="kt">void</span><span class="o">*</span><span class="p">)</span> <span class="k">throw</span><span class="p">();</span>                   <span class="c1">// placement new</span>
+</pre></div>
+
+
+      <p>A new operator is used like this: <tt class="code">new(x, y, z) T</tt>. Then, following happens:</p>
+
+      <ol>
+        <li value="1">
+          <p>Class <tt class="code">T</tt> is searched usual way for <tt class="code">operator new</tt> (if class hasn't overridden <tt class="code">new</tt>, search reaches global namespace).</p>
+        </li>
+        <li value="2">
+          <p>Found operator is overloaded based on parameters <tt class="code">x, y, z</tt> again, the usual way.</p>
+        </li>
+      </ol>
+
+      <p>Interesting thing is, you can not just overload, you can <strong>redefine</strong> global new and global nothrow new (and of course, you can write anything you want for classes).</p>
+
+      <p>So,</p>
+
+      <ul>
+        <li>
+          <p>A <tt class="code">new</tt> operator can be overloaded either for specific object (<strong>locally</strong>) or <strong>globally</strong>.</p>
+        </li>
+        <li>
+          <p>Global operators can be redefined (except placement new).</p>
+        </li>
+        <li>
+          <p>If you write custom class new, write custom placement new, and custom nothrow new, because you've just hidden global versions.</p>
+        </li>
+        <li>
+          <p>If you write custom <tt class="code">new</tt>, write custom <tt class="code">delete</tt>.</p>
+        </li>
+        <li>
+          <p>On some systems (i won't name them, but it's linux) new never fails (throws), thanks to copy-on-write, but a memory access can fail, since that access can cause system to make copy and run out of memory. So don't try to fall nicely when you've run out of memory.</p>
+        </li>
+      </ul>
+    </section>
+
+    <section>
+      <h3>Life cycle</h3>
+
+      <p>Construction and destruction steps:</p>
+
+      <p><tt class="code">new</tt>:</p>
+
+      <ol>
+        <li value="#">
+          <p>Allocate.</p>
+        </li>
+        <li value="#">
+          <p>Call ctor.</p>
+        </li>
+        <li value="#">
+          <p>If ctor failed (i.e. thrown exception), deallocate.</p>
+        </li>
+      </ol>
+
+      <p><tt class="code">delete</tt>:</p>
+
+      <ol>
+        <li value="#">
+          <p>Call dtor.</p>
+        </li>
+        <li value="#">
+          <p>Deallocate (using correct <tt class="code">delete</tt> overload).</p>
+        </li>
+      </ol>
+    </section>
+
+    <section>
+      <h3>Interchangeability</h3>
+
+      <ul>
+        <li>
+          <p><strong><tt class="code">free()</tt> and <tt class="code">delete</tt></strong> are not interchangeable.</p>
+          <p>Also, no <tt class="code">realloc</tt> on <tt class="code">new</tt>-allocated pointers.</p>
+        </li>
+        <li>
+          <p><strong><tt class="code">delete</tt> and <tt class="code">delete[]</tt></strong> are not ichangeable</p>
+        </li>
+        <li>
+          <p><strong><tt class="code">new</tt> vs <tt class="code">malloc()</tt></strong></p>
+          <p><tt class="code">new</tt> is better:</p>
+          <ul>
+            <li>
+              <p>Type safety.</p>
+            </li>
+            <li>
+              <p><tt class="code">new</tt> calls constructor.</p>
+            </li>
+            <li>
+              <p><tt class="code">new</tt> can be overridden.</p>
+            </li>
+          </ul>
+        </li>
+        <li>
+          <p>Array destructors cannot be virtual:</p>
+          <div class="code"><pre><span class="k">class</span> <span class="nc">B</span> <span class="p">{</span> <span class="p">...</span> <span class="p">};</span>
+<span class="k">class</span> <span class="nc">D</span><span class="o">:</span> <span class="k">public</span> <span class="n">B</span> <span class="p">{</span> <span class="p">...</span> <span class="p">};</span>
+
+<span class="n">B</span><span class="o">*</span> <span class="o">=</span> <span class="k">new</span> <span class="n">D</span><span class="p">[</span><span class="mi">10</span><span class="p">];</span>
+<span class="k">delete</span><span class="p">[]</span> <span class="n">D</span><span class="p">;</span>     <span class="c1">// disaster</span>
+</pre></div>
+
+        </li>
+      </ul>
+    </section>
+  </section>
+
+  <section>
+    <h2>Const correctness</h2>
+
+    <ul>
+      <li>
+        <p>Three <strong>types</strong>: ptr-to-const, ref-to-const, by value.</p>
+      </li>
+      <li>
+        <p>CC should be introduced <strong>at the very beginning</strong>.</p>
+        <p>Back-patching results in a snowball effect</p>
+      </li>
+      <li>
+        <p>Types read <strong>right to left</strong> from within brackets</p>
+      </li>
+      <li>
+        <p><strong>Non-const</strong> members <strong>can't be called</strong> for const objects</p>
+      </li>
+      <li>
+        <p><strong><tt class="code">mutable</tt></strong> modifier on members allows it to be modified within const-functions</p>
+        <ul>
+          <li>
+            <p>Eg. caching.</p>
+          </li>
+          <li>
+            <p>Don't use const-casts instead.</p>
+          </li>
+        </ul>
+      </li>
+      <li>
+        <p><strong>Constness of a pointer</strong> means «i won't change it», not «it won't change by itself»</p>
+      </li>
+      <li>
+        <p><strong>`Foo</strong> → const Foo<strong>`</strong> conversion is illegal:</p>
+        <div class="code"><pre><span class="k">class</span> <span class="nc">Foo</span> <span class="p">{</span>
+<span class="k">public</span><span class="o">:</span>
+    <span class="kt">void</span> <span class="n">modify</span><span class="p">();</span>  <span class="c1">// make some modify to the this object</span>
+<span class="p">};</span>
+
+<span class="kt">int</span> <span class="n">main</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="k">const</span> <span class="n">Foo</span> <span class="n">x</span><span class="p">;</span>
+    <span class="n">Foo</span><span class="o">*</span> <span class="n">p</span><span class="p">;</span>
+    <span class="k">const</span> <span class="n">Foo</span><span class="o">**</span> <span class="n">q</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">p</span><span class="p">;</span>  <span class="c1">// q now points to p; this is (fortunately!) an error</span>
+    <span class="o">*</span><span class="n">q</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">x</span><span class="p">;</span>             <span class="c1">// p now points to x</span>
+    <span class="n">p</span><span class="o">-&gt;</span><span class="n">modify</span><span class="p">();</span>         <span class="c1">// Ouch: modifies a const Foo!!</span>
+    <span class="p">...</span>
+<span class="p">}</span>
+</pre></div>
+
+      </li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Serialization</h2>
+
+    <p>Serialization: <tt class="code">object -&gt; data</tt>. Deserialization is <tt class="code">data -&gt; object</tt>.</p>
+
+    <ul>
+      <li>
+        <p>Add <strong>magic</strong> and <strong>version number</strong> to serialized data;</p>
+        <p>And not fucking fancy version number; version should simlpy be an integer.</p>
+      </li>
+      <li>
+        <p><tt class="code">unique[className] = unique.size()</tt> is illegal:</p>
+        <ul>
+          <li>
+            <p>mutates unique twice</p>
+          </li>
+          <li>
+            <p>pre-increments size</p>
+          </li>
+        </ul>
+        <p>(Occurs when <strong>mapping names to integers.</strong>)</p>
+      </li>
+      <li>
+        <p>Beware of <strong>endianness</strong>;</p>
+      </li>
+      <li>
+        <p>Don't forget to add <strong><tt class="code">NULL</tt> handling;</strong></p>
+      </li>
+      <li>
+        <p><strong>Don't write any data</strong> into objects <strong>on serialization.</strong></p>
+        <p>Thread problems and poor performance.</p>
+      </li>
+    </ul>
+
+    <section>
+      <h3>Recipy</h3>
+
+      <p>Four levels of serialization</p>
+
+      <ol>
+        <li value="#">
+          <p><strong>Simple</strong></p>
+        </li>
+        <li value="#">
+          <p><strong>... + hierarchy</strong></p>
+          <p>Unserialize with factory.</p>
+        </li>
+        <li value="#">
+          <p><strong>...+ references (no cycles and joins)</strong></p>
+          <p>Recursive.</p>
+        </li>
+        <li value="#">
+          <p><strong>... + joins or cycles</strong></p>
+          <p>Dumb method: two-pass approach.</p>
+          <p>Serialization:</p>
+          <ol>
+            <li value="#">
+              <p>Map <tt class="code">ptr-&gt;id</tt>.</p>
+            </li>
+            <li value="#">
+              <p>Serialize each object in map, replacing pointers by id.</p>
+            </li>
+          </ol>
+          <p>Unserialization:</p>
+          <ol>
+            <li value="#">
+              <p><tt class="code">vector&lt;Node*, id&gt;</tt></p>
+            </li>
+            <li value="#">
+              <p>Fix pointers up, discard vector.</p>
+            </li>
+          </ol>
+        </li>
+      </ol>
+    </section>
+  </section>
+  </section>
+{% endblock %}

@@ -1,0 +1,105 @@
+/* == OVERLAYS == */
+
+.blocker-overlay {
+  .overlay(fixed);
+  z-index: 1;
+}
+
+.edit-info {
+  .overlay;
+  background: @darken;
+  z-index: 1;
+}
+
+.blocker-overlay:hover + .edit-info {
+  z-index: 3;
+}
+
+.editor {
+  position: relative;
+  width: 100%;
+  background: white;
+  border: 1px solid @border-color;
+  z-index: 2;
+}
+
+
+/* == HOVER == */
+
+.hover-overlay(@color) {
+  background-color: @color;
+  outline-color: fadein(@color, 10%);
+  .noise;
+}
+
+.editable {
+  -webkit-transition: background       0.1s,
+                      outline-color    0.1s;
+  outline-style: solid;
+  outline-color: transparent;
+}
+
+
+body.edit-mode {
+  .editable:hover {
+    cursor: pointer;
+    .hover-overlay(@edit-highlight-1);
+
+    .editable:hover {
+      .hover-overlay(@edit-highlight-2);
+
+      .editable:hover {
+        .hover-overlay(@edit-highlight-3);
+
+        .editable:hover {
+          .hover-overlay(@edit-highlight-4);
+
+          .editable:hover {
+            .hover-overlay(@edit-highlight-5);
+
+            .editable:hover {
+              .hover-overlay(@edit-highlight-6);
+} } } } } } }
+
+.editable:hover .editable {
+  border-style: dashed;
+  border-color: white;
+}
+
+section {
+  outline-width: 2 * @well-spacing;
+
+  section {
+    outline-width: @well-spacing;
+
+    section {
+      outline-width: @well-spacing / 2;
+} } }
+
+.math-admonition, div.code, ul, ol {
+  outline-width: @well-spacing / 2;
+}
+
+p  { outline-width: @p-spacing / 2; }
+li {
+  outline-width: @li-spacing;
+
+  .math-admonition, div.code, ul, ol {
+    outline-width: @li-spacing;
+  }
+}
+
+/* == EDITOR == */
+
+.CodeMirror-scroll {
+  height: auto;
+  overflow-y: hidden;
+  overflow-x: auto;
+
+  pre { overflow: visible; cursor: text; }
+}
+
+.CodeMirror-gutter-text, .CodeMirror-lines {
+  .code-font;
+  font-size: 13px;
+}

@@ -11,5 +11,6 @@ urlpatterns = patterns('',
     url(r'^admin/', include(admin.site.urls)),
 
     # wiki
-    url(r'', include('dryad.wiki.urls'))
+    url('^template/(?P<template_name>.+)$', 'django.shortcuts.render'),
+    url('', include('dryad.wiki.urls')),
 ) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

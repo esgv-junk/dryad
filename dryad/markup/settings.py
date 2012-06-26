@@ -41,7 +41,7 @@ PLUGIN_LIST = [
 
     # after all plugins have done their transformations, invoke tagger,
     # assigning unique IDs to all doctree nodes
-    'dryad.markup.plugins.id_wrapper'
+    #'dryad.markup.plugins.id_wrapper'
 ]
 
 MATH_DEFINES = ur'''
