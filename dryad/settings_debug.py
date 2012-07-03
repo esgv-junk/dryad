@@ -31,7 +31,7 @@ DATABASES = {
 #
 #                            FILE UPLOADING
 #
-MEDIA_ROOT = 'Z:/Dropbox/code/dryad/dryad/wiki/media'
+MEDIA_ROOT = 'D:/Dropbox/code/dryad/dryad/wiki/media'
 MEDIA_URL = '/media/'
 
 #
