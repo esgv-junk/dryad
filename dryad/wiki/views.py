@@ -11,6 +11,8 @@ from dryad.wiki.models import *
 # uploading
 from django.core.files.storage import default_storage
 
+from dryad.wiki.path import *
+
 # ==============================================================================
 #                                    SHOW
 # ==============================================================================
@@ -32,6 +34,7 @@ def show_page(request, path):
 def show_page_children(request, path):
     pages = Page.get(path)[0].children()
     parents = get_parents(path)
+    page_name = wiki_title(parents[-1][1])
     rendered_page = render_to_string('list_pages.html', locals())
     return render(request, 'show_page.html', locals())
 
@@ -84,9 +87,12 @@ def edit_page(request, path):
 # =============== COOL EDIT ===================
 from pyforge.all import *
 
+from dryad.utils.meta import cache
+
+@cache
 def get_doctree(path):
     page, _ = Page.get(path)
-    return markup.parse_document(page.source)
+    return markup.parse_document(page.source, {'page_path': path})
 
 def get_child(root, need_index):
     from dryad.markup.plugins.list_ import List
@@ -94,6 +100,7 @@ def get_child(root, need_index):
     from dryad.markup.plugins.code import CodeBlock
     from dryad.markup.plugins.section import Section
     from dryad.markup.plugins.math_admonitions import MathAdmonitionBlock
+    from dryad.markup.plugins.table import Table
 
     if isinstance(root, List):
         return root.items[need_index]
@@ -102,7 +109,7 @@ def get_child(root, need_index):
     index = 0
     while true_index < len(root.child_nodes):
         child = root.child_nodes[true_index]
-        if isinstance(child, (List, Paragraph, CodeBlock, Section, MathAdmonitionBlock)):
+        if isinstance(child, (List, Paragraph, CodeBlock, Section, MathAdmonitionBlock, Table)):
             if index == need_index:
                 return child
             index += 1
@@ -136,7 +143,7 @@ def onpage_edit(request, path):
 
         node_lines = lines[node.src_start-1:node.src_end-1]
         min_indent = get_min_indent(node_lines)
-        new_node_lines = indented_by(request.POST['new_lines'].split('\n'), min_indent)
+        new_node_lines = indented_by(request.POST['new_lines'].expandtabs(4).split('\n'), min_indent)
         lines[node.src_start-1:node.src_end-1] = new_node_lines
         page.source = u'\n'.join(lines)
         page.save()

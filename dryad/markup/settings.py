@@ -25,6 +25,7 @@ PLUGIN_LIST = [
     'dryad.markup.plugins.figure',
     'dryad.markup.plugins.math_admonitions',
     'dryad.markup.plugins.strike',
+    'dryad.markup.plugins.table',
     #'dryad.markup.plugins.toc',
 
     # the later we do replaces, the better

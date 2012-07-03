@@ -45,6 +45,9 @@ class Page(models.Model):
     # INTEGRITY
 
     def save(self, *args, **kwargs):
+        from dryad.wiki import views
+        views.get_doctree.cache.pop(self.path())
+
         super(Page, self).save(*args, **kwargs)
 
         # if page is the root page, it has no parents

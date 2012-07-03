@@ -1,12 +1,28 @@
 {% extends "site_base.html" %}
 
-
 {% block onload %}
+  MathJax.Hub.Config({
+    skipStartupTypeset: true,
+    tex2jax: {
+      inlineMath: [["$", "$"]]
+    },
+    "HTML-CSS": {
+      scale: 100,
+      showMathMenu: false
+    },
+    NativeMML: {
+      scale: 100
+    }
+  });
+  MathJax.Hub.Startup.onload();
+
   $(editableNodes)
     .addClass('editable')
     .click(editableClicked);
   $('a').click(stopPropagation);
-  $('body').addClass('edit-mode').click(bodyClicked);
+  $('body').addClass('edit-mode');
+
+  $('.math').typeset().removeClass('preloaded');
 {% endblock %}
 
 {% block scripts %}
@@ -20,6 +36,8 @@
   <link rel="stylesheet" href="/static/js/codemirror/lib/codemirror.css">
 
   <script type="text/javascript" src="/static/wiki/small_edit.js"></script>
+  <script type="text/javascript" src="/static/wiki/math.js"></script>
+  <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 {% endblock %}
 
 {% block header %}
@@ -37,5 +55,28 @@
 {% endblock %}
 
 {% block content %}
-    {% block test_content %}{{ rendered_page|safe }}{% endblock %}
+    <div class="hidden">
+      <div class="edit-info loading persistent">
+        <div class="centered"><div>
+          <h1>Loading...</h1>
+          <h2>Please wait</h2>
+        </div></div>
+      </div>
+  
+      <div class="edit-info info">
+        <div class="centered"><div>
+          <h1>Click outside of the box to save</h1>
+          <h2>Hover back to continue editing</h2>
+        </div></div>
+      </div>
+
+      <div class="edit-info saving persistent">
+        <div class="centered"><div>
+          <h1>Saving...</h1>
+          <h2>Please wait</h2>
+        </div></div>
+      </div>
+    </div>
+  
+    {{ rendered_page|safe }}
 {% endblock %}

@@ -68,7 +68,7 @@ def list_parse_action(source_iter, marker):
         # HERE
         from dryad.utils.line import Line
         inline_text = Line(u' ' * num_spaces + inline_text)
-        inline_text._line_number = src_start
+        inline_text.line_number = src_start
         item_lines.insert(0, inline_text)
         #item_lines.insert(0, u' ' * num_spaces + inline_text)
 
@@ -81,10 +81,7 @@ def list_parse_action(source_iter, marker):
         global_num_lines += len(item_lines)
         items.append(item)
 
-    list_ = List(items, marker)
-    list_.src_start = global_src_start
-    list_.src_end = global_src_start + global_num_lines
-    return list_
+    return List(items, marker)
 
 def parse_list_item(lines, marker):
     from dryad.markup.parser import parse_blocks

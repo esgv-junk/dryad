@@ -1,11 +1,12 @@
-var editableNodes = 'p, section, .math-admonition, div.code, ul, ol, li';
+var editableNodes = 'p, section, .math-admonition, div.code, ul, ol, li, table';
 var editModeOn = true;
 var isEditedNow = false;
+var editor = null;
 
 /* == PATH UTILITIES == */
 
 function siblingIndex(element) {
-  return $(element).prevAll(editableNodes).length;
+  return $(element).prevAll('.editable').length;
 }
 
 function doctreePath(element) {
@@ -16,11 +17,15 @@ function doctreePath(element) {
   return doctreePath($(element).parent()).concat([siblingIndex(element)]);
 }
 
+function currentPagePath() {
+  return document.location.pathname.slice(5);
+}
+
 /* == CODEMIRROR EDITOR == */
 
 function createEditor(element, data) {
   $(element).click(stopPropagation);
-  var editor = CodeMirror(element, {
+  editor = CodeMirror(element, {
     'value': data,
 
     'indentUnit': 4,
@@ -37,43 +42,55 @@ function createEditor(element, data) {
   });
 
   var lineCount = editor.lineCount();
-  var lastLineLength = editor.getLine(lineCount - 1).length;
-  editor.setCursor(lineCount - 1, lastLineLength);
+  if (lineCount < 10) {
+    var lastLineLength = editor.getLine(lineCount - 1).length;
+    editor.setCursor(lineCount - 1, lastLineLength);
+  }
 }
 
 /* == AJAX EVENTS == */
 
 function startEdit(element) {
-  startSave();
-
-  if (!$('body').hasClass('edit-mode')) {
-    return;
-  }
-
   isEditedNow = true;
-  $(element).append('<div class="edit-overlay" id="editor"></div>');
-  $("#editor").siblings().hide();
+
+
+  $(element)
+      .append('<div class="editor"></div>')
+      .append($('.edit-info.loading').detach());
+  $('body')
+      .append('<div class="blocker-overlay"></div>')
+      .removeClass('edit-mode');
 
   $.get(
-    '/onpage-edit' + document.location.pathname.slice(5),
-    {
-      'node_path': doctreePath(element).join(',')
-    },
+    '/onpage-edit' + currentPagePath(),
+    { 'node_path': doctreePath(element).join(',') },
     nodeSourceRecieved
   );
 }
 
 function nodeSourceRecieved(data) {
-  createEditor($('#editor')[0], data);
+  $('.edit-info.loading').remove();
+  $('.blocker-overlay')
+      .addClass('active')
+      .click(startSave);
+
+  var $editor = $('.editor');
+  $editor.click(stopPropagation);
+  $editor.append($('.edit-info.info').detach());
+  $editor.siblings().hide();
+  createEditor($editor[0], data);
 }
 
 function startSave() {
-  if (!isEditedNow) {
-    return;
-  }
-  $.post('/onpage-edit' + document.location.pathname.slice(5),
+  $('.edit-info.info').replaceWith($('.edit-info.saving').detach());
+  $('.blocker-overlay')
+      .off('click')
+      .removeClass('active');
+
+  $.post(
+    '/onpage-edit' + currentPagePath(),
     {
-      'node_path': doctreePath($("#editor").parent()).join(','),
+      'node_path': doctreePath($(".editor").parent()).join(','),
       'new_lines': editor.getValue(),
       'csrfmiddlewaretoken': csrf_token
     },
@@ -82,17 +99,13 @@ function startSave() {
 }
 
 function endSave() {
-  isEditedNow = false;
-  //$editor = $('.edit-overlay');
-  //$editor.siblings().show();
-  //$editor.remove();
   location.reload();
 }
 
 /* == EVENT HANDLERS == */
 
 function editableClicked(event) {
-  if (editModeOn) {
+  if ($('body').hasClass('edit-mode')) {
     startEdit(this);
   }
   event.stopPropagation();
@@ -100,9 +113,4 @@ function editableClicked(event) {
 
 function stopPropagation(event) {
   event.stopPropagation();
-}
-
-function bodyClicked() {
-  startSave();
-  isEditedNow = false;
 }

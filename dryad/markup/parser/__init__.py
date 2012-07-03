@@ -35,8 +35,11 @@ def parse_block(block_name, inline_text, body_lines):
 def parse_span(span_name, body_text):
     return apply_parse_rules(SPAN_PARSERS, span_name, (span_name, body_text))
 
-@works_with_line_list
-def parse_document(lines):
+@partial(works_with_line_list, (0, 'lines'))
+def parse_document(lines, context={}):
+    from dryad import markup
+    markup._context = context
+
     for callback in BEFORE_PARSE_DOCUMENT:
         callback()
     root = Root(parse_blocks(lines))

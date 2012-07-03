@@ -2,29 +2,50 @@
 
 .blocker-overlay {
   .overlay(fixed);
-  z-index: 1;
-}
-
-.edit-info {
-  .overlay;
   background: @darken;
-  z-index: 1;
-}
-
-.blocker-overlay:hover + .edit-info {
-  z-index: 3;
 }
 
 .editor {
   position: relative;
   width: 100%;
-  background: white;
-  border: 1px solid @border-color;
-  z-index: 2;
+  z-index: 11;
 }
 
+.edit-info {
+  .overlay;
+  color: white;
+  background: @darken;
+  outline: 1px dashed @white-border-color;
+  z-index: 12;
+  -webkit-transition: opacity 0.5s ease-in;
+
+  h1, h2 { text-align: center; }
+  h1 { color: white; }
+  h2 { color: @white-border-color; }
+}
+
+// Persistent .edit-info
+
+.edit-info.persistent {
+  outline: none;
+  z-index: 12 !important;
+  background: fadein(@darken, 25%);
+}
+
+.editor:hover {
+  .edit-info:hover { z-index: auto; }
+  .edit-info {
+    opacity: 0;
+    z-index: auto;
+    -webkit-transition: opacity 0;
+  }
+
+  .edit-info.persistent { opacity: 1.0; }
+}
 
 /* == HOVER == */
+
+// Include classes
 
 .hover-overlay(@color) {
   background-color: @color;
@@ -32,17 +53,23 @@
   .noise;
 }
 
+.white-hover-border {
+  border-style: dashed;
+  border-color: @white-border-color;
+}
+
+// Wide and dashed outlines
+
 .editable {
-  -webkit-transition: background       0.1s,
-                      outline-color    0.1s;
+  -webkit-transition: background    0.1s,
+                      outline-color 0.1s;
   outline-style: solid;
   outline-color: transparent;
 }
 
-
 body.edit-mode {
   .editable:hover {
-    cursor: pointer;
+    .active;
     .hover-overlay(@edit-highlight-1);
 
     .editable:hover {
@@ -61,10 +88,18 @@ body.edit-mode {
               .hover-overlay(@edit-highlight-6);
 } } } } } } }
 
-.editable:hover .editable {
-  border-style: dashed;
-  border-color: white;
+// White hover borders
+
+body.edit-mode {
+  .math-admonition:hover, div.code:hover {
+    .white-hover-border;
+  }
+  .editable:hover {
+    .math-admonition, div.code { .white-hover-border }
+  }
 }
+
+// Wide outline size
 
 section {
   outline-width: 2 * @well-spacing;
@@ -76,20 +111,22 @@ section {
       outline-width: @well-spacing / 2;
 } } }
 
-.math-admonition, div.code, ul, ol {
+.math-admonition, div.code, ul, ol, table {
   outline-width: @well-spacing / 2;
 }
 
-p  { outline-width: @p-spacing / 2; }
+p  { outline-width: 0; }
 li {
-  outline-width: @li-spacing;
-
-  .math-admonition, div.code, ul, ol {
-    outline-width: @li-spacing;
-  }
+  outline-width: 0;
+  .editable { outline-width: 0; }
 }
 
 /* == EDITOR == */
+
+.CodeMirror {
+  background: white;
+  border: 1px solid @border-color;
+}
 
 .CodeMirror-scroll {
   height: auto;
@@ -97,6 +134,11 @@ li {
   overflow-x: auto;
 
   pre { overflow: visible; cursor: text; }
+}
+
+li >     .editor .CodeMirror-lines pre,
+li > p > .editor .CodeMirror-lines pre {
+  top: -3px;
 }
 
 .CodeMirror-gutter-text, .CodeMirror-lines {

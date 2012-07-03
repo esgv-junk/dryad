@@ -1,0 +1,39 @@
+/* == GENERAL SETUP == */
+
+table {
+  border-collapse: separate;
+  border-spacing: 0;
+  margin: @block-spacing auto;
+  border: 1px solid @table-outer;
+}
+
+th {
+  background: rgba(0, 0, 0, 0.06);
+  text-align: left;
+}
+
+td { text-align: center; }
+
+td, th {
+  padding: @li-spacing 2*@li-spacing;
+  border-left: 1px solid @table-outer;
+  border-bottom: 1px solid @table-inner;
+}
+
+tr.odd { background-color: rgba(0, 0, 0, 0.02); }
+tr:first-child th { border-bottom: 1px solid @table-outer; }
+
+/* == BORDER PRECEDENCE == */
+
+tr:last-child {
+  td, th { border-bottom: none; }
+}
+th:first-child, td:first-child { border-left: none; }
+
+/* == FIX = */
+
+// Usually, we don't want first column to wrap: it contains
+// useful definitions, function declarations, etc.
+th:first-child, td:first-child {
+  white-space: nowrap;
+}

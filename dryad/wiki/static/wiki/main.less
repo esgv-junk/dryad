@@ -5,13 +5,16 @@
 @header-padding: 0.5em;
 
 // Colors
-@font-color:          #111;
-@font-light-color:    #222;
-@font-lightest-color: #444;
+@font-color:          #111;   // main text color
+@font-light-color:    #222;   // used in headings
+@font-lightest-color: #444;   // used in strong
+@font-inactive-color: rgba(0, 0, 0, 0.5);
 @link:                hsl(206, 48%, 32%);
 
-@border-color:        #ddd;
-@border-dark-color:   #aaa;
+@border-color:        rgba(0, 0, 0, 0.05);
+@white-border-color:  rgba(255, 255, 255, 0.75);
+@table-outer:         rgba(0, 0, 0, 0.4);
+@table-inner:         @border-color;
 
 @darken:              rgba(0, 0, 0, 0.5);
 @edit-highlight-1:    hsla(52, 100%, 60%, 0.5);
@@ -32,7 +35,7 @@ strong       { color: @font-lightest-color; }
 @line-height:   1.3em;
 @p-spacing:     0.5em;
 @block-spacing: 1em;
-@well-spacing:  0.75em;
+@well-spacing:  0.5em;
 @li-spacing:    0.25em;
 @list-sides:    3em;
 
@@ -81,7 +84,8 @@ a:hover {
   padding: 0;
   position: relative;
   border-width: 0;
-  z-index: 0;
+  outline-color: transparent;
+  z-index: auto;
 }
 
 header {
@@ -108,5 +112,5 @@ ul, ol, .code, .math-admonition, img, div.math {
 @import "/static/wiki/less/section.less";
 @import "/static/wiki/less/code.less";
 @import "/static/wiki/less/math-admonitions.less";
-
+@import "/static/wiki/less/table.less";
 @import "/static/wiki/less/edit.less";

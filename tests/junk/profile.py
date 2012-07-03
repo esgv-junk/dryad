@@ -78,5 +78,5 @@ def render_page():
     rendered_page =\
         markup.render(page_source, 'html')
 
-cProfile.run('render_page()')
+render_page()
 cProfile.run('render_page()')

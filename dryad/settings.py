@@ -12,7 +12,7 @@ TEMPLATE_DEBUG = DEBUG
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME':  r'D:\Virtual Machines\dryad_wiki.db',
+        'NAME':  r'D:\Dropbox\knowledge\dryad_wiki.db',
         'USER': '',
         'PASSWORD': '',
         'HOST': '',
@@ -28,12 +28,10 @@ DATABASES = {
     }
 }
 
-DATABASES['default'] = DATABASES['remote']
-
 #
 #                            FILE UPLOADING
 #
-MEDIA_ROOT = 'D:/Dropbox/code/dryad/dryad/wiki/media'
+MEDIA_ROOT = 'Z:/Dropbox/code/dryad/dryad/wiki/media'
 MEDIA_URL = '/media/'
 
 #

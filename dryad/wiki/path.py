@@ -92,7 +92,6 @@ def resolve_image_path(img_path, current_page_path):
     # return link to current page's child
     return u'/media' + join_path(current_page_path, img_path)
 
-
 def wiki_title(path):
     return split_path(path).name.replace('_', ' ')
 

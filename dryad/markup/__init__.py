@@ -12,7 +12,5 @@ def render_document(document, renderer=None):
     return render_nodes(document, renderer=renderer)
 
 def render(lines, renderer=None, context={}):
-    global _context
-    _context = context
-    root = parse_document(lines)
+    root = parse_document(lines, context)
     return render_nodes(root, renderer=renderer)
