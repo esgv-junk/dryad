@@ -1,33 +1,5 @@
-{#{% set span_name = node.block_name  %}
-{% set body_text = node.inline_text %}
-
-{% if node.body_lines %}
-  <div class="unknown">
-    <!-- label -->
-    <span class="unknown">
-      <tt class="span_name">{{ span_name | escape }}</tt>
-      {%- if body_text %}
-        <tt class="body_text">{{ body_text | escape }}</tt>
-      {%- else %}
-        <span style="margin-right: 1pt;"></span>
-      {%- endif %}
-    </span>
-
-    <!-- body -->
-    <pre>
-        {{- node.body_lines | join('\n') | escape -}}
-    </pre>
-  </div>
-{% else %}
-  <p>
-    <!-- label -->
-    <span class="unknown">
-      <tt class="span_name">{{ span_name | escape }}</tt>
-      {%- if body_text %}
-        <tt class="body_text">{{ body_text | escape }}</tt>
-      {%- else %}
-        <span style="margin-right: 1pt;"></span>
-      {%- endif %}
-    </span>
-  </p>
-{% endif %}#}
+<div class="unknown">
+  <span class="block-name">{{ node.block_name }}</span>
+  <span class="inline-text">{{ node.inline_text }}</span>
+  <pre>{{ node.body_lines | join("\n") }}</pre>
+</div>

@@ -1,0 +1,11 @@
+.unknown {
+  .block-name, .inline-text { .code-font; }
+  .block-name:before { content: "["; }
+  .block-name:after  { content: "]"; }
+
+  padding: @well-spacing;
+  margin: @block-spacing 0;
+
+  background-color: @alert;
+  color: @alert-font;
+}

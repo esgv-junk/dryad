@@ -39,10 +39,6 @@ PLUGIN_LIST = [
     # unknown should go even after text and paragraph: after all named 
     # blocks and spans
     'dryad.markup.plugins.unknown',
-
-    # after all plugins have done their transformations, invoke tagger,
-    # assigning unique IDs to all doctree nodes
-    #'dryad.markup.plugins.id_wrapper'
 ]
 
 MATH_DEFINES = ur'''
@@ -75,5 +71,37 @@ MATH_DEFINES = ur'''
     \renewcommand{\mod}{\,\mathop{\rm mod}\,}
     \newcommand{\const}{\mathrm{const}}
 '''
+
+MATH_DEFINES = {
+    'Pr':   r'\mathop{\rm P}\nolimits',
+    'ind':  r'\mathop{\rm I}\nolimits',
+    'mean': r'\mathop{\rm E}\nolimits',
+    'var':  r'\mathop{\rm D}\nolimits',
+    'cov':  r'\mathop{\rm cov}\nolimits',
+
+    'rank': r'\mathop{\rm rank}\nolimits',
+    'tr':   r'\mathop{\rm tr}\nolimits',
+    'dim':  r'\mathop{\rm dim}\nolimits',
+    'ker':  r'\mathop{\rm ker}\nolimits',
+    'im':   r'\mathop{\rm im}\nolimits',
+
+    'liminf':  r'\mathop{\overline{\lim}}',
+    'limsup':  r'\mathop{\underline{\lim}}',
+    'to':      r'\mathop\longrightarrow',
+    'implies': r'\mathop\Rightarrow',
+    'intl':    r'\int\limits',
+    'iintl':   r'\iint\limits',
+    'iiintl':  r'\iiint\limits',
+
+    'd': r'\partial',
+    'l': r'\left',
+    'r': r'\right',
+
+    'phi':      r'\varphi',
+    'eps':      r'\varepsilon',
+    'emptyset': r'\varnothing',
+    'mod':      r'\,\mathop{\rm mod}\,',
+    'const':    r'{\rm const}'
+}
 
 UNSET_DEFAULT_SPAN_NAME = u'default'

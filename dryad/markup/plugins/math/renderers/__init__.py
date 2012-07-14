@@ -1,10 +1,8 @@
 from pyforge.all import *
 
-# '$' is not a math marker anymore, so we should escape it,
-# even when rendering to LaTeX
 math_escapes = {
-    ur'\$': ur'\$',
-    ur'$' : ur'\$'
+    u'<': u' < ',
+    u'>': u' > '
 }
 
 def escape_math(string):

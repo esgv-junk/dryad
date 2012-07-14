@@ -1,1 +1,5 @@
-<span class="math preloaded">${{ escape_math(node.body_text) | escape }}$</span>
+{%- set rendered_lines = escape_math(node.body_text) -%}
+<span class="math">{#--#}
+  <span class="MathJax_Preview">{{ rendered_lines }}</span>{#--#}
+  <script type="math/tex">{{ rendered_lines }}</script> {#--#}
+</span>
